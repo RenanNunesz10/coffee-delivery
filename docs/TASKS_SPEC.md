@@ -54,14 +54,14 @@
   - **Commit:** `chore: configure styling lint and test tooling`
   - **Status:** Concluída
 
-- [ ] **TASK-004 — Criar registro de uso de IA**
+- [x] **TASK-004 — Criar registro de uso de IA**
   - **Objetivo:** criar `docs/AI_USAGE.md` com modelo de registro e as primeiras interações (revisão das SPECs, análise de arquitetura).
   - **Requisitos:** PRD seção 9.
   - **Arquivos:** `docs/AI_USAGE.md`.
   - **Critério de pronto:** modelo com prompt, objetivo, resposta resumida, decisão e evidência; ao menos uma entrada real.
   - **Teste/validação:** revisão do documento.
   - **Commit:** `docs: add ai usage log`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 ### Fase 1 — Identidade e fundação visual
 
@@ -334,6 +334,7 @@
 | 17/11/2026 | TASK-001 | Revisão cruzada PRD × TECH × TASKS × enunciado: IDs RF-01–RF-16 e RN-01–RN-10 consistentes; rota alterada para `/success`; viewports 320–1440 px; justificativa Tailwind registrada; ordem de tarefas corrigida (cálculos antes do carrinho); `AGENTS.md` e `CLAUDE.md` criados. | `docs: define product and technical specifications` |
 | 17/11/2026 | TASK-002 | Boilerplate do Vite removido; `App` em `src/app/`; `lang="pt-BR"` e título. `npm run build` OK (15 módulos, 219,65 kB JS); `npm run lint` sem erros; `vite` servindo `/` com HTTP 200, `lang="pt-BR"` e `<title>Coffee Delivery</title>`. | `chore: clean up vite scaffold and app structure` |
 | 17/11/2026 | TASK-003 | Instalados Tailwind CSS 4.3.5 (`@tailwindcss/vite`), Vitest 5.1.0, jsdom 29, Testing Library (react 16, user-event 14, jest-dom 7); `strict: true` explícito nos tsconfig; scripts `test`/`test:watch`. `npm run test`: 1 arquivo, 1 teste passou; `npm run lint` sem erros; `npm run build` OK (CSS 7,30 kB com classes Tailwind geradas); `vite` HTTP 200. `npm audit`: 0 vulnerabilidades em produção; 12 altas apenas em dependências de desenvolvimento (`picomatch`), sem correção não-breaking. | `chore: configure styling lint and test tooling` |
+| 17/11/2026 | TASK-004 | `docs/AI_USAGE.md` criado com modelo (prompt, objetivo, resposta, análise crítica, decisão, evidência) e 5 interações reais (IA-01 a IA-05) com commits de evidência conferidos em `git log`. | `docs: add ai usage log` |
 
 ## Definition of Done (global)
 
