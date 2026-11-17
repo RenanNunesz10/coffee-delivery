@@ -1,6 +1,6 @@
 # Coffee Delivery — Plano de Implementação (TASKS)
 
-**Versão:** 1.2.0
+**Versão:** 1.3.0
 **Última atualização:** 17/11/2026
 **Documentos relacionados:** [`PRD_SPEC.md`](./PRD_SPEC.md) · [`TECH_SPEC.md`](./TECH_SPEC.md) · [`AGENTS.md`](../AGENTS.md)
 
@@ -11,6 +11,7 @@
 | 1.0.0 | 17/11/2026 | Versão inicial (30 tarefas). |
 | 1.1.0 | 17/11/2026 | Reordenação (cálculos antes dos componentes do carrinho), tarefas de `AI_USAGE.md`, Branding com IA, screenshots; rota `/success`; nomes de componentes do enunciado. |
 | 1.2.0 | 17/11/2026 | Fidelidade ao Figma: frete 350 centavos; Phosphor Icons; TASK-005 inclui ilustrações geradas com IA; preço da linha do carrinho. |
+| 1.3.0 | 17/11/2026 | TASK-005 passa a criar assets provisórios em SVG; nova TASK-032 aplica a identidade final criada com IA (antes do deploy). Push para o GitHub somente ao final do projeto. |
 
 ## Como trabalhar com este checklist
 
@@ -19,6 +20,7 @@
 - Antes de iniciar: conferir objetivo, requisitos e critério de pronto.
 - Ao concluir: marcar `[x]`, atualizar o status, registrar o teste no **Registro de execução** e criar o commit semântico indicado.
 - Interações relevantes com a IA são registradas em `docs/AI_USAGE.md` ao longo do projeto.
+- Commits são locais durante o desenvolvimento; o push para o GitHub é feito somente ao final, antes do deploy.
 - Status permitidos: `Pendente`, `Em andamento`, `Bloqueada`, `Concluída`.
 
 ## Checklist
@@ -63,13 +65,13 @@
 
 ### Fase 1 — Identidade e fundação visual
 
-- [ ] **TASK-005 — Criar identidade visual e logo com IA**
-  - **Objetivo:** gerar com IA a logo original e as ilustrações sem asset reutilizável no Figma (imagem do hero sem a logo original e entregador da tela de sucesso); curar e exportar.
-  - **Requisitos:** RF-16, RF-14.
-  - **Arquivos:** `public/brand/*`, `public/favicon.svg`, `src/assets/brand/*`, `src/assets/hero/*`, `src/assets/illustrations/*`, `docs/BRAND_GUIDE.md`.
-  - **Critério de pronto:** logo (light/dark) e símbolo exportados; favicon legível em 16–48 px; hero e ilustração de sucesso coerentes com a paleta; `BRAND_GUIDE.md` com conceito, paleta, tipografia, variações e seção **Branding com IA** (ferramenta, prompt, resultado, motivos, termos de uso) cobrindo logo e ilustrações.
-  - **Teste/validação:** legibilidade em tamanhos pequenos e contraste nos dois temas.
-  - **Commit:** `feat: add coffee delivery brand identity`
+- [ ] **TASK-005 — Criar identidade visual provisória em SVG**
+  - **Objetivo:** criar logo, símbolo/favicon, ilustração do hero e ilustração de sucesso em SVG **provisórios**, coerentes com a paleta do Figma, para permitir visualizar o projeto enquanto as imagens finais com IA não ficam prontas (substituídas na TASK-032).
+  - **Requisitos:** RF-16 (parcial), RF-14.
+  - **Arquivos:** `public/favicon.svg`, `src/assets/brand/*`, `src/assets/hero/*`, `src/assets/illustrations/*`, `docs/BRAND_GUIDE.md` (rascunho: paleta, tipografia, lista de assets provisórios).
+  - **Critério de pronto:** SVGs com mesmos nomes/dimensões que os assets finais terão; logo com variação light/dark; favicon legível em 16–48 px; assets marcados como provisórios no `BRAND_GUIDE.md`.
+  - **Teste/validação:** visualização dos SVGs em tamanho pequeno e nos dois temas; `npm run build`.
+  - **Commit:** `feat: add provisional svg brand assets`
   - **Status:** Pendente
 
 - [ ] **TASK-006 — Definir tokens e estilos globais**
@@ -296,6 +298,15 @@
   - **Critério de pronto:** test, lint e build passam; console limpo no fluxo principal.
   - **Teste/validação:** `npm run test`, `npm run lint`, `npm run build` e fluxo manual completo.
   - **Commit:** `test: cover coffee delivery purchase flow`
+  - **Status:** Pendente
+
+- [ ] **TASK-032 — Substituir assets provisórios pela identidade criada com IA** *(executar antes da TASK-030)*
+  - **Objetivo:** aplicar a logo e as ilustrações finais geradas com IA pelo aluno (logo, favicon, hero sem a logo original, ilustração de sucesso) no lugar dos SVGs provisórios da TASK-005.
+  - **Requisitos:** RF-16, RF-14.
+  - **Arquivos:** `public/favicon.svg`, `public/brand/*`, `src/assets/brand/*`, `src/assets/hero/*`, `src/assets/illustrations/*`, `docs/BRAND_GUIDE.md`.
+  - **Critério de pronto:** nenhum asset provisório restante; logo light/dark e favicon legíveis; `BRAND_GUIDE.md` com conceito final e seção **Branding com IA** (ferramenta, prompt, resultado, motivos, termos de uso) cobrindo logo e ilustrações.
+  - **Teste/validação:** legibilidade em 16–48 px, contraste nos dois temas, ausência de imagens quebradas, `npm run build`.
+  - **Commit:** `feat: apply ai generated brand identity`
   - **Status:** Pendente
 
 - [ ] **TASK-030 — Preparar deploy**

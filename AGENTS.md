@@ -131,7 +131,7 @@ Coberturas prioritárias: reducer, cálculos em centavos e frete, persistência,
 Um commit por tarefa, em Conventional Commits, usando a mensagem indicada na TASKS_SPEC:
 `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `style:`, `chore:`.
 
-Proibido: mensagens vagas (`update`, `changes`, `final`). Push para o GitHub apenas quando o usuário pedir.
+Proibido: mensagens vagas (`update`, `changes`, `final`). Push para o GitHub somente ao final do projeto, quando o usuário pedir.
 
 ## 9. Registro de uso de IA
 

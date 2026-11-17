@@ -111,9 +111,9 @@ As imagens foram extraídas do PDF exportado do Figma, associadas aos cafés pel
 ### 6.3 Outros assets
 | Asset | Situação |
 |---|---|
-| `src/assets/hero/hero-coffee.webp` | Extraído (952 px) apenas como referência: o copo exibe a logo original do desafio. Será substituído por versão gerada com IA (TASK-005). |
+| `src/assets/hero/hero-coffee.webp` | Extraído (952 px) apenas como referência: o copo exibe a logo original do desafio. Substituído por SVG provisório (TASK-005) e depois por versão com IA (TASK-032). |
 | `src/assets/hero/hero-background.webp` | Fundo desfocado do hero, extraído (1440 px). Pode ser substituído por gradiente CSS. |
-| Ilustração do entregador (sucesso) | Vetorial, não extraída. Será gerada com IA (TASK-005). |
+| Ilustração do entregador (sucesso) | Vetorial, não extraída. SVG provisório (TASK-005); versão com IA (TASK-032). |
 | Logo original | Vetorial; não será usada (a marca própria será criada com IA, RF-16). |
 
 ## 7. Lacunas e divergências em relação aos SPECs
@@ -126,6 +126,6 @@ As imagens foram extraídas do PDF exportado do Figma, associadas aos cafés pel
 | D4 | Mobile e tablet | Inexistente | Obrigatório (RF-15) | Layout próprio: grade de 1/2/3/4 colunas; checkout em coluna única abaixo de `lg`. |
 | D5 | Dark mode | Inexistente | Obrigatório (RF-14) | Paleta escura derivada dos tokens base, a definir na TASK-006. |
 | D6 | Localização no Header | "Porto Alegre, RS" fixo | Cidade/UF do último pedido | Mantida a decisão do PRD. |
-| D7 | Logo no copo do hero | Logo original do desafio | Marca própria (RF-16) | **Resolvido:** novo hero gerado com IA na TASK-005. |
-| D8 | Ilustração do sucesso | Vetorial | — | **Resolvido:** ilustração gerada com IA na TASK-005. |
+| D7 | Logo no copo do hero | Logo original do desafio | Marca própria (RF-16) | **Resolvido:** SVG provisório na TASK-005; versão com IA na TASK-032. |
+| D8 | Ilustração do sucesso | Vetorial | — | **Resolvido:** SVG provisório na TASK-005; versão com IA na TASK-032. |
 | D9 | Orientação de 2 fotos | Café com Leite e Havaiano aparecem espelhados na Home | — | Detalhe visual sem impacto; usar as imagens como exportadas. |
