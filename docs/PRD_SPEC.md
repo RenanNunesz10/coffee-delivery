@@ -42,7 +42,7 @@ Pessoas que desejam navegar por um catálogo de cafés e simular uma compra. O p
 
 | Referência | Uso |
 |---|---|
-| Figma — *Coffee Delivery / Projeto Final React* | Referência visual primária. |
+| [Figma — *Coffee Delivery • Projeto Final React (cópia)*](https://www.figma.com/design/DBM8Ky5Qy7ZUOP2pUR5SrJ/Coffee-Delivery-%E2%80%A2-Projeto-Final-React--c%C3%B3pia-?node-id=0-1) | Referência visual primária. |
 | Frame `2:1550` — Home | Header, hero e catálogo. |
 | Frame `217:511` — Checkout | Formulário, pagamento e carrinho (vazio e preenchido). |
 | Frame `222:824` — Sucesso | Tela de pedido confirmado. |
