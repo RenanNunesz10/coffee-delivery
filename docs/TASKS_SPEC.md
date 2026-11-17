@@ -45,14 +45,14 @@
   - **Commit:** `chore: clean up vite scaffold and app structure`
   - **Status:** Concluída
 
-- [ ] **TASK-003 — Configurar Tailwind, lint e testes**
+- [x] **TASK-003 — Configurar Tailwind, lint e testes**
   - **Objetivo:** instalar Tailwind CSS v4 (`@tailwindcss/vite`), Vitest, Testing Library e jsdom; criar script `test`.
   - **Requisitos:** RNF de qualidade (PRD 8.6).
   - **Arquivos:** `package.json`, `vite.config.ts`, `src/styles/index.css`, `src/tests/setup.ts`, teste inicial.
   - **Critério de pronto:** `dev`, `build`, `lint` e `test` executam com sucesso.
   - **Teste/validação:** rodar os quatro scripts.
   - **Commit:** `chore: configure styling lint and test tooling`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-004 — Criar registro de uso de IA**
   - **Objetivo:** criar `docs/AI_USAGE.md` com modelo de registro e as primeiras interações (revisão das SPECs, análise de arquitetura).
@@ -333,6 +333,7 @@
 |---|---|---|---|
 | 17/11/2026 | TASK-001 | Revisão cruzada PRD × TECH × TASKS × enunciado: IDs RF-01–RF-16 e RN-01–RN-10 consistentes; rota alterada para `/success`; viewports 320–1440 px; justificativa Tailwind registrada; ordem de tarefas corrigida (cálculos antes do carrinho); `AGENTS.md` e `CLAUDE.md` criados. | `docs: define product and technical specifications` |
 | 17/11/2026 | TASK-002 | Boilerplate do Vite removido; `App` em `src/app/`; `lang="pt-BR"` e título. `npm run build` OK (15 módulos, 219,65 kB JS); `npm run lint` sem erros; `vite` servindo `/` com HTTP 200, `lang="pt-BR"` e `<title>Coffee Delivery</title>`. | `chore: clean up vite scaffold and app structure` |
+| 17/11/2026 | TASK-003 | Instalados Tailwind CSS 4.3.5 (`@tailwindcss/vite`), Vitest 5.1.0, jsdom 29, Testing Library (react 16, user-event 14, jest-dom 7); `strict: true` explícito nos tsconfig; scripts `test`/`test:watch`. `npm run test`: 1 arquivo, 1 teste passou; `npm run lint` sem erros; `npm run build` OK (CSS 7,30 kB com classes Tailwind geradas); `vite` HTTP 200. `npm audit`: 0 vulnerabilidades em produção; 12 altas apenas em dependências de desenvolvimento (`picomatch`), sem correção não-breaking. | `chore: configure styling lint and test tooling` |
 
 ## Definition of Done (global)
 

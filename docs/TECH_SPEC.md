@@ -437,6 +437,7 @@ Os tokens usam **os mesmos nomes do Style Guide do Figma** (ver [`docs/figma/REA
 npm install
 npm run dev       # servidor local
 npm run test      # vitest run
+npm run test:watch # vitest em modo watch
 npm run lint      # eslint .
 npm run build     # tsc -b && vite build
 npm run preview   # serve o build
