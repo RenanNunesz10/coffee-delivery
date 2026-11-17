@@ -34,14 +34,14 @@
   - **Commit:** `docs: define product and technical specifications`
   - **Status:** Concluída
 
-- [ ] **TASK-002 — Ajustar projeto Vite inicial**
+- [x] **TASK-002 — Ajustar projeto Vite inicial**
   - **Objetivo:** partindo do scaffold existente (commit `1e3f0b5`), mover `App` para `src/app/`, remover boilerplate do template (assets, CSS e conteúdo de demonstração), definir `lang="pt-BR"` e título.
   - **Requisitos:** base para RF-01 a RF-16.
-  - **Arquivos:** `index.html`, `src/main.tsx`, `src/app/App.tsx`, remoção de `src/App.*`, `src/assets/{react,vite}.svg`, `src/assets/hero.png`, `public/icons.svg`.
+  - **Arquivos:** `index.html`, `src/main.tsx`, `src/app/App.tsx`, remoção de `src/App.*`, `src/assets/{react,vite}.svg`, `src/assets/hero.png`, `public/icons.svg`, `src/index.css`; README do template substituído. O `public/favicon.svg` do Vite permanece até a TASK-005.
   - **Critério de pronto:** `npm run dev` e `npm run build` sem erros; nenhum resíduo do template.
   - **Teste/validação:** servidor local e `npm run build`.
   - **Commit:** `chore: clean up vite scaffold and app structure`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-003 — Configurar Tailwind, lint e testes**
   - **Objetivo:** instalar Tailwind CSS v4 (`@tailwindcss/vite`), Vitest, Testing Library e jsdom; criar script `test`.
@@ -321,6 +321,7 @@
 | Data | Tarefa | Resultado/teste realizado | Commit |
 |---|---|---|---|
 | 17/11/2026 | TASK-001 | Revisão cruzada PRD × TECH × TASKS × enunciado: IDs RF-01–RF-16 e RN-01–RN-10 consistentes; rota alterada para `/success`; viewports 320–1440 px; justificativa Tailwind registrada; ordem de tarefas corrigida (cálculos antes do carrinho); `AGENTS.md` e `CLAUDE.md` criados. | `docs: define product and technical specifications` |
+| 17/11/2026 | TASK-002 | Boilerplate do Vite removido; `App` em `src/app/`; `lang="pt-BR"` e título. `npm run build` OK (15 módulos, 219,65 kB JS); `npm run lint` sem erros; `vite` servindo `/` com HTTP 200, `lang="pt-BR"` e `<title>Coffee Delivery</title>`. | `chore: clean up vite scaffold and app structure` |
 
 ## Definition of Done (global)
 
