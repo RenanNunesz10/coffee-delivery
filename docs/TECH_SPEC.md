@@ -1,6 +1,6 @@
 # Coffee Delivery — Technical Specification
 
-**Versão:** 1.1.0
+**Versão:** 1.2.0
 **Status:** Base técnica para implementação
 **Última atualização:** 17/11/2026
 **Documentos relacionados:** [`PRD_SPEC.md`](./PRD_SPEC.md) · [`TASKS_SPEC.md`](./TASKS_SPEC.md) · [`AGENTS.md`](../AGENTS.md)
@@ -11,6 +11,7 @@
 |---|---|---|
 | 1.0.0 | 17/11/2026 | Versão inicial. |
 | 1.1.0 | 17/11/2026 | Rota `/success`; justificativa Tailwind × styled-components; nomes de componentes do enunciado; tipo `CoffeeTag[]`; validação de storage com Zod; script anti-flash de tema; timeout ViaCEP; configuração de testes e deploy. |
+| 1.2.0 | 17/11/2026 | Fidelidade ao Figma: `DELIVERY_FEE_CENTS = 350`, Phosphor Icons, tokens com nomes do Style Guide, ilustrações geradas com IA. |
 
 ## 1. Stack e justificativas
 
@@ -24,7 +25,7 @@
 | Context API + `useReducer` | Estado global | Carrinho com transições previsíveis e testáveis (RF-03 a RF-06). |
 | React Hook Form | Formulário | Controle eficiente de campos e erros do checkout. |
 | Zod + `@hookform/resolvers` | Validação | Um schema reutilizado no formulário, na revalidação da confirmação e na leitura do `localStorage` (RF-08, RF-09, RF-11, RN-10). |
-| Lucide React | Ícones | Ícones SVG consistentes, tree-shakeable e com suporte a `aria-hidden`. |
+| Phosphor Icons (`@phosphor-icons/react`) | Ícones | Biblioteca indicada no Style Guide do Figma; variantes `regular`/`fill`, tree-shakeable, `aria-hidden` por padrão quando decorativos. |
 | Vitest + Testing Library + jsdom | Testes | Integração nativa com Vite; testes de lógica e de componentes. |
 | ESLint (typescript-eslint, react-hooks) | Qualidade | Já configurado pelo template Vite. |
 
@@ -234,7 +235,7 @@ export interface Order {
 
 ### 4.1 Constantes (`src/domain/constants.ts`)
 ```ts
-export const DELIVERY_FEE_CENTS = 500;
+export const DELIVERY_FEE_CENTS = 350; // R$ 3,50, conforme Figma
 export const DELIVERY_ESTIMATE = '20 min – 30 min';
 export const BRAZILIAN_STATES = ['AC', 'AL', /* ... */ 'TO'] as const;
 export const STORAGE_KEYS = {
@@ -367,22 +368,22 @@ export function findInvalidItems(items: CartItem[], coffees: Coffee[]): string[]
 ## 10. Tema, tokens, breakpoints e acessibilidade
 
 ### 10.1 Tokens (`styles/tokens.css`)
-Valores base vêm do Style Guide do Figma (amarelo/roxo) ou do `BRAND_GUIDE.md` após a personalização.
+Os tokens usam **os mesmos nomes do Style Guide do Figma** (ver [`docs/figma/README.md`](./figma/README.md)), facilitando a conferência design ↔ código. Os valores light são os do Figma; os valores dark são definidos na TASK-006, mantendo os mesmos nomes.
 
-| Token | Uso |
-|---|---|
-| `--color-background` | Fundo da página |
-| `--color-surface` / `--color-surface-alt` | Cards, inputs, resumo |
-| `--color-text` / `--color-title` / `--color-muted` | Textos |
-| `--color-border` | Bordas e divisores |
-| `--color-primary` / `--color-primary-strong` | Ações principais (amarelo) |
-| `--color-secondary` / `--color-secondary-strong` | Destaques/seleção (roxo) |
-| `--color-primary-soft` / `--color-secondary-soft` | Fundos de tag/badge |
-| `--color-focus` | Anel de foco |
-| `--color-danger` / `--color-success` | Feedback |
+| Token | Light (Figma) | Uso |
+|---|---|---|
+| `--color-yellow-dark` / `--color-yellow` / `--color-yellow-light` | `#C47F17` / `#DBAC2C` / `#F1E9C9` | Ação primária, hover, carrinho, tags |
+| `--color-purple-dark` / `--color-purple` / `--color-purple-light` | `#4B2995` / `#8047F8` / `#EBE5F9` | Botão de adicionar, quantidade, pagamento selecionado, localização |
+| `--color-base-title` / `--color-base-subtitle` / `--color-base-text` / `--color-base-label` | `#272221` / `#403937` / `#574F4D` / `#8D8686` | Textos |
+| `--color-base-hover` / `--color-base-button` / `--color-base-input` / `--color-base-card` | `#D7D5D5` / `#E6E5E5` / `#EDEDED` / `#F3F2F2` | Superfícies e estados |
+| `--color-background` / `--color-white` | `#FAFAFA` / `#FFFFFF` | Fundo e texto sobre botões |
+| `--color-focus` | `#8047F8` | Anel de foco (não existe no Figma) |
+| `--color-danger` | a definir (AA nos dois temas) | Mensagens de erro (não existe no Figma) |
 
 - Light em `:root, [data-theme='light']`; dark em `[data-theme='dark']`.
-- Tailwind consome via `@theme` (ex.: `bg-surface`, `text-title`).
+- Tailwind consome via `@theme` (ex.: `bg-base-card`, `text-base-title`, `bg-yellow`).
+- Raios: `--radius-sm: 6px`; cards com raio assimétrico `6px 36px` (catálogo, sucesso) e `6px 44px` (carrinho).
+- Escala tipográfica conforme Figma (Title XL–XS, Text L–XS, Tag, Button G/M).
 - Fontes: `--font-title` (Baloo 2) e `--font-body` (Roboto), carregadas do Google Fonts com `display=swap`.
 
 ### 10.2 Breakpoints (padrão Tailwind)

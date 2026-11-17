@@ -1,6 +1,6 @@
 # Coffee Delivery — Product Requirements Document (PRD)
 
-**Versão:** 1.1.0
+**Versão:** 1.2.0
 **Status:** Aprovado para início do desenvolvimento
 **Última atualização:** 17/11/2026
 **Documentos relacionados:** [`TECH_SPEC.md`](./TECH_SPEC.md) · [`TASKS_SPEC.md`](./TASKS_SPEC.md) · [`AGENTS.md`](../AGENTS.md)
@@ -11,6 +11,7 @@
 |---|---|---|
 | 1.0.0 | 17/11/2026 | Versão inicial. |
 | 1.1.0 | 17/11/2026 | Alinhamento ao enunciado do projeto final: rota `/success`, viewports 320–1440 px, WCAG 2.2 AA, referências do Figma, Branding com IA, registro de uso de IA e entregáveis. |
+| 1.2.0 | 17/11/2026 | Fidelidade ao Figma: frete R$ 3,50; preço da linha do carrinho; ilustrações (hero e sucesso) geradas com IA. |
 
 ## 1. Visão geral
 
@@ -153,7 +154,7 @@ IDs estáveis, referenciados na TECH_SPEC e na TASKS_SPEC.
 ### RN-03 — Cálculo e frete
 - `subtotalCents = Σ(priceCents × quantity)`.
 - `totalCents = subtotalCents + deliveryFeeCents`.
-- **Taxa de entrega fictícia fixa: R$ 5,00 (500 centavos) por pedido com ao menos um item.**
+- **Taxa de entrega fictícia fixa: R$ 3,50 (350 centavos) por pedido com ao menos um item**, conforme o Figma.
 - Carrinho vazio: subtotal, frete e total iguais a zero.
 - A taxa existe em uma única constante; não é repetida como literal.
 
@@ -204,13 +205,15 @@ IDs estáveis, referenciados na TECH_SPEC e na TASKS_SPEC.
 - A marca comunica café, praticidade, acolhimento e entrega.
 - Paleta e tipografia partem do Style Guide do Figma (amarelo/roxo; Baloo 2 e Roboto) e podem ser personalizadas, mantendo coerência nos dois temas.
 - Símbolo simples e legível em tamanhos pequenos, acompanhado de logotipo tipográfico.
-- Arquivos em SVG (preferencial) e PNG quando necessário.
+- Arquivos em SVG (preferencial) e PNG/WebP quando necessário.
+- Ilustrações sem asset reutilizável no Figma (imagem do hero sem a logo original e entregador da tela de sucesso) são geradas com IA e seguem a paleta da marca.
 
 ### 7.2 Branding com IA (obrigatório)
 1. Gerar ao menos uma proposta de logo original com ferramenta de IA.
 2. Definir conceito, paleta, tipografia e variações para fundo claro e escuro.
 3. Registrar em `docs/BRAND_GUIDE.md`, seção **Branding com IA**: ferramenta utilizada, prompt(s), resultado(s), curadoria/ajustes manuais, motivos da escolha e verificação dos termos de uso do material gerado.
-4. Verificar legibilidade em 16–48 px e contraste nos dois temas.
+4. Registrar também as ilustrações geradas com IA (hero e sucesso) com o mesmo nível de detalhe.
+5. Verificar legibilidade em 16–48 px e contraste nos dois temas.
 
 ### 7.3 Aplicação da logo
 - Header: versão adequada ao tema ativo.
@@ -298,7 +301,10 @@ IDs estáveis, referenciados na TECH_SPEC e na TASKS_SPEC.
 | Tipo | SPA demonstrativa de e-commerce |
 | Idioma e moeda | pt-BR; BRL |
 | Catálogo | Arquivo local tipado, conteúdo conforme Figma |
-| Frete | Fixo fictício de R$ 5,00 por pedido não vazio |
+| Frete | Fixo fictício de R$ 3,50 por pedido não vazio (valor do Figma) |
+| Preço da linha do carrinho | Exibe `preço unitário × quantidade` |
+| Ícones | Phosphor Icons (conforme Style Guide) |
+| Ilustrações | Hero e ilustração da tela de sucesso gerados com IA; fotos dos cafés extraídas do Figma |
 | Previsão de entrega | Texto fixo informativo "20 min – 30 min" (conforme Figma) |
 | Pagamento | Crédito, débito ou dinheiro; sem transação |
 | CEP | ViaCEP |

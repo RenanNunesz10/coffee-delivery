@@ -111,21 +111,21 @@ As imagens foram extraídas do PDF exportado do Figma, associadas aos cafés pel
 ### 6.3 Outros assets
 | Asset | Situação |
 |---|---|
-| `src/assets/hero/hero-coffee.webp` | Extraído (952 px de largura). O copo exibe a **logo original** do desafio. |
+| `src/assets/hero/hero-coffee.webp` | Extraído (952 px) apenas como referência: o copo exibe a logo original do desafio. Será substituído por versão gerada com IA (TASK-005). |
 | `src/assets/hero/hero-background.webp` | Fundo desfocado do hero, extraído (1440 px). Pode ser substituído por gradiente CSS. |
-| Ilustração do entregador (sucesso) | **Vetorial, não extraída.** Precisa de export SVG do Figma ou de uma ilustração própria. |
+| Ilustração do entregador (sucesso) | Vetorial, não extraída. Será gerada com IA (TASK-005). |
 | Logo original | Vetorial; não será usada (a marca própria será criada com IA, RF-16). |
 
 ## 7. Lacunas e divergências em relação aos SPECs
 
 | # | Ponto | Figma | SPEC atual | Encaminhamento |
 |---|---|---|---|---|
-| D1 | Taxa de entrega | R$ 3,50 | R$ 5,00 (RN-03) | **Decisão do usuário pendente.** |
-| D2 | Biblioteca de ícones | Phosphor Icons | Lucide React | Recomendado trocar para `@phosphor-icons/react`. |
+| D1 | Taxa de entrega | R$ 3,50 | R$ 5,00 (RN-03) | **Resolvido:** segue o Figma, R$ 3,50 (PRD 1.2.0). |
+| D2 | Biblioteca de ícones | Phosphor Icons | Lucide React | **Resolvido:** `@phosphor-icons/react` (TECH 1.2.0). |
 | D3 | Preço na linha do carrinho | Latte com quantidade 1 mostra R$ 19,80 (mock inconsistente) | — | A linha exibe `preço unitário × quantidade`. |
 | D4 | Mobile e tablet | Inexistente | Obrigatório (RF-15) | Layout próprio: grade de 1/2/3/4 colunas; checkout em coluna única abaixo de `lg`. |
 | D5 | Dark mode | Inexistente | Obrigatório (RF-14) | Paleta escura derivada dos tokens base, a definir na TASK-006. |
 | D6 | Localização no Header | "Porto Alegre, RS" fixo | Cidade/UF do último pedido | Mantida a decisão do PRD. |
-| D7 | Logo no copo do hero | Logo original do desafio | Marca própria (RF-16) | Avaliar na TASK-005: manter como imagem ilustrativa ou gerar novo hero com IA. |
-| D8 | Ilustração do sucesso | Vetorial | — | Exportar SVG do Figma ou criar ilustração própria. |
+| D7 | Logo no copo do hero | Logo original do desafio | Marca própria (RF-16) | **Resolvido:** novo hero gerado com IA na TASK-005. |
+| D8 | Ilustração do sucesso | Vetorial | — | **Resolvido:** ilustração gerada com IA na TASK-005. |
 | D9 | Orientação de 2 fotos | Café com Leite e Havaiano aparecem espelhados na Home | — | Detalhe visual sem impacto; usar as imagens como exportadas. |

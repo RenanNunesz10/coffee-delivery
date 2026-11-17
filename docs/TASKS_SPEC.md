@@ -1,6 +1,6 @@
 # Coffee Delivery — Plano de Implementação (TASKS)
 
-**Versão:** 1.1.0
+**Versão:** 1.2.0
 **Última atualização:** 17/11/2026
 **Documentos relacionados:** [`PRD_SPEC.md`](./PRD_SPEC.md) · [`TECH_SPEC.md`](./TECH_SPEC.md) · [`AGENTS.md`](../AGENTS.md)
 
@@ -10,6 +10,7 @@
 |---|---|---|
 | 1.0.0 | 17/11/2026 | Versão inicial (30 tarefas). |
 | 1.1.0 | 17/11/2026 | Reordenação (cálculos antes dos componentes do carrinho), tarefas de `AI_USAGE.md`, Branding com IA, screenshots; rota `/success`; nomes de componentes do enunciado. |
+| 1.2.0 | 17/11/2026 | Fidelidade ao Figma: frete 350 centavos; Phosphor Icons; TASK-005 inclui ilustrações geradas com IA; preço da linha do carrinho. |
 
 ## Como trabalhar com este checklist
 
@@ -63,10 +64,10 @@
 ### Fase 1 — Identidade e fundação visual
 
 - [ ] **TASK-005 — Criar identidade visual e logo com IA**
-  - **Objetivo:** gerar logo original com ferramenta de IA, curar o resultado e exportar versões.
+  - **Objetivo:** gerar com IA a logo original e as ilustrações sem asset reutilizável no Figma (imagem do hero sem a logo original e entregador da tela de sucesso); curar e exportar.
   - **Requisitos:** RF-16, RF-14.
-  - **Arquivos:** `public/brand/*`, `public/favicon.svg`, `src/assets/brand/*`, `docs/BRAND_GUIDE.md`.
-  - **Critério de pronto:** logo (light/dark) e símbolo exportados; favicon legível em 16–48 px; `BRAND_GUIDE.md` com conceito, paleta, tipografia, variações e seção **Branding com IA** (ferramenta, prompt, resultado, motivos, termos de uso).
+  - **Arquivos:** `public/brand/*`, `public/favicon.svg`, `src/assets/brand/*`, `src/assets/hero/*`, `src/assets/illustrations/*`, `docs/BRAND_GUIDE.md`.
+  - **Critério de pronto:** logo (light/dark) e símbolo exportados; favicon legível em 16–48 px; hero e ilustração de sucesso coerentes com a paleta; `BRAND_GUIDE.md` com conceito, paleta, tipografia, variações e seção **Branding com IA** (ferramenta, prompt, resultado, motivos, termos de uso) cobrindo logo e ilustrações.
   - **Teste/validação:** legibilidade em tamanhos pequenos e contraste nos dois temas.
   - **Commit:** `feat: add coffee delivery brand identity`
   - **Status:** Pendente
@@ -113,7 +114,7 @@
   - **Objetivo:** `pricing.ts` (subtotal, frete, total, itens inválidos) e `formatCurrency`.
   - **Requisitos:** RF-10; RN-03, RN-04, RN-10.
   - **Arquivos:** `src/domain/pricing.ts`, `src/lib/formatCurrency.ts`, testes.
-  - **Critério de pronto:** frete 0 sem itens e 500 com itens; sem float acumulado; item inexistente detectado.
+  - **Critério de pronto:** frete 0 sem itens e 350 com itens; sem float acumulado; item inexistente detectado.
   - **Teste/validação:** testes unitários de carrinho vazio, múltiplos itens e item inválido.
   - **Commit:** `feat: centralize monetary calculations and delivery fee`
   - **Status:** Pendente
@@ -187,7 +188,7 @@
   - **Objetivo:** `CartItem`, `CartSummary` e `EmptyState`.
   - **Requisitos:** RF-05, RF-10, RF-15; RN-01, RN-03, RN-04, RN-09.
   - **Arquivos:** `src/features/cart/components/*`, `src/components/EmptyState/*`.
-  - **Critério de pronto:** alterações atualizam valores imediatamente; moeda em BRL; estado vazio com retorno à Home.
+  - **Critério de pronto:** alterações atualizam valores imediatamente; cada linha exibe `preço unitário × quantidade`; moeda em BRL; estado vazio com retorno à Home.
   - **Teste/validação:** incrementar, decrementar até remover, remover e conferir valores.
   - **Commit:** `feat: add cart item management and order summary`
   - **Status:** Pendente

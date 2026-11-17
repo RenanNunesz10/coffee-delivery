@@ -76,7 +76,7 @@ Respeite o lockfile. Não troque bibliotecas nem adicione dependências sem just
 - Quantidades inteiras ≥ 1; decrementar de 1 para 0 remove o item.
 - Produto repetido acumula na mesma linha.
 - O contador do Header soma unidades.
-- Valores em centavos inteiros; frete `DELIVERY_FEE_CENTS = 500` para pedido não vazio, 0 para vazio.
+- Valores em centavos inteiros; frete `DELIVERY_FEE_CENTS = 350` (R$ 3,50, conforme Figma) para pedido não vazio, 0 para vazio.
 - Formatação BRL centralizada em `formatCurrency`.
 - Item inexistente no catálogo bloqueia a confirmação.
 
