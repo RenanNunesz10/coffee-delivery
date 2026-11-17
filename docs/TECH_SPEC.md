@@ -1,139 +1,179 @@
 # Coffee Delivery — Technical Specification
 
-**Versão:** 1.0.0  
-**Status:** Base técnica para implementação  
-**Última atualização:** 17/11/2026  
-**Documento relacionado:** [`PRD_SPEC.md`](./PRD_SPEC.md)
+**Versão:** 1.1.0
+**Status:** Base técnica para implementação
+**Última atualização:** 17/11/2026
+**Documentos relacionados:** [`PRD_SPEC.md`](./PRD_SPEC.md) · [`TASKS_SPEC.md`](./TASKS_SPEC.md) · [`AGENTS.md`](../AGENTS.md)
+
+## Histórico de versões
+
+| Versão | Data | Alteração |
+|---|---|---|
+| 1.0.0 | 17/11/2026 | Versão inicial. |
+| 1.1.0 | 17/11/2026 | Rota `/success`; justificativa Tailwind × styled-components; nomes de componentes do enunciado; tipo `CoffeeTag[]`; validação de storage com Zod; script anti-flash de tema; timeout ViaCEP; configuração de testes e deploy. |
 
 ## 1. Stack e justificativas
 
 | Tecnologia | Uso | Justificativa |
 |---|---|---|
-| React | Interface | Componentização e estado declarativo. |
-| TypeScript | Tipagem | Segurança de tipos e contratos explícitos. |
-| Vite | Build/dev server | Inicialização rápida e configuração simples. |
-| Tailwind CSS | Estilização | Tokens/utilitários e implementação responsiva. |
-| React Router DOM | Rotas | Navegação SPA entre Home, Checkout e Confirmação (RF-07). |
-| Context API + `useReducer` | Estado global | Centralizar carrinho e operações previsíveis (RF-03 a RF-06). |
-| React Hook Form | Formulários | Controle eficiente do formulário de checkout. |
-| Zod | Validação | Schemas reutilizáveis e integração com formulários (RF-08, RF-09, RF-11). |
-| `@hookform/resolvers` | Integração | Resolver Zod para React Hook Form. |
-| Lucide React | Ícones | Ícones consistentes e acessíveis. |
-| Vitest + Testing Library | Testes | Testes unitários e de componentes. |
-| ESLint | Qualidade | Identificação de problemas estáticos. |
+| React 19 | Interface | Componentização e estado declarativo. Já instalado no projeto. |
+| TypeScript (`strict`) | Tipagem | Contratos explícitos para domínio, props e ações. |
+| Vite | Build/dev server | Inicialização rápida, HMR e build estático para deploy. |
+| Tailwind CSS v4 (`@tailwindcss/vite`) | Estilização | Ver 1.1. |
+| React Router | Rotas | Navegação SPA entre `/`, `/checkout` e `/success` (RF-07). |
+| Context API + `useReducer` | Estado global | Carrinho com transições previsíveis e testáveis (RF-03 a RF-06). |
+| React Hook Form | Formulário | Controle eficiente de campos e erros do checkout. |
+| Zod + `@hookform/resolvers` | Validação | Um schema reutilizado no formulário, na revalidação da confirmação e na leitura do `localStorage` (RF-08, RF-09, RF-11, RN-10). |
+| Lucide React | Ícones | Ícones SVG consistentes, tree-shakeable e com suporte a `aria-hidden`. |
+| Vitest + Testing Library + jsdom | Testes | Integração nativa com Vite; testes de lógica e de componentes. |
+| ESLint (typescript-eslint, react-hooks) | Qualidade | Já configurado pelo template Vite. |
 
-As versões devem ser compatíveis entre si e registradas no lockfile. Evitar adicionar bibliotecas sem necessidade demonstrável.
+As versões ficam registradas no `package-lock.json`. Nenhuma biblioteca é adicionada sem necessidade demonstrável e registro nesta tabela.
+
+### 1.1 Decisão: Tailwind CSS em vez de styled-components
+O desafio de origem usa styled-components; o enunciado permite Tailwind desde que o motivo seja registrado. Motivos:
+- **Tema por tokens CSS:** os temas são definidos como variáveis CSS em `data-theme`, consumidas pelo Tailwind via `@theme`. A troca de tema não exige re-render de componentes nem `ThemeProvider` de estilos — só um atributo no `<html>`.
+- **Mobile-first nativo:** prefixos `sm:`/`md:`/`lg:`/`xl:` tornam a responsividade (RF-15) explícita no próprio markup.
+- **Sem runtime de CSS-in-JS:** CSS gerado em build, menor custo em tempo de execução e menor bundle.
+- **Integração com Vite 8 / React 19:** plugin oficial mantido, sem configuração de Babel/SWC adicional.
+- **Consistência:** cores arbitrárias (`bg-[#...]`) são proibidas; somente tokens semânticos.
+
+Contrapartida aceita: classes longas no JSX; mitigada com componentes pequenos e helpers de variantes quando necessário.
 
 ## 2. Arquitetura da SPA
 
-Arquitetura em camadas leves, orientada a funcionalidades:
+Camadas leves, organizadas por funcionalidade:
 
-1. **Presentation:** páginas e componentes React; não contém regras de negócio complexas.
-2. **Application/state:** Context API, reducer e hooks que orquestram ações.
-3. **Domain:** tipos, constantes e funções puras de carrinho, preço, frete e pedido.
-4. **Infrastructure:** `localStorage`, cliente ViaCEP e adaptadores externos.
+1. **Presentation:** páginas e componentes React, sem regras de negócio complexas.
+2. **Application/state:** Contexts, reducer e hooks que orquestram ações.
+3. **Domain:** tipos, constantes e funções puras (carrinho, preço, frete, pedido).
+4. **Infrastructure:** adaptadores de `localStorage` e cliente ViaCEP.
 
 ### 2.1 Fluxo de dados
-- `products.ts` fornece catálogo tipado.
-- Componentes disparam ações do contexto.
+- `coffees.ts` fornece o catálogo tipado.
+- Componentes disparam ações via `useCart()`.
 - `cartReducer` produz novo estado sem mutação.
-- Provider persiste o carrinho após alterações.
-- Checkout valida dados com Zod e consulta ViaCEP por serviço isolado.
-- Funções puras calculam valores em centavos.
-- A confirmação cria e persiste `Order` como snapshot antes de limpar o carrinho.
-- A rota de confirmação lê o snapshot, nunca reconstrói o pedido a partir do carrinho.
+- `CartProvider` persiste o carrinho após cada alteração.
+- O Checkout valida com Zod e consulta a ViaCEP por serviço isolado.
+- Funções puras de `pricing.ts` calculam valores em centavos.
+- A confirmação cria e persiste o `Order` (snapshot) **antes** de limpar o carrinho.
+- `/success` lê o snapshot; nunca reconstrói o pedido a partir do carrinho.
 
 ### 2.2 Diagrama de alto nível
 
 ```text
-App
-├── Router
-│   ├── HomePage ── ProductCard ── CartContext
-│   ├── CheckoutPage ── AddressForm ── ViaCEP service
-│   │                 └── OrderSummary
-│   └── ConfirmationPage ── Order snapshot
-├── CartProvider
-│   ├── cartReducer
-│   └── localStorage adapter
-└── ThemeProvider
-    └── theme localStorage adapter
+main.tsx
+└── App
+    └── AppProviders (ThemeProvider → CartProvider)
+        └── RouterProvider
+            └── PageLayout (Header + <Outlet/>)
+                ├── /          HomePage ── Hero, CoffeeCatalog ── CoffeeCard ── QuantityInput
+                ├── /checkout  CheckoutPage ── DeliveryAddressForm ── viacep service
+                │                           ├── PaymentMethodSelector
+                │                           └── CartItem[] + CartSummary
+                └── /success   SuccessPage ── OrderSuccess ── orderStorage
 ```
 
 ## 3. Estrutura de diretórios
 
 ```text
 coffee-delivery/
+├── AGENTS.md                     # diretrizes do assistente de IA
+├── CLAUDE.md                     # importa AGENTS.md (convenção do Claude Code)
+├── README.md
+├── index.html                    # script anti-flash de tema, fontes, favicon
+├── vercel.json                   # rewrite SPA para deploy
 ├── public/
 │   ├── favicon.svg
-│   └── brand/
-│       ├── coffee-delivery-logo.svg
-│       └── coffee-delivery-symbol.svg
-├── src/
-│   ├── app/
-│   │   ├── App.tsx
-│   │   ├── router.tsx
-│   │   └── providers.tsx
-│   ├── assets/
-│   ├── components/
-│   │   ├── Header/
-│   │   ├── ThemeToggle/
-│   │   ├── QuantityControl/
-│   │   ├── ProductCard/
-│   │   ├── CartItem/
-│   │   ├── OrderSummary/
-│   │   └── EmptyState/
-│   ├── features/
-│   │   ├── catalog/
-│   │   │   ├── data/products.ts
-│   │   │   ├── components/
-│   │   │   └── pages/HomePage.tsx
-│   │   ├── cart/
-│   │   │   ├── CartContext.tsx
-│   │   │   ├── cartReducer.ts
-│   │   │   ├── cartStorage.ts
-│   │   │   └── cartTypes.ts
-│   │   ├── checkout/
-│   │   │   ├── components/AddressForm.tsx
-│   │   │   ├── schemas/checkoutSchema.ts
-│   │   │   ├── services/viacep.ts
-│   │   │   └── pages/CheckoutPage.tsx
-│   │   └── orders/
-│   │       ├── orderStorage.ts
-│   │       ├── orderService.ts
-│   │       └── pages/ConfirmationPage.tsx
-│   ├── hooks/
-│   ├── lib/
-│   │   ├── formatCurrency.ts
-│   │   └── storage.ts
-│   ├── domain/
-│   │   ├── types.ts
-│   │   ├── pricing.ts
-│   │   └── constants.ts
-│   ├── styles/
-│   │   ├── index.css
-│   │   └── tokens.css
-│   └── main.tsx
+│   └── brand/                    # logo e símbolo exportados
 ├── docs/
 │   ├── PRD_SPEC.md
 │   ├── TECH_SPEC.md
 │   ├── TASKS_SPEC.md
-│   └── BRAND_GUIDE.md
-├── tests/
-├── .env.example
-├── index.html
-├── package.json
-├── tsconfig.json
-└── README.md
+│   ├── BRAND_GUIDE.md
+│   ├── AI_USAGE.md
+│   ├── figma/                    # exports de referência dos frames
+│   └── screenshots/
+└── src/
+    ├── main.tsx
+    ├── app/
+    │   ├── App.tsx
+    │   ├── router.tsx
+    │   └── providers.tsx
+    ├── assets/
+    │   ├── brand/                # logo light/dark usada no Header
+    │   └── coffees/              # imagens dos cafés
+    ├── components/               # UI reutilizável e sem regra de domínio
+    │   ├── PageLayout/
+    │   ├── Header/               # inclui CartBadge
+    │   ├── ThemeToggle/
+    │   ├── QuantityInput/
+    │   └── EmptyState/
+    ├── features/
+    │   ├── catalog/
+    │   │   ├── data/coffees.ts
+    │   │   ├── components/       # CoffeeCard, CoffeeCatalog, Hero
+    │   │   └── pages/HomePage.tsx
+    │   ├── cart/
+    │   │   ├── CartContext.tsx
+    │   │   ├── cartReducer.ts
+    │   │   ├── cartStorage.ts
+    │   │   ├── cartTypes.ts
+    │   │   ├── useCart.ts
+    │   │   └── components/       # CartItem, CartSummary
+    │   ├── checkout/
+    │   │   ├── components/       # DeliveryAddressForm, PaymentMethodSelector
+    │   │   ├── hooks/usePostalCodeLookup.ts
+    │   │   ├── schemas/checkoutSchema.ts
+    │   │   ├── services/viacep.ts
+    │   │   └── pages/CheckoutPage.tsx
+    │   ├── orders/
+    │   │   ├── orderService.ts
+    │   │   ├── orderStorage.ts
+    │   │   ├── components/OrderSuccess.tsx
+    │   │   └── pages/SuccessPage.tsx
+    │   └── theme/
+    │       ├── ThemeContext.tsx
+    │       ├── themeStorage.ts
+    │       └── useTheme.ts
+    ├── domain/
+    │   ├── types.ts
+    │   ├── constants.ts
+    │   └── pricing.ts
+    ├── lib/
+    │   ├── formatCurrency.ts
+    │   ├── postalCode.ts         # normalização e máscara
+    │   └── storage.ts            # leitura/escrita segura de JSON
+    ├── styles/
+    │   ├── tokens.css
+    │   └── index.css
+    └── tests/
+        └── setup.ts              # jest-dom, limpeza de localStorage
 ```
 
-A estrutura pode ser ajustada durante a implementação, desde que as responsabilidades permaneçam claras e a alteração seja registrada.
+Testes unitários e de componentes ficam ao lado do módulo (`*.test.ts(x)`). Alterações nesta estrutura devem ser registradas aqui.
+
+### 3.1 Componentes
+
+| Componente | Responsabilidade | RF |
+|---|---|---|
+| `PageLayout` | Header + conteúdo da rota (`<Outlet/>`), container e largura máxima. | RF-07, RF-15 |
+| `Header` | Logo, localização (cidade/UF do último pedido), `ThemeToggle`, link do carrinho com `CartBadge`. | RF-04, RF-14, RF-16 |
+| `ThemeToggle` | Botão acessível de alternância (`aria-pressed`/rótulo dinâmico). | RF-14 |
+| `QuantityInput` | Controle −/+ controlado, `min` configurável, rótulos acessíveis. | RF-02, RF-05 |
+| `CoffeeCard` | Imagem, tags, nome, descrição, preço, `QuantityInput` e botão adicionar. | RF-01, RF-02, RF-03 |
+| `CoffeeCatalog` | Grid responsivo de `CoffeeCard`. | RF-01, RF-15 |
+| `CartItem` | Linha do carrinho com quantidade e "Remover". | RF-05 |
+| `CartSummary` | Subtotal, entrega, total e botão "Confirmar pedido". | RF-10, RF-11 |
+| `DeliveryAddressForm` | Campos de endereço, máscara de CEP, status da consulta. | RF-08 |
+| `PaymentMethodSelector` | Grupo de rádio estilizado (crédito/débito/dinheiro). | RF-09 |
+| `OrderSuccess` | Endereço, previsão e pagamento do snapshot. | RF-12 |
+| `EmptyState` | Mensagem + ação de retorno à Home. | RN-09 |
 
 ## 4. Tipos e interfaces de domínio
 
-Os exemplos abaixo são contratos de referência; manter nomes e campos consistentes em todo o projeto.
-
 ```ts
-export type CoffeeCategory =
+export type CoffeeTag =
   | 'traditional'
   | 'special'
   | 'with-milk'
@@ -141,28 +181,27 @@ export type CoffeeCategory =
   | 'iced';
 
 export interface Coffee {
-  id: string;
+  id: string;           // slug estável, ex.: 'expresso-tradicional'
   name: string;
   description: string;
-  priceCents: number;
-  category: CoffeeCategory;
-  image: string;
-  tags: string[];
+  priceCents: number;   // inteiro
+  tags: CoffeeTag[];    // ao menos uma
+  image: string;        // URL importada de src/assets/coffees
 }
 
 export interface CartItem {
   coffeeId: Coffee['id'];
-  quantity: number;
+  quantity: number;     // inteiro >= 1
 }
 
 export interface DeliveryAddress {
-  postalCode: string; // oito dígitos, sem máscara no domínio
+  postalCode: string;   // oito dígitos, sem máscara
   street: string;
   number: string;
   complement?: string;
   district: string;
   city: string;
-  state: string; // UF
+  state: BrazilianState;
 }
 
 export type PaymentMethod = 'credit' | 'debit' | 'cash';
@@ -176,8 +215,8 @@ export interface OrderItem {
 }
 
 export interface Order {
-  id: string;
-  createdAt: string; // ISO 8601
+  id: string;           // crypto.randomUUID()
+  createdAt: string;    // ISO 8601
   items: OrderItem[];
   address: DeliveryAddress;
   paymentMethod: PaymentMethod;
@@ -187,16 +226,27 @@ export interface Order {
 }
 ```
 
-Regras:
-- Preço sempre em centavos inteiros.
-- `CartItem` guarda a referência do café e quantidade; detalhes são resolvidos pelo catálogo.
-- `OrderItem` copia os dados necessários para que mudanças futuras no catálogo não alterem um pedido já confirmado.
-- `complement` pode ser omitido ou string vazia.
-- Não armazenar dados de cartão.
+- `BrazilianState` é a união das 27 siglas, derivada da constante `BRAZILIAN_STATES` (`as const`).
+- Rótulos de exibição ficam em constantes (`COFFEE_TAG_LABELS`, `PAYMENT_METHOD_LABELS`), não no tipo.
+- `CartItem` guarda só referência e quantidade; detalhes vêm do catálogo.
+- `OrderItem` copia os dados para que mudanças futuras no catálogo não alterem um pedido confirmado.
+- Nenhum dado de cartão é modelado.
 
-## 5. Context API e useReducer
+### 4.1 Constantes (`src/domain/constants.ts`)
+```ts
+export const DELIVERY_FEE_CENTS = 500;
+export const DELIVERY_ESTIMATE = '20 min – 30 min';
+export const BRAZILIAN_STATES = ['AC', 'AL', /* ... */ 'TO'] as const;
+export const STORAGE_KEYS = {
+  cart: 'coffee-delivery:cart:v1',
+  theme: 'coffee-delivery:theme:v1',
+  lastOrder: 'coffee-delivery:last-order:v1',
+} as const;
+```
 
-### 5.1 Estado
+## 5. Context API e `useReducer`
+
+### 5.1 Estado e ações
 ```ts
 export interface CartState {
   items: CartItem[];
@@ -210,43 +260,38 @@ export type CartAction =
   | { type: 'CLEAR_CART' };
 ```
 
-### 5.2 Comportamento das ações
-- `ADD_ITEM`: rejeitar quantidade não inteira ou menor que 1; se existir, somar à linha atual; caso contrário, criar linha.
-- `INCREMENT_ITEM`: somar uma unidade à linha encontrada.
-- `DECREMENT_ITEM`: subtrair uma unidade; se a quantidade resultante for zero, remover a linha (RN-01).
-- `REMOVE_ITEM`: remover somente o café informado.
-- `CLEAR_CART`: retornar `{ items: [] }`.
+### 5.2 Comportamento
+| Ação | Regra | Métodos |
+|---|---|---|
+| `ADD_ITEM` | Ignora quantidade não inteira ou < 1 e `coffeeId` fora do catálogo; soma à linha existente ou cria nova. | `find`, `map`, spread |
+| `INCREMENT_ITEM` | +1 na linha encontrada. | `map` |
+| `DECREMENT_ITEM` | −1; se resultar 0, remove a linha (RN-01). | `map` + `filter` |
+| `REMOVE_ITEM` | Remove apenas o café informado. | `filter` |
+| `CLEAR_CART` | Retorna `{ items: [] }`. | — |
 
-O reducer deve ser puro, imutável e coberto por testes. Validar existência do `coffeeId` no catálogo antes de permitir operação e novamente antes de confirmar (RN-10).
+Ação inválida retorna o **mesmo** estado (referência), evitando re-render. O reducer é puro e não acessa `localStorage`.
 
-### 5.3 Contexto
-Expor pelo contexto:
-- `items`
-- `totalUnits`
-- `subtotalCents`
-- `deliveryFeeCents`
-- `totalCents`
-- `addItem`, `incrementItem`, `decrementItem`, `removeItem`, `clearCart`
+### 5.3 Valor do contexto
+- Estado: `items`, `detailedItems` (item + dados do café), `invalidItemIds`.
+- Derivados (via `useMemo`): `totalUnits`, `subtotalCents`, `deliveryFeeCents`, `totalCents`.
+- Ações: `addItem`, `incrementItem`, `decrementItem`, `removeItem`, `clearCart`.
 
-Evitar colocar lógica de apresentação no reducer.
+`useCart()` lança erro descritivo se usado fora do `CartProvider`.
 
-## 6. Hooks, eventos, efeitos e persistência
+## 6. Hooks, efeitos e persistência
 
-Hooks sugeridos:
-- `useCart()`: acesso tipado ao contexto.
-- `useTheme()`: tema e alternância.
-- `useDebounce()` (opcional): evitar consultas repetidas durante digitação, caso a consulta seja disparada automaticamente.
-- `useCheckout()` (opcional): orquestração de consulta de CEP se isso não ficar claro na página.
+| Hook | Responsabilidade |
+|---|---|
+| `useCart()` | Acesso tipado ao contexto do carrinho. |
+| `useTheme()` | `theme`, `toggleTheme()`. |
+| `usePostalCodeLookup()` | Estado da consulta (`idle`/`loading`/`success`/`not-found`/`error`), cancelamento via `AbortController`. |
 
-Persistência:
-- Chave do carrinho: `coffee-delivery:cart:v1`.
-- Chave do tema: `coffee-delivery:theme:v1`.
-- Chave do último pedido: `coffee-delivery:last-order:v1`.
-- Ler com tratamento de exceção; validar e normalizar dados antes de hidratar.
-- Persistir carrinho e tema em efeitos após mudanças.
-- Não sobrescrever estado inicial antes de concluir a hidratação, para evitar apagar dados persistidos.
-- Se JSON estiver corrompido, iniciar com estado seguro e tratar a chave inválida sem derrubar a aplicação.
-- O snapshot de pedido deve ser gravado antes de limpar o carrinho.
+### 6.1 Persistência
+- `lib/storage.ts` expõe `readJson(key, schema)` e `writeJson(key, value)`, com `try/catch` (quota, modo privado, JSON inválido).
+- Os dados lidos são validados com schemas Zod; inválidos são descartados (chave removida) e o estado seguro é usado.
+- Carrinho: hidratação **síncrona** no inicializador do `useReducer` (`useReducer(reducer, undefined, loadCart)`), evitando que o primeiro efeito sobrescreva os dados salvos; um `useEffect` persiste a cada mudança. Itens com `coffeeId` fora do catálogo são descartados na hidratação.
+- Tema: `index.html` contém um script inline mínimo que aplica `data-theme` antes do primeiro paint (preferência salva → `prefers-color-scheme`), evitando flash; o `ThemeProvider` lê o mesmo valor e persiste alterações.
+- Último pedido: gravado por `orderStorage.save()` antes de `clearCart()`.
 
 ## 7. Rotas
 
@@ -254,178 +299,175 @@ Persistência:
 |---|---|---|
 | `/` | `HomePage` | Catálogo e inclusão no carrinho (RF-01 a RF-04). |
 | `/checkout` | `CheckoutPage` | Revisão do carrinho, endereço, pagamento e confirmação (RF-05, RF-08 a RF-11). |
-| `/confirmation` | `ConfirmationPage` | Exibição do snapshot do pedido (RF-12 e RF-13). |
+| `/success` | `SuccessPage` | Exibição do snapshot (RF-12, RF-13). |
+| `*` | `Navigate` | Redireciona para `/`. |
 
-- Usar `BrowserRouter`, `Routes`, `Route` e `Navigate` conforme necessário.
-- Navegação deve ocorrer sem reload (RF-07).
-- A rota `/confirmation` deve apresentar estado vazio se não houver snapshot válido (RN-09).
-- Após confirmar, navegar para `/confirmation`.
-- Não permitir confirmação por acesso direto sem validação dos dados.
+- `createBrowserRouter` + `RouterProvider`, com `PageLayout` como rota pai.
+- Após confirmar: `navigate('/success', { replace: true })`, evitando voltar a um checkout já confirmado.
+- `/success` sem snapshot válido exibe `EmptyState` (RN-09).
+- Deploy: `vercel.json` com rewrite de todas as rotas para `index.html`.
 
-## 8. Formulário, Zod e integração ViaCEP
+## 8. Formulário, Zod e ViaCEP
 
-### 8.1 Schema
-Criar schema Zod para:
-- `postalCode`: exatamente oito dígitos após normalização.
-- `street`: obrigatório.
-- `number`: obrigatório.
-- `complement`: opcional.
-- `district`: obrigatório.
-- `city`: obrigatório.
-- `state`: duas letras e pertencente à lista de UFs brasileiras.
-- `paymentMethod`: enum `credit | debit | cash`.
+### 8.1 Schema (`checkoutSchema.ts`)
+| Campo | Regra |
+|---|---|
+| `postalCode` | Normalizado para dígitos; exatamente 8. |
+| `street` | Obrigatório (trim). |
+| `number` | Obrigatório (trim), até 10 caracteres. |
+| `complement` | Opcional. |
+| `district` | Obrigatório. |
+| `city` | Obrigatório. |
+| `state` | Maiúsculas; pertence a `BRAZILIAN_STATES`. |
+| `paymentMethod` | `z.enum(['credit','debit','cash'])`; mensagem "Selecione uma forma de pagamento". |
 
-A validação do CEP no schema é sintática; existência do CEP é verificada pela API.
+O schema valida sintaxe; a existência do CEP é verificada pela API. O tipo do formulário é inferido com `z.infer`.
 
-### 8.2 Serviço ViaCEP
-Endpoint padrão:
+### 8.2 Serviço ViaCEP (`services/viacep.ts`)
 ```text
 GET https://viacep.com.br/ws/{CEP}/json/
 ```
 
-Contrato esperado:
 ```ts
-interface ViaCepResponse {
-  cep: string;
-  logradouro: string;
-  complemento: string;
-  bairro: string;
-  localidade: string;
-  uf: string;
-  erro?: boolean;
-}
+type PostalCodeLookupResult =
+  | { status: 'success'; address: Pick<DeliveryAddress, 'postalCode' | 'street' | 'district' | 'city' | 'state'> }
+  | { status: 'invalid' }      // não tem 8 dígitos (nenhuma requisição)
+  | { status: 'not-found' }    // { erro: true } ou HTTP 400
+  | { status: 'error'; reason: 'network' | 'timeout' | 'http' | 'invalid-response' };
+
+lookupPostalCode(cep: string, signal?: AbortSignal): Promise<PostalCodeLookupResult>
 ```
+- Normaliza para dígitos e exige 8 antes da chamada.
+- `fetch` com timeout de 8 s (`AbortSignal.timeout` combinado ao sinal externo).
+- Verifica `response.ok`; trata `erro: true`/`"true"` como não encontrado.
+- Valida o JSON com schema Zod; formato inesperado → `invalid-response`.
+- Mapeia `logradouro → street`, `bairro → district`, `localidade → city`, `uf → state`.
+- Cancelamento pelo chamador (`AbortError`) não é tratado como erro exibido.
 
-Implementar `lookupPostalCode(cep: string)` em módulo isolado:
-- Normalizar para dígitos.
-- Exigir oito dígitos antes da chamada.
-- Usar `fetch` e tratar `response.ok`.
-- Tratar `erro === true` como CEP não encontrado.
-- Tratar falha de rede, JSON inválido e timeout.
-- Mapear `logradouro` → `street`, `bairro` → `district`, `localidade` → `city`, `uf` → `state`.
-- Não sobrescrever número ou complemento.
-- Limpar ou atualizar campos derivados ao consultar um CEP diferente, evitando manter endereço antigo incorretamente.
-- Apresentar loading, sucesso e erro.
-- Permitir edição manual em caso de indisponibilidade.
-- Usar `AbortController` se houver risco de consultas concorrentes.
-
-A integração deve ser real durante a execução; mocks são permitidos somente nos testes.
+### 8.3 Comportamento no formulário
+- Consulta disparada quando o CEP atinge 8 dígitos (e no blur, se ainda não consultado); consulta anterior é abortada.
+- Sucesso: `setValue` em rua, bairro, cidade e UF (com `shouldValidate`), substituindo valores de CEP anterior; número/complemento intactos; foco movido para "Número".
+- Falha/não encontrado: mensagem em região `aria-live="polite"`; campos editáveis para correção manual; nunca indicar "validado".
+- Campos derivados permanecem editáveis (CEP genérico pode vir sem logradouro).
+- A integração é real em execução; mocks de `fetch` somente em testes.
 
 ## 9. Cálculo e formatação monetária
 
-Constantes centralizadas:
 ```ts
-export const DELIVERY_FEE_CENTS = 500;
-```
-
-Funções puras:
-```ts
-export function calculateSubtotal(
-  items: CartItem[],
-  coffees: Coffee[],
-): number;
-
+export function calculateSubtotal(items: CartItem[], coffees: Coffee[]): number;
 export function calculateDeliveryFee(items: CartItem[]): number;
-
-export function calculateTotal(
-  subtotalCents: number,
-  deliveryFeeCents: number,
-): number;
+export function calculateTotal(subtotalCents: number, deliveryFeeCents: number): number;
+export function findInvalidItems(items: CartItem[], coffees: Coffee[]): string[];
 ```
+- Subtotal: `reduce` de `priceCents * quantity` (inteiros).
+- Frete: `DELIVERY_FEE_CENTS` se houver item; senão 0.
+- Item sem correspondência no catálogo é reportado por `findInvalidItems` e bloqueia a confirmação (RN-10); não é ignorado silenciosamente.
+- `formatCurrency(cents)` usa um único `Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })` com `cents / 100` apenas na exibição.
 
-- Subtotal: soma de `priceCents * quantity`.
-- Frete: 500 centavos quando houver ao menos um item; caso contrário, zero.
-- Total: subtotal + frete.
-- Item sem correspondência no catálogo deve ser tratado como inválido, não ignorado silenciosamente.
-- Formatação centralizada com `Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })`.
+## 10. Tema, tokens, breakpoints e acessibilidade
 
-## 10. Estratégia de tema, tokens e acessibilidade
+### 10.1 Tokens (`styles/tokens.css`)
+Valores base vêm do Style Guide do Figma (amarelo/roxo) ou do `BRAND_GUIDE.md` após a personalização.
 
-### 10.1 Tema
-- Definir `data-theme="light"` ou `data-theme="dark"` no elemento raiz.
-- Tokens semânticos em CSS: `--color-background`, `--color-surface`, `--color-text`, `--color-muted`, `--color-primary`, `--color-border`, `--color-danger`, `--color-success`.
-- Tailwind deve consumir os tokens, evitando cores arbitrárias espalhadas.
-- Inicializar com preferência salva; se ausente, consultar `prefers-color-scheme`.
-- Persistir alternância (RF-14).
+| Token | Uso |
+|---|---|
+| `--color-background` | Fundo da página |
+| `--color-surface` / `--color-surface-alt` | Cards, inputs, resumo |
+| `--color-text` / `--color-title` / `--color-muted` | Textos |
+| `--color-border` | Bordas e divisores |
+| `--color-primary` / `--color-primary-strong` | Ações principais (amarelo) |
+| `--color-secondary` / `--color-secondary-strong` | Destaques/seleção (roxo) |
+| `--color-primary-soft` / `--color-secondary-soft` | Fundos de tag/badge |
+| `--color-focus` | Anel de foco |
+| `--color-danger` / `--color-success` | Feedback |
 
-### 10.2 Breakpoints
-Usar breakpoints coerentes com Tailwind:
-- `sm`: 640 px
-- `md`: 768 px
-- `lg`: 1024 px
-- `xl`: 1280 px
+- Light em `:root, [data-theme='light']`; dark em `[data-theme='dark']`.
+- Tailwind consome via `@theme` (ex.: `bg-surface`, `text-title`).
+- Fontes: `--font-title` (Baloo 2) e `--font-body` (Roboto), carregadas do Google Fonts com `display=swap`.
 
-Projetar mobile-first e verificar larguras mínimas de 360 px (RF-15).
+### 10.2 Breakpoints (padrão Tailwind)
+`sm` 640 · `md` 768 · `lg` 1024 · `xl` 1280 px. Mobile-first; verificação em 320, 375/390, 768 e 1280/1440 px.
 
 ### 10.3 Acessibilidade
-- Labels explícitos, `aria-invalid`, `aria-describedby` e mensagens de erro.
-- Foco visível e ordem de tabulação lógica.
-- Botões de quantidade com nomes como “Aumentar quantidade de [café]”.
-- Feedback de adição e consulta de CEP com `aria-live`.
-- Contraste WCAG AA como meta.
-- Não depender exclusivamente de cor para estados.
+- Labels explícitos, `aria-invalid`, `aria-describedby` em erros.
+- Foco visível (`focus-visible:outline` com `--color-focus`) e ordem de tabulação lógica.
+- Botões de quantidade: "Diminuir/Aumentar quantidade de {café}".
+- Badge do carrinho com texto acessível ("Carrinho, 5 itens").
+- Feedback de adição ao carrinho e da consulta de CEP em `aria-live`.
+- Pagamento como `radiogroup` nativo (inputs `type="radio"` estilizados), com seleção indicada também por borda/ícone.
+- Contraste WCAG 2.2 AA verificado nos dois temas.
+- `prefers-reduced-motion` respeitado em transições.
 
 ## 11. Testes e qualidade
 
-### 11.1 Testes unitários
-- Reducer: adicionar, acumular, incrementar, decrementar, remover, limpar.
-- Cálculo: subtotal, frete com/sem itens, total e centavos.
-- Formatação BRL.
-- Normalização e validação de CEP.
-- Mapeamento da resposta ViaCEP e tratamento de erro.
-- Criação de snapshot de pedido.
+### 11.1 Ferramentas
+`vitest`, `@testing-library/react`, `@testing-library/user-event`, `@testing-library/jest-dom`, `jsdom`. Setup em `src/tests/setup.ts`; ambiente `jsdom` configurado em `vite.config.ts`.
 
-### 11.2 Testes de componentes/integração
-- ProductCard seleciona quantidade e adiciona.
-- Header exibe soma de unidades.
+### 11.2 Unitários
+- Reducer: adicionar, acumular, quantidade inválida, incrementar, decrementar até remover, remover, limpar, imutabilidade.
+- Pricing: subtotal, frete com/sem itens, total, item inválido.
+- `formatCurrency` (inclui `R$ 9,90`, zero e milhares).
+- `postalCode`: normalização e máscara.
+- Schema do checkout: casos válidos e cada campo inválido.
+- ViaCEP: sucesso, inválido sem requisição, `erro: true`, HTTP não-ok, falha de rede, timeout, JSON inválido.
+- Storage: JSON corrompido, versão/formato incompatível.
+- `orderService`: snapshot independente do carrinho e do catálogo.
+
+### 11.3 Componentes/integração
+- `CoffeeCard` seleciona quantidade e adiciona.
+- `Header` exibe soma de unidades.
 - Carrinho atualiza valores após operações.
-- Checkout bloqueia dados inválidos.
-- Consulta CEP preenche os campos corretos e preserva número/complemento.
-- Erros de CEP são anunciados e permitem correção.
-- Confirmação exibe snapshot após carrinho limpo.
-- Tema persiste após refresh.
+- Consulta de CEP preenche campos e preserva número/complemento; erros anunciados.
+- Checkout bloqueia carrinho vazio e formulário inválido.
+- Confirmação salva snapshot, limpa carrinho e `/success` exibe os dados.
+- `/success` sem snapshot mostra estado vazio.
+- Tema persiste após remontagem.
 
-### 11.3 Testes manuais de aceite
-- Fluxo completo em viewport 360 px, 768 px e 1280 px.
-- Refresh na Home com itens no carrinho.
-- CEP válido, inválido, não encontrado e API indisponível.
-- Acesso direto a `/checkout` com carrinho vazio.
-- Acesso direto a `/confirmation` sem pedido.
-- Navegação por teclado e conferência de foco.
-- Alternância de tema em todas as rotas.
+### 11.4 Manuais de aceite
+- Fluxo completo em 320, 375/390, 768 e 1280/1440 px, nos dois temas.
+- Refresh na Home, no Checkout e no Sucesso.
+- CEP válido real, inválido, inexistente e API indisponível (DevTools offline).
+- Acesso direto a `/checkout` vazio e a `/success` sem pedido.
+- Navegação apenas por teclado.
+- Console sem erros.
 
-### 11.4 Comandos esperados
-Ajustar scripts conforme `package.json`:
+### 11.5 Scripts
 ```bash
 npm install
-npm run dev
-npm run test
-npm run lint
-npm run build
+npm run dev       # servidor local
+npm run test      # vitest run
+npm run lint      # eslint .
+npm run build     # tsc -b && vite build
+npm run preview   # serve o build
 ```
 
-## 12. Referência cruzada com PRD
+## 12. Referência cruzada com o PRD
 
-| Área técnica | Requisitos relacionados |
+| Área técnica | Requisitos |
 |---|---|
-| Catálogo e componentes de produto | RF-01, RF-02 |
+| Catálogo e `CoffeeCard` | RF-01, RF-02; RN-08 |
 | Reducer e contexto do carrinho | RF-03, RF-04, RF-05; RN-01, RN-02 |
 | Persistência | RF-06; RN-06 |
-| Router | RF-07; RN-09, RN-10 |
+| Router e `PageLayout` | RF-07; RN-09, RN-10 |
 | ViaCEP e formulário Zod | RF-08; RN-07 |
 | Pagamento | RF-09; RN-05 |
 | Cálculo em centavos | RF-10; RN-03, RN-04 |
 | Bloqueio de confirmação | RF-11; RN-10 |
 | Snapshot e sucesso | RF-12, RF-13; RN-06, RN-09 |
 | Tema | RF-14 |
-| Responsividade/acessibilidade | RF-15 |
-| Logo e documentação da marca | RF-16 |
-| Catálogo local tipado | RN-08 |
+| Responsividade e acessibilidade | RF-15 |
+| Logo e Branding com IA | RF-16 |
 
 ## 13. Riscos e decisões técnicas
-- **Indisponibilidade ViaCEP:** exibir erro e permitir preenchimento manual; não simular consulta bem-sucedida.
-- **Dados antigos no localStorage:** versionar chaves e validar conteúdo.
-- **Pedido após refresh:** persistir snapshot separado do carrinho.
-- **Produto removido do catálogo:** invalidar item e impedir confirmação até correção/remoção.
-- **Precisão monetária:** usar exclusivamente centavos inteiros no domínio.
-- **Escopo:** não introduzir backend ou pagamento real sem aprovação e atualização do PRD.
+
+| Risco | Mitigação |
+|---|---|
+| ViaCEP indisponível ou lenta | Timeout de 8 s, mensagem clara, preenchimento manual; nunca simular sucesso. |
+| Dados antigos/corrompidos no `localStorage` | Chaves versionadas (`:v1`) e validação Zod na leitura. |
+| Hidratação apagando o carrinho salvo | Inicialização síncrona do reducer. |
+| Flash do tema errado | Script inline em `index.html`. |
+| Produto removido do catálogo | Descartado na hidratação; `findInvalidItems` bloqueia confirmação. |
+| Precisão monetária | Apenas centavos inteiros no domínio. |
+| Rotas SPA no deploy (404) | Rewrite em `vercel.json`. |
+| Imagens do Figma indisponíveis | Exports versionados em `src/assets/coffees`; placeholder documentado apenas temporariamente. |
+| Escopo | Backend, pagamento real ou extras exigem aprovação e atualização do PRD. |
