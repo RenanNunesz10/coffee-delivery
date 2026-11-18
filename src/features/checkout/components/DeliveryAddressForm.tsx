@@ -103,7 +103,7 @@ export function DeliveryAddressForm() {
           onChange={handlePostalCodeChange}
           onBlur={handlePostalCodeBlur}
         />
-        <p role="status" aria-live="polite" className={`text-xs font-normal sm:col-span-2 sm:self-center ${statusTone}`}>
+        <p role="status" aria-live="polite" className={`text-xs font-normal max-sm:-mt-3 sm:col-span-2 sm:self-center ${statusTone}`}>
           {status === 'idle' ? '' : STATUS_MESSAGES[status]}
         </p>
 

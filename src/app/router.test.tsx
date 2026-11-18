@@ -8,7 +8,7 @@ const HOME_HEADING = 'Encontre o café perfeito para qualquer hora do dia'
 describe('rotas', () => {
   it.each([
     ['/', 'Encontre o café perfeito para qualquer hora do dia', 'Coffee Delivery'],
-    ['/checkout', 'Complete seu pedido', 'Checkout | Coffee Delivery'],
+    ['/checkout', 'Seu carrinho está vazio', 'Checkout | Coffee Delivery'],
     ['/success', 'Uhu! Pedido confirmado', 'Pedido confirmado | Coffee Delivery'],
   ])('acesso direto a %s mostra a página certa', async (path, heading, title) => {
     renderApp(path)
