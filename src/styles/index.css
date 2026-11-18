@@ -97,6 +97,14 @@
   }
 }
 
+/* Borda em gradiente amarelo → roxo do card de sucesso (Figma), compatível com cantos arredondados. */
+@utility border-gradient {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(var(--background), var(--background)) padding-box,
+    linear-gradient(102.89deg, var(--yellow-dark) 2.61%, var(--purple) 98.76%) border-box;
+}
+
 @layer base {
   body {
     min-height: 100dvh;

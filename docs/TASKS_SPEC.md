@@ -262,14 +262,14 @@
   - **Commit:** `feat: confirm valid orders and clear cart`
   - **Status:** Concluída
 
-- [ ] **TASK-026 — Criar SuccessPage**
+- [x] **TASK-026 — Criar SuccessPage**
   - **Objetivo:** `OrderSuccess` com endereço, previsão e pagamento; estado vazio sem pedido.
   - **Requisitos:** RF-12, RF-13; RN-06, RN-09.
   - **Arquivos:** `src/features/orders/pages/SuccessPage.tsx`, `src/features/orders/components/OrderSuccess.tsx`.
   - **Critério de pronto:** dados corretos com carrinho vazio e após refresh; acesso sem pedido mostra estado vazio.
   - **Teste/validação:** com e sem snapshot, inclusive após refresh.
   - **Commit:** `feat: add order success page`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 ### Fase 6 — Responsividade, acessibilidade, qualidade e entrega
 
@@ -356,6 +356,7 @@
 | 18/11/2026 | TASK-023 | `CheckoutPage` com `FormProvider` envolvendo endereço, pagamento, itens (`CartItem`) e `CartSummary`; layout em 2 colunas (40 rem + 28 rem) no desktop e empilhado no celular; estado vazio com h1 "Seu carrinho está vazio"; alerta `role=alert` e foco no primeiro campo inválido ao enviar com erros. `npm run test`: todos passando (4 novos: estado vazio e link para a Home, seções e total R$ 33,20 do Figma, bloqueio com formulário inválido mantendo a rota e descrevendo erros, remoção do último item volta ao estado vazio; teste de rota atualizado); `lint` sem erros; `build` OK. Navegador com carrinho do Figma: 375 e 1440 px nos dois temas, sem overflow horizontal e sem erros de console; desktop confere com o frame de Checkout. | `feat: implement checkout page` |
 | 18/11/2026 | TASK-024 | `orderSchema` (Zod: itens, endereço, pagamento, ISO datetime e consistência subtotal/total), `createOrder` (revalida carrinho vazio, café inexistente e quantidade inválida; copia nome/preço/imagem; congela pedido, itens e endereço; ID por `crypto.randomUUID`) e `orderStorage` (`saveLastOrder`/`readLastOrder` em `coffee-delivery:last-order:v1`). `npm run test`: todos passando (17 novos: snapshot completo com R$ 33,20; independência após mutar carrinho e catálogo; congelamento; carrinho vazio; café inexistente; quantidade 0; endereço inválido; IDs únicos; salvar/ler; chave separada; ausência; JSON corrompido; totais adulterados; 4 valores inválidos em `parseOrder`); `lint` sem erros; `build` OK. | `feat: create independent order snapshot` |
 | 18/11/2026 | TASK-025 | `CheckoutPage.handleConfirm`: revalida via `createOrder` (carrinho vazio, café inexistente, quantidade, endereço), exibe erro `role=alert` se falhar, grava o snapshot com `saveLastOrder` ANTES de `clearCart` e navega para `/success` com `replace` e o pedido no estado da navegação. `npm run test`: todos passando (4 novos de integração com ViaCEP simulada: fluxo válido salva pedido R$ 33,20 com endereço do Figma, esvazia carrinho e badge e navega; ordem das gravações no storage (pedido antes do carrinho); confirmação com storage indisponível segue com o snapshot no estado; formulário inválido não grava pedido nem limpa carrinho). Carrinho vazio e café inexistente cobertos nos testes unitários de `createOrder` (a interface não permite chegar a esses estados). `lint` sem erros; `build` OK. | `feat: confirm valid orders and clear cart` |
+| 18/11/2026 | TASK-026 | `SuccessPage` (snapshot do estado da navegação validado por `parseOrder`, com fallback para `readLastOrder` após refresh; estado vazio sem pedido válido) e `OrderSuccess` (título, card com utility `border-gradient`, endereço com complemento, previsão `DELIVERY_ESTIMATE`, rótulo do pagamento, ilustração provisória); `PageLayout` passa ao Header a cidade/UF do último pedido. `npm run test`: todos passando (6 novos: dados do snapshot após refresh, complemento, independência do carrinho vazio, localização no Header, estado vazio com título da aba, snapshot corrompido rejeitado; teste de rota atualizado); `lint` sem erros; `build` OK. Navegador com pedido salvo: 375 e 1440 px nos dois temas sem overflow e sem erros de console; confere com o frame de Sucesso (traços escuros da ilustração provisória perdem contraste no dark mode — será resolvido na TASK-032). | `feat: add order success page` |
 
 ## Definition of Done (global)
 
