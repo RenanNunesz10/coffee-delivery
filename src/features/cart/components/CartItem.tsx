@@ -16,32 +16,33 @@ export function CartItem({ item, onIncrease, onDecrease, onRemove }: CartItemPro
   const { coffee, quantity, lineTotalCents } = item
 
   return (
-    <li className="flex items-start justify-between gap-3 border-b border-base-button py-6 first:pt-0">
-      <div className="flex min-w-0 items-center gap-4 sm:gap-5">
-        <img src={coffee.image} alt="" width={64} height={64} className="size-16 shrink-0" />
-        <div className="min-w-0">
-          <p className="text-m text-base-subtitle">{coffee.name}</p>
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            <QuantityInput
-              quantity={quantity}
-              itemName={coffee.name}
-              onIncrease={onIncrease}
-              onDecrease={onDecrease}
-              size="sm"
-            />
-            <button
-              type="button"
-              onClick={onRemove}
-              aria-label={`Remover ${coffee.name} do carrinho`}
-              className="inline-flex h-8 items-center gap-1 rounded-sm bg-base-button px-2 text-button-m text-base-text uppercase transition-colors hover:bg-base-hover"
-            >
-              <TrashIcon size={16} aria-hidden="true" className="text-purple" />
-              Remover
-            </button>
-          </div>
+    <li className="flex items-center gap-3 border-b border-base-button py-6 first:pt-0 sm:gap-5">
+      <img src={coffee.image} alt="" width={64} height={64} className="size-12 shrink-0 sm:size-16" />
+      <div className="min-w-0 flex-1">
+        {/* Em telas estreitas o preço quebra para a linha de baixo em vez de encostar no nome. */}
+        <div className="flex flex-wrap items-baseline justify-between gap-x-3">
+          <p className="min-w-0 text-m break-words text-base-subtitle">{coffee.name}</p>
+          <p className="shrink-0 text-m font-bold text-base-text">{formatCurrency(lineTotalCents)}</p>
+        </div>
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          <QuantityInput
+            quantity={quantity}
+            itemName={coffee.name}
+            onIncrease={onIncrease}
+            onDecrease={onDecrease}
+            size="sm"
+          />
+          <button
+            type="button"
+            onClick={onRemove}
+            aria-label={`Remover ${coffee.name} do carrinho`}
+            className="inline-flex h-8 items-center gap-1 rounded-sm bg-base-button px-2 text-button-m text-base-text uppercase transition-colors hover:bg-base-hover"
+          >
+            <TrashIcon size={16} aria-hidden="true" className="text-purple" />
+            Remover
+          </button>
         </div>
       </div>
-      <p className="shrink-0 text-m font-bold text-base-text">{formatCurrency(lineTotalCents)}</p>
     </li>
   )
 }
