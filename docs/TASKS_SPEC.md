@@ -244,14 +244,14 @@
 
 ### Fase 5 — Pedido e sucesso
 
-- [ ] **TASK-024 — Criar serviço e persistência do pedido**
+- [x] **TASK-024 — Criar serviço e persistência do pedido**
   - **Objetivo:** `createOrder` (snapshot) e `orderStorage` (salvar/ler com validação).
   - **Requisitos:** RF-12, RF-13; RN-06, RN-10.
   - **Arquivos:** `src/features/orders/orderService.ts`, `src/features/orders/orderStorage.ts`.
   - **Critério de pronto:** pedido copia itens, endereço, pagamento e valores; independente do carrinho e do catálogo.
   - **Teste/validação:** testes de snapshot e leitura válida/inválida.
   - **Commit:** `feat: create independent order snapshot`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-025 — Implementar confirmação do pedido**
   - **Objetivo:** revalidar, salvar snapshot, limpar carrinho e navegar para `/success`.
@@ -354,6 +354,7 @@
 | 18/11/2026 | TASK-021 | `TextField` acessível (label associado, `aria-invalid`, `aria-describedby`, selo "Opcional", adorno de carregamento), `usePostalCodeLookup` (status, cancelamento da consulta anterior e ao desmontar, descarte de resposta antiga) e `DeliveryAddressForm` (máscara 00000-000, consulta ao completar 8 dígitos e no blur, preenche rua/bairro/cidade/UF sem tocar número/complemento, limpa endereço do CEP anterior, foco no Número, status em `aria-live`, preenchimento manual após falha). Decisão D12 registrada. `npm run test`: todos passando (7 novos de integração com fetch simulado: autofill, preservação de número/complemento, troca de CEP, CEP não encontrado limpa dados antigos, falha de rede + preenchimento manual + envio, CEP incompleto sem consulta e erros acessíveis, anúncio de carregamento); `build` OK. **Correção:** o commit inicial foi feito com 1 erro de lint (`react-hooks/refs`: callback com refs passado a `register()` durante a renderização), corrigido no commit seguinte movendo os handlers do CEP para props de evento; depois disso `lint` sem erros e 47/47 testes do checkout. | `feat: build address form with viacep autofill` + `fix: avoid ref access during render in address form` |
 | 18/11/2026 | TASK-022 | `PaymentMethodSelector` com rádios nativos estilizados (borda `purple` + fundo `purple-light` quando selecionado, anel de foco no cartão, ícones Phosphor do Figma), `fieldset`/`legend` e erro ligado por `aria-describedby`. `npm run test`: todos passando (7 novos: três opções sem seleção inicial, obrigatoriedade com descrição acessível, aceite de crédito/débito/dinheiro, setas do teclado, nenhum campo de cartão); `lint` sem erros; `build` OK, variantes `has-checked`/`has-focus-visible` presentes no CSS gerado. | `feat: add checkout payment method selection` |
 | 18/11/2026 | TASK-023 | `CheckoutPage` com `FormProvider` envolvendo endereço, pagamento, itens (`CartItem`) e `CartSummary`; layout em 2 colunas (40 rem + 28 rem) no desktop e empilhado no celular; estado vazio com h1 "Seu carrinho está vazio"; alerta `role=alert` e foco no primeiro campo inválido ao enviar com erros. `npm run test`: todos passando (4 novos: estado vazio e link para a Home, seções e total R$ 33,20 do Figma, bloqueio com formulário inválido mantendo a rota e descrevendo erros, remoção do último item volta ao estado vazio; teste de rota atualizado); `lint` sem erros; `build` OK. Navegador com carrinho do Figma: 375 e 1440 px nos dois temas, sem overflow horizontal e sem erros de console; desktop confere com o frame de Checkout. | `feat: implement checkout page` |
+| 18/11/2026 | TASK-024 | `orderSchema` (Zod: itens, endereço, pagamento, ISO datetime e consistência subtotal/total), `createOrder` (revalida carrinho vazio, café inexistente e quantidade inválida; copia nome/preço/imagem; congela pedido, itens e endereço; ID por `crypto.randomUUID`) e `orderStorage` (`saveLastOrder`/`readLastOrder` em `coffee-delivery:last-order:v1`). `npm run test`: todos passando (17 novos: snapshot completo com R$ 33,20; independência após mutar carrinho e catálogo; congelamento; carrinho vazio; café inexistente; quantidade 0; endereço inválido; IDs únicos; salvar/ler; chave separada; ausência; JSON corrompido; totais adulterados; 4 valores inválidos em `parseOrder`); `lint` sem erros; `build` OK. | `feat: create independent order snapshot` |
 
 ## Definition of Done (global)
 
