@@ -159,14 +159,14 @@
 
 ### Fase 3 — Carrinho
 
-- [ ] **TASK-015 — Implementar reducer do carrinho**
+- [x] **TASK-015 — Implementar reducer do carrinho**
   - **Objetivo:** ações `ADD_ITEM`, `INCREMENT_ITEM`, `DECREMENT_ITEM`, `REMOVE_ITEM`, `CLEAR_CART`.
   - **Requisitos:** RF-03, RF-05; RN-01, RN-02.
   - **Arquivos:** `src/features/cart/cartReducer.ts`, `src/features/cart/cartTypes.ts`.
   - **Critério de pronto:** reducer puro e imutável; sem linhas duplicadas; remove ao decrementar de 1.
   - **Teste/validação:** testes unitários de todas as ações e limites.
   - **Commit:** `feat: implement cart reducer and actions`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-016 — Criar CartProvider e persistência**
   - **Objetivo:** Context, `useCart`, valores derivados e sincronização com `localStorage`.
@@ -345,6 +345,7 @@
 | 18/11/2026 | TASK-012 | Header do Figma com logo por tema, `LocationChip` (só ícone abaixo de 640 px), `ThemeToggle` e `CartLink` com badge (oculto em zero, nome acessível "Carrinho, N itens"); Header fixo (decisão D11). `npm run test`: 127/127 (6 novos: link da logo, badge oculto/1/5 com singular e plural, localização condicional, troca de logo por tema); `lint` sem erros; `build` OK. Navegador: 320 e 1280 px nos dois temas sem overflow horizontal e sem erros de console. | `feat: add responsive application header` |
 | 18/11/2026 | TASK-013 | `QuantityInput` (−/+ rotulados "Diminuir/Aumentar quantidade de {café}", `output` com `aria-live`, diminuir desabilitável, só inteiros) e `CoffeeCard` (imagem, tags, nome, descrição, preço com `formatCurrencyParts`, quantidade inicial 1 sem descer abaixo de 1, botão "Adicionar N {café} ao carrinho", anúncio em `role=status` e ícone de confirmação por 2 s). `npx vitest` nos componentes: 7/7 (rótulos, clique, limite, teclado Enter/Espaço, dados do card, adicionar com reset para 1); `tsc` e `lint` sem erros. | `feat: build coffee cards and quantity input` |
 | 18/11/2026 | TASK-014 | Home com `Hero` (título, subtítulo, 4 benefícios com ícones decorativos, ilustração provisória, fundo desfocado do Figma com máscara) e `CoffeeCatalog` (grade `auto-fill` de 16 rem: 1/2/4 colunas). `npm run test`: 129/129 (Home: hero e benefícios; 14 cafés renderizados; rotas atualizadas para o novo h1); `lint` sem erros; `build` OK. Navegador: 320, 768 e 1440 px nos dois temas sem overflow horizontal e sem erros de console; desktop confere com o Figma (4 colunas, hero em 2 colunas). | `feat: implement coffee catalog home page` |
+| 18/11/2026 | TASK-015 | `cartReducer` puro e imutável com `ADD_ITEM` (acumula na mesma linha; ignora quantidade não inteira/< 1 e café fora do catálogo), `INCREMENT_ITEM`, `DECREMENT_ITEM` (remove ao chegar a 0), `REMOVE_ITEM` e `CLEAR_CART`; ações sem efeito devolvem a mesma referência. `npx vitest run src/features/cart`: 16/16, com estados congelados (`Object.freeze`) provando a imutabilidade; `tsc` e `lint` sem erros. | `feat: implement cart reducer and actions` |
 
 ## Definition of Done (global)
 
