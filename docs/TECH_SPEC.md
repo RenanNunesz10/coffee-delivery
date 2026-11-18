@@ -365,11 +365,14 @@ export function calculateSubtotal(items: CartItem[], coffees: Coffee[]): number;
 export function calculateDeliveryFee(items: CartItem[]): number;
 export function calculateTotal(subtotalCents: number, deliveryFeeCents: number): number;
 export function findInvalidItems(items: CartItem[], coffees: Coffee[]): string[];
+export function calculateLineTotal(unitPriceCents: number, quantity: number): number;
+export function countUnits(items: CartItem[]): number; // soma de unidades para o Header (RF-04)
 ```
 - Subtotal: `reduce` de `priceCents * quantity` (inteiros).
 - Frete: `DELIVERY_FEE_CENTS` se houver item; senão 0.
 - Item sem correspondência no catálogo é reportado por `findInvalidItems` e bloqueia a confirmação (RN-10); não é ignorado silenciosamente.
 - `formatCurrency(cents)` usa um único `Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' })` com `cents / 100` apenas na exibição.
+- `formatCurrencyParts(cents)` usa o mesmo formatador e separa `{ symbol, amount }` para o card do catálogo ("R$" pequeno + "9,90" grande).
 
 ## 10. Tema, tokens, breakpoints e acessibilidade
 

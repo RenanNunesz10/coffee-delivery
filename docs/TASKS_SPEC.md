@@ -112,14 +112,14 @@
   - **Commit:** `feat: add typed coffee catalog`
   - **Status:** Concluída
 
-- [ ] **TASK-010 — Implementar cálculos e formatação monetária**
+- [x] **TASK-010 — Implementar cálculos e formatação monetária**
   - **Objetivo:** `pricing.ts` (subtotal, frete, total, itens inválidos) e `formatCurrency`.
   - **Requisitos:** RF-10; RN-03, RN-04, RN-10.
   - **Arquivos:** `src/domain/pricing.ts`, `src/lib/formatCurrency.ts`, testes.
   - **Critério de pronto:** frete 0 sem itens e 350 com itens; sem float acumulado; item inexistente detectado.
   - **Teste/validação:** testes unitários de carrinho vazio, múltiplos itens e item inválido.
   - **Commit:** `feat: centralize monetary calculations and delivery fee`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-011 — Configurar React Router e PageLayout**
   - **Objetivo:** rotas `/`, `/checkout`, `/success` e `*`, com `PageLayout`.
@@ -340,6 +340,7 @@
 | 17/11/2026 | TASK-007 | ThemeProvider + `useTheme` + `ThemeToggle` (Phosphor), persistência em `coffee-delivery:theme:v1`, fallback para `prefers-color-scheme` (acompanha mudanças do sistema até haver escolha), script anti-flash em `index.html`. `npm run test`: 55/55 (storage, toggle, teclado, remontagem, sistema, chave do script); `lint` sem erros; `build` OK. Navegador (Chrome headless via `vite preview`): sistema escuro → `dark`; sistema claro → `light`; Tab+Enter alterna e grava; reload mantém `dark`; com o bundle JS bloqueado o script inline já aplica `dark` (sem flash); console sem erros. | `feat: implement persistent light and dark themes` |
 | 18/11/2026 | TASK-008 | `types.ts` (Coffee, CoffeeTag, CartItem, DeliveryAddress, BrazilianState, PaymentMethod, OrderItem, Order; uniões derivadas das listas `as const`) e `constants.ts` (frete 350, previsão, tags, pagamentos, 27 UFs, rótulos com `satisfies`, quantidade mínima, tamanho do CEP, chaves de storage). `tsc -b` sem erros; `npm run test`: 60/60 (5 novos de integridade das constantes); `lint` sem erros; `build` OK. | `feat: define coffee delivery domain types` |
 | 18/11/2026 | TASK-009 | `coffees.ts` com os 14 cafés do Figma (textos, tags, 990 centavos, imagens WebP) e helpers `findCoffee`/`isKnownCoffee`. `npm run test`: 78/78 (18 novos: quantidade, IDs únicos em slug, campos obrigatórios por café, imagem própria por café, busca por ID); `lint` sem erros; `build` OK. | `feat: add typed coffee catalog` |
+| 18/11/2026 | TASK-010 | `pricing.ts` (linha, subtotal, frete, total, itens inválidos, contagem de unidades) e `formatCurrency`/`formatCurrencyParts`. `npm run test`: 92/92 (14 novos: soma em centavos, 0,10 × 3 sem erro de float, frete 0/350, carrinho vazio, exemplo do Figma R$ 33,20, item inexistente reportado, unidades × tipos, formatos BRL incl. milhar); `lint` sem erros; `build` OK. | `feat: centralize monetary calculations and delivery fee` |
 
 ## Definition of Done (global)
 
