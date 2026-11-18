@@ -58,14 +58,20 @@ export function DeliveryAddressForm() {
     setFocus(address.street ? 'number' : 'street')
   }
 
-  const postalCodeField = register('postalCode', {
-    onChange: (event: ChangeEvent<HTMLInputElement>) => {
-      const masked = formatPostalCode(event.target.value)
-      setValue('postalCode', masked)
-      void searchAddress(masked)
-    },
-    onBlur: (event: FocusEvent<HTMLInputElement>) => void searchAddress(event.target.value),
-  })
+  // Handlers como props de evento (rodam só em eventos, nunca durante a renderização).
+  const { onChange: onPostalCodeChange, onBlur: onPostalCodeBlur, ...postalCodeField } = register('postalCode')
+
+  function handlePostalCodeChange(event: ChangeEvent<HTMLInputElement>) {
+    void onPostalCodeChange(event)
+    const masked = formatPostalCode(event.target.value)
+    setValue('postalCode', masked)
+    void searchAddress(masked)
+  }
+
+  function handlePostalCodeBlur(event: FocusEvent<HTMLInputElement>) {
+    void onPostalCodeBlur(event)
+    void searchAddress(event.target.value)
+  }
 
   const isLoading = status === 'loading'
   const statusTone = status === 'not-found' || status === 'error' ? 'text-danger' : 'text-base-text'
@@ -94,6 +100,8 @@ export function DeliveryAddressForm() {
           }
           containerClassName="sm:col-span-1"
           {...postalCodeField}
+          onChange={handlePostalCodeChange}
+          onBlur={handlePostalCodeBlur}
         />
         <p role="status" aria-live="polite" className={`text-xs font-normal sm:col-span-2 sm:self-center ${statusTone}`}>
           {status === 'idle' ? '' : STATUS_MESSAGES[status]}
