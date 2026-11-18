@@ -176,20 +176,19 @@ Testes unitários e de componentes ficam ao lado do módulo (`*.test.ts(x)`). Al
 
 ## 4. Tipos e interfaces de domínio
 
+Implementado em `src/domain/types.ts`. As uniões são **derivadas das listas** de `constants.ts`, para que a lista e o tipo nunca divirjam e os schemas Zod (TASK-019) usem as mesmas listas:
+
 ```ts
-export type CoffeeTag =
-  | 'traditional'
-  | 'special'
-  | 'with-milk'
-  | 'alcoholic'
-  | 'iced';
+export type CoffeeTag = (typeof COFFEE_TAGS)[number];         // 'traditional' | 'special' | 'with-milk' | 'alcoholic' | 'iced'
+export type PaymentMethod = (typeof PAYMENT_METHODS)[number]; // 'credit' | 'debit' | 'cash'
+export type BrazilianState = (typeof BRAZILIAN_STATES)[number];
 
 export interface Coffee {
   id: string;           // slug estável, ex.: 'expresso-tradicional'
   name: string;
   description: string;
   priceCents: number;   // inteiro
-  tags: CoffeeTag[];    // ao menos uma
+  tags: readonly CoffeeTag[];  // ao menos uma
   image: string;        // URL importada de src/assets/coffees
 }
 
@@ -208,10 +207,8 @@ export interface DeliveryAddress {
   state: BrazilianState;
 }
 
-export type PaymentMethod = 'credit' | 'debit' | 'cash';
-
 export interface OrderItem {
-  coffeeId: string;
+  coffeeId: Coffee['id'];
   name: string;
   unitPriceCents: number;
   quantity: number;
@@ -221,7 +218,7 @@ export interface OrderItem {
 export interface Order {
   id: string;           // crypto.randomUUID()
   createdAt: string;    // ISO 8601
-  items: OrderItem[];
+  items: readonly OrderItem[];
   address: DeliveryAddress;
   paymentMethod: PaymentMethod;
   subtotalCents: number;
@@ -230,8 +227,8 @@ export interface Order {
 }
 ```
 
-- `BrazilianState` é a união das 27 siglas, derivada da constante `BRAZILIAN_STATES` (`as const`).
-- Rótulos de exibição ficam em constantes (`COFFEE_TAG_LABELS`, `PAYMENT_METHOD_LABELS`), não no tipo.
+- `readonly` em `tags` e `items` impede mutação acidental (ex.: `push`) em dados do catálogo e do snapshot.
+- Rótulos de exibição ficam em constantes (`COFFEE_TAG_LABELS`, `PAYMENT_METHOD_LABELS`), não no tipo; `satisfies Record<…, string>` faz o TypeScript acusar rótulo faltando.
 - `CartItem` guarda só referência e quantidade; detalhes vêm do catálogo.
 - `OrderItem` copia os dados para que mudanças futuras no catálogo não alterem um pedido confirmado.
 - Nenhum dado de cartão é modelado.
@@ -240,7 +237,13 @@ export interface Order {
 ```ts
 export const DELIVERY_FEE_CENTS = 350; // R$ 3,50, conforme Figma
 export const DELIVERY_ESTIMATE = '20 min – 30 min';
-export const BRAZILIAN_STATES = ['AC', 'AL', /* ... */ 'TO'] as const;
+export const COFFEE_TAGS = ['traditional', 'special', 'with-milk', 'alcoholic', 'iced'] as const;
+export const COFFEE_TAG_LABELS = { traditional: 'Tradicional', /* ... */ } as const satisfies Record<CoffeeTag, string>;
+export const PAYMENT_METHODS = ['credit', 'debit', 'cash'] as const;
+export const PAYMENT_METHOD_LABELS = { credit: 'Cartão de crédito', debit: 'Cartão de débito', cash: 'Dinheiro' } as const;
+export const BRAZILIAN_STATES = ['AC', 'AL', /* ... 27 UFs */ 'TO'] as const;
+export const MIN_ITEM_QUANTITY = 1;   // RN-01
+export const POSTAL_CODE_LENGTH = 8;  // RN-07
 export const STORAGE_KEYS = {
   cart: 'coffee-delivery:cart:v1',
   theme: 'coffee-delivery:theme:v1',

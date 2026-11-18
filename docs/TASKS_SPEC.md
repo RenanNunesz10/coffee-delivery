@@ -94,14 +94,14 @@
 
 ### Fase 2 — Domínio, catálogo e navegação
 
-- [ ] **TASK-008 — Definir tipos e constantes de domínio**
+- [x] **TASK-008 — Definir tipos e constantes de domínio**
   - **Objetivo:** tipos `Coffee`, `CoffeeTag`, `CartItem`, `DeliveryAddress`, `PaymentMethod`, `OrderItem`, `Order`; constantes (frete, UFs, chaves de storage, rótulos).
   - **Requisitos:** RF-01 a RF-13; RN-01 a RN-10.
   - **Arquivos:** `src/domain/types.ts`, `src/domain/constants.ts`.
   - **Critério de pronto:** tipos e constantes compilando em modo `strict`.
   - **Teste/validação:** `tsc` sem erros.
   - **Commit:** `feat: define coffee delivery domain types`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-009 — Criar catálogo local tipado**
   - **Objetivo:** cadastrar os cafés do Figma com imagens, descrição, preço em centavos e tags.
@@ -338,6 +338,7 @@
 | 17/11/2026 | TASK-005 | Criados SVGs provisórios: símbolo, logo light/dark, favicon, ilustração do hero (substitui a foto com a logo original) e ilustração de sucesso; `BRAND_GUIDE.md` em rascunho. SVGs renderizados em PNG para revisão: favicon reconhecível em 16 e 96 px; logo legível em fundo claro e escuro; ilustrações sem cortes. `npm run build` OK, `npm run lint` sem erros, `npm run test` 1/1. | `feat: add provisional svg brand assets` |
 | 17/11/2026 | TASK-006 | Tokens light/dark com nomes do Figma em `tokens.css`; `@theme inline` sem paleta padrão do Tailwind; tipografia, raios, foco, `prefers-reduced-motion`; fontes Baloo 2/Roboto. Contraste: 4 combinações do Figma reprovavam AA e foram ajustadas (D10). `npm run test`: 42/42 (20 pares × 2 temas + paridade + App); `lint` sem erros; `build` OK (CSS 9,83 kB, sem `--color-red-500`, com `[data-theme=dark]`). Página de amostra renderizada no Chrome headless nos dois temas: fontes carregadas, cantos assimétricos e textos legíveis. | `style: define design tokens and global styles` |
 | 17/11/2026 | TASK-007 | ThemeProvider + `useTheme` + `ThemeToggle` (Phosphor), persistência em `coffee-delivery:theme:v1`, fallback para `prefers-color-scheme` (acompanha mudanças do sistema até haver escolha), script anti-flash em `index.html`. `npm run test`: 55/55 (storage, toggle, teclado, remontagem, sistema, chave do script); `lint` sem erros; `build` OK. Navegador (Chrome headless via `vite preview`): sistema escuro → `dark`; sistema claro → `light`; Tab+Enter alterna e grava; reload mantém `dark`; com o bundle JS bloqueado o script inline já aplica `dark` (sem flash); console sem erros. | `feat: implement persistent light and dark themes` |
+| 18/11/2026 | TASK-008 | `types.ts` (Coffee, CoffeeTag, CartItem, DeliveryAddress, BrazilianState, PaymentMethod, OrderItem, Order; uniões derivadas das listas `as const`) e `constants.ts` (frete 350, previsão, tags, pagamentos, 27 UFs, rótulos com `satisfies`, quantidade mínima, tamanho do CEP, chaves de storage). `tsc -b` sem erros; `npm run test`: 60/60 (5 novos de integridade das constantes); `lint` sem erros; `build` OK. | `feat: define coffee delivery domain types` |
 
 ## Definition of Done (global)
 
