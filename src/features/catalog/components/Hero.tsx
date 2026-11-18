@@ -1,6 +1,6 @@
 import { CoffeeIcon, PackageIcon, ShoppingCartIcon, TimerIcon, type Icon } from '@phosphor-icons/react'
 import heroBackground from '../../../assets/hero/hero-background.webp'
-import heroIllustration from '../../../assets/hero/hero-illustration.svg'
+import heroCoffee from '../../../assets/hero/hero-coffee.webp'
 
 interface Benefit {
   label: string
@@ -53,7 +53,7 @@ export function Hero() {
         </div>
 
         <img
-          src={heroIllustration}
+          src={heroCoffee}
           alt=""
           width={476}
           height={360}

@@ -301,9 +301,9 @@
   - **Status:** Concluída
 
 - [ ] **TASK-032 — Substituir assets provisórios pela identidade criada com IA** *(executar antes da TASK-030)*
-  - **Objetivo:** aplicar a logo e as ilustrações finais geradas com IA pelo aluno (logo, favicon, hero sem a logo original, ilustração de sucesso) no lugar dos SVGs provisórios da TASK-005.
+  - **Objetivo:** aplicar a logo, o favicon e a ilustração de sucesso finais gerados com IA pelo aluno no lugar dos SVGs provisórios da TASK-005 (o hero passou a usar a imagem do Figma em 18/11/2026).
   - **Requisitos:** RF-16, RF-14.
-  - **Arquivos:** `public/favicon.svg`, `public/brand/*`, `src/assets/brand/*`, `src/assets/hero/*`, `src/assets/illustrations/*`, `docs/BRAND_GUIDE.md`.
+  - **Arquivos:** `public/favicon.svg`, `src/assets/brand/*`, `src/assets/illustrations/*`, `docs/BRAND_GUIDE.md`.
   - **Critério de pronto:** nenhum asset provisório restante; logo light/dark e favicon legíveis; `BRAND_GUIDE.md` com conceito final e seção **Branding com IA** (ferramenta, prompt, resultado, motivos, termos de uso) cobrindo logo e ilustrações.
   - **Teste/validação:** legibilidade em 16–48 px, contraste nos dois temas, ausência de imagens quebradas, `npm run build`.
   - **Commit:** `feat: apply ai generated brand identity`

@@ -41,7 +41,7 @@ A escala completa está na [análise do Figma](./figma/README.md#3-tipografia).
 | `src/assets/brand/logo-dark.svg` | Header no tema escuro | Texto `purple-light`, tampa clareada | Provisório |
 | `src/assets/brand/symbol.svg` | Símbolo isolado | Fundo transparente | Provisório |
 | `public/favicon.svg` | Favicon | Símbolo sobre `yellow-light` com cantos arredondados, legível em fundos claros e escuros | Provisório |
-| `src/assets/hero/hero-illustration.svg` | Hero da Home | Copo para viagem com o símbolo, grãos e forma em `yellow` | Provisório |
+| `src/assets/hero/hero-coffee.webp` | Hero da Home | Imagem original do Figma (copo com a logo do desafio), 952 px para telas 2× | Definitivo (decisão do aluno) |
 | `src/assets/illustrations/delivery-success.svg` | Tela de sucesso | Entregador em scooter `purple` | Provisório |
 | `src/assets/coffees/*.webp` | Fotos do catálogo | 14 imagens extraídas do Figma | Definitivo |
 | `src/assets/hero/hero-background.webp` | Fundo desfocado do hero | Extraído do Figma | Definitivo (pode virar gradiente CSS) |

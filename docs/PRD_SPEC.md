@@ -206,13 +206,13 @@ IDs estáveis, referenciados na TECH_SPEC e na TASKS_SPEC.
 - Paleta e tipografia partem do Style Guide do Figma (amarelo/roxo; Baloo 2 e Roboto) e podem ser personalizadas, mantendo coerência nos dois temas.
 - Símbolo simples e legível em tamanhos pequenos, acompanhado de logotipo tipográfico.
 - Arquivos em SVG (preferencial) e PNG/WebP quando necessário.
-- Ilustrações sem asset reutilizável no Figma (imagem do hero sem a logo original e entregador da tela de sucesso) são geradas com IA e seguem a paleta da marca.
+- O hero usa a imagem original do Figma (copo de café), por decisão do aluno em 18/11/2026. A ilustração da tela de sucesso, que não tem asset reutilizável no Figma, é gerada com IA e segue a paleta da marca.
 
 ### 7.2 Branding com IA (obrigatório)
 1. Gerar ao menos uma proposta de logo original com ferramenta de IA.
 2. Definir conceito, paleta, tipografia e variações para fundo claro e escuro.
 3. Registrar em `docs/BRAND_GUIDE.md`, seção **Branding com IA**: ferramenta utilizada, prompt(s), resultado(s), curadoria/ajustes manuais, motivos da escolha e verificação dos termos de uso do material gerado.
-4. Registrar também as ilustrações geradas com IA (hero e sucesso) com o mesmo nível de detalhe.
+4. Registrar também a ilustração gerada com IA (tela de sucesso) com o mesmo nível de detalhe.
 5. Verificar legibilidade em 16–48 px e contraste nos dois temas.
 
 ### 7.3 Aplicação da logo
@@ -304,7 +304,7 @@ IDs estáveis, referenciados na TECH_SPEC e na TASKS_SPEC.
 | Frete | Fixo fictício de R$ 3,50 por pedido não vazio (valor do Figma) |
 | Preço da linha do carrinho | Exibe `preço unitário × quantidade` |
 | Ícones | Phosphor Icons (conforme Style Guide) |
-| Ilustrações | Hero e ilustração da tela de sucesso gerados com IA; fotos dos cafés extraídas do Figma |
+| Ilustrações | Hero e fotos dos cafés vindos do Figma; ilustração da tela de sucesso gerada com IA |
 | Previsão de entrega | Texto fixo informativo "20 min – 30 min" (conforme Figma) |
 | Pagamento | Crédito, débito ou dinheiro; sem transação |
 | CEP | ViaCEP |

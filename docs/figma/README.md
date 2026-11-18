@@ -111,7 +111,7 @@ As imagens foram extraídas do PDF exportado do Figma, associadas aos cafés pel
 ### 6.3 Outros assets
 | Asset | Situação |
 |---|---|
-| `src/assets/hero/hero-illustration.svg` | SVG provisório (TASK-005) no lugar da foto do hero, que exibia a logo original do desafio. Versão final com IA na TASK-032. |
+| `src/assets/hero/hero-coffee.webp` | Imagem do hero do Figma (952 px, 2×), em uso desde 18/11/2026 por decisão do aluno. O copo exibe a logo original do desafio. |
 | `src/assets/hero/hero-background.webp` | Fundo desfocado do hero, extraído (1440 px). Pode ser substituído por gradiente CSS. |
 | Ilustração do entregador (sucesso) | Vetorial, não extraída. SVG provisório (TASK-005); versão com IA (TASK-032). |
 | Logo original | Vetorial; não será usada (a marca própria será criada com IA, RF-16). |
@@ -126,7 +126,7 @@ As imagens foram extraídas do PDF exportado do Figma, associadas aos cafés pel
 | D4 | Mobile e tablet | Inexistente | Obrigatório (RF-15) | Layout próprio: grade de 1/2/3/4 colunas; checkout em coluna única abaixo de `lg`. |
 | D5 | Dark mode | Inexistente | Obrigatório (RF-14) | Paleta escura derivada dos tokens base, a definir na TASK-006. |
 | D6 | Localização no Header | "Porto Alegre, RS" fixo | Cidade/UF do último pedido | Mantida a decisão do PRD. |
-| D7 | Logo no copo do hero | Logo original do desafio | Marca própria (RF-16) | **Resolvido:** SVG provisório na TASK-005; versão com IA na TASK-032. |
+| D7 | Logo no copo do hero | Logo original do desafio | Marca própria (RF-16) | **Decisão do aluno (18/11/2026):** usar a imagem original do Figma no hero; a marca própria aparece no Header e no favicon. |
 | D8 | Ilustração do sucesso | Vetorial | — | **Resolvido:** SVG provisório na TASK-005; versão com IA na TASK-032. |
 | D9 | Orientação de 2 fotos | Café com Leite e Havaiano aparecem espelhados na Home | — | Detalhe visual sem impacto; usar as imagens como exportadas. |
 | D10 | Contraste (WCAG AA) | Texto branco sobre amarelo (2,1:1), `base-label` em descrições (3,2:1), texto da tag (2,7:1), número do badge (3,3:1) | WCAG 2.2 AA (PRD 8.1) | **Resolvido na TASK-006:** texto escuro `on-yellow` sobre amarelo, `base-label` escurecido para `#6E6767`, novos tokens `yellow-ink`/`purple-ink`. Verificado por teste automatizado. |

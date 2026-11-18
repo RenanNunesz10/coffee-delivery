@@ -162,7 +162,7 @@ CoffeeCard ──addItem()──▶ CartProvider ──dispatch(action)──▶
 
 ## Marca e Branding com IA
 
-A logo, o favicon, o hero e a ilustração da tela de sucesso são **provisórios, em SVG**. As fotos dos cafés foram extraídas do PDF do Figma. A identidade final criada com IA entra na **TASK-032**, e a seção "Branding com IA" (ferramenta, prompt, resultado e motivos) fica em [docs/BRAND_GUIDE.md](docs/BRAND_GUIDE.md).
+A logo, o favicon e a ilustração da tela de sucesso são **provisórios, em SVG**. O hero e as fotos dos cafés vêm do Figma (o copo do hero exibe a logo original do desafio, por decisão do aluno). A identidade final criada com IA entra na **TASK-032**, e a seção "Branding com IA" (ferramenta, prompt, resultado e motivos) fica em [docs/BRAND_GUIDE.md](docs/BRAND_GUIDE.md).
 
 ## Uso de IA no desenvolvimento
 
@@ -182,7 +182,7 @@ O projeto foi desenvolvido com o **Claude Code** (extensão do VS Code), seguind
 
 ## Limitações conhecidas
 
-- Logo e ilustrações ainda provisórias (TASK-032).
+- Logo, favicon e ilustração de sucesso ainda provisórios (TASK-032).
 - Aplicação ainda não publicada (TASK-030): depende da conta de hospedagem.
 - Apenas o último pedido é mantido; não há histórico (fora do escopo).
 - Projeto demonstrativo: nenhum pedido é enviado e nenhum pagamento é processado.
