@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { CartProvider } from '../features/cart/CartProvider'
 import { ThemeProvider } from '../features/theme/ThemeProvider'
 
 interface AppProvidersProps {
@@ -6,5 +7,9 @@ interface AppProvidersProps {
 }
 
 export function AppProviders({ children }: AppProvidersProps) {
-  return <ThemeProvider>{children}</ThemeProvider>
+  return (
+    <ThemeProvider>
+      <CartProvider>{children}</CartProvider>
+    </ThemeProvider>
+  )
 }

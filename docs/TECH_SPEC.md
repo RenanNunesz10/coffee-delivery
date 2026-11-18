@@ -117,7 +117,8 @@ coffee-delivery/
     │   │   ├── components/       # CoffeeCard, CoffeeCatalog, Hero
     │   │   └── pages/HomePage.tsx
     │   ├── cart/
-    │   │   ├── CartContext.tsx
+    │   │   ├── cartContext.ts    # createContext + tipos do valor exposto
+    │   │   ├── CartProvider.tsx  # useReducer + persistência + valores derivados
     │   │   ├── cartReducer.ts
     │   │   ├── cartStorage.ts
     │   │   ├── cartTypes.ts
