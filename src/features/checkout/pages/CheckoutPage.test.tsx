@@ -1,4 +1,4 @@
-import { screen, within } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { STORAGE_KEYS } from '../../../domain/constants'
@@ -48,7 +48,7 @@ describe('CheckoutPage', () => {
     expect(screen.getByRole('group', { name: 'Forma de pagamento' })).toHaveAccessibleDescription(
       'Selecione uma forma de pagamento',
     )
-    expect(router.state.location.pathname).toBe('/checkout')
+    await waitFor(() => expect(router.state.location.pathname).toBe('/checkout'))
   })
 
   it('volta ao estado vazio ao remover o último item', async () => {
@@ -83,7 +83,7 @@ describe('CheckoutPage: confirmação do pedido', () => {
 
     await user.click(screen.getByRole('button', { name: 'Confirmar pedido' }))
 
-    expect(router.state.location.pathname).toBe('/success')
+    await waitFor(() => expect(router.state.location.pathname).toBe('/success'))
     const order = JSON.parse(localStorage.getItem(STORAGE_KEYS.lastOrder) ?? 'null')
     expect(order).toMatchObject({
       items: [
@@ -132,7 +132,7 @@ describe('CheckoutPage: confirmação do pedido', () => {
 
     await user.click(screen.getByRole('button', { name: 'Confirmar pedido' }))
 
-    expect(router.state.location.pathname).toBe('/success')
+    await waitFor(() => expect(router.state.location.pathname).toBe('/success'))
     expect(router.state.location.state).toMatchObject({ order: { paymentMethod: 'credit', totalCents: 1340 } })
   })
 
