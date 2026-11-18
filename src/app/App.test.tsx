@@ -3,11 +3,10 @@ import { describe, expect, it } from 'vitest'
 import { App } from './App'
 
 describe('App', () => {
-  it('renderiza o título da aplicação', () => {
+  it('monta providers e router reais e abre na Home', async () => {
     render(<App />)
 
-    expect(
-      screen.getByRole('heading', { level: 1, name: 'Coffee Delivery' }),
-    ).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: 'Nossos cafés' })).toBeInTheDocument()
+    expect(screen.getByRole('banner')).toBeInTheDocument()
   })
 })

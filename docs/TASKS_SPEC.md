@@ -121,14 +121,14 @@
   - **Commit:** `feat: centralize monetary calculations and delivery fee`
   - **Status:** Concluída
 
-- [ ] **TASK-011 — Configurar React Router e PageLayout**
+- [x] **TASK-011 — Configurar React Router e PageLayout**
   - **Objetivo:** rotas `/`, `/checkout`, `/success` e `*`, com `PageLayout`.
   - **Requisitos:** RF-07; RN-09.
   - **Arquivos:** `src/app/router.tsx`, `src/app/App.tsx`, `src/components/PageLayout/*`, páginas placeholder.
   - **Critério de pronto:** navegação sem reload; URL direta funciona; rota desconhecida redireciona para `/`.
   - **Teste/validação:** teste de navegação e acesso direto.
   - **Commit:** `feat: configure application routes`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-012 — Criar Header responsivo**
   - **Objetivo:** logo, indicador de localização, `ThemeToggle` e link do carrinho com `CartBadge`.
@@ -341,6 +341,7 @@
 | 18/11/2026 | TASK-008 | `types.ts` (Coffee, CoffeeTag, CartItem, DeliveryAddress, BrazilianState, PaymentMethod, OrderItem, Order; uniões derivadas das listas `as const`) e `constants.ts` (frete 350, previsão, tags, pagamentos, 27 UFs, rótulos com `satisfies`, quantidade mínima, tamanho do CEP, chaves de storage). `tsc -b` sem erros; `npm run test`: 60/60 (5 novos de integridade das constantes); `lint` sem erros; `build` OK. | `feat: define coffee delivery domain types` |
 | 18/11/2026 | TASK-009 | `coffees.ts` com os 14 cafés do Figma (textos, tags, 990 centavos, imagens WebP) e helpers `findCoffee`/`isKnownCoffee`. `npm run test`: 78/78 (18 novos: quantidade, IDs únicos em slug, campos obrigatórios por café, imagem própria por café, busca por ID); `lint` sem erros; `build` OK. | `feat: add typed coffee catalog` |
 | 18/11/2026 | TASK-010 | `pricing.ts` (linha, subtotal, frete, total, itens inválidos, contagem de unidades) e `formatCurrency`/`formatCurrencyParts`. `npm run test`: 92/92 (14 novos: soma em centavos, 0,10 × 3 sem erro de float, frete 0/350, carrinho vazio, exemplo do Figma R$ 33,20, item inexistente reportado, unidades × tipos, formatos BRL incl. milhar); `lint` sem erros; `build` OK. | `feat: centralize monetary calculations and delivery fee` |
+| 18/11/2026 | TASK-011 | `react-router` 7.18 instalado; rotas `/`, `/checkout`, `/success` e `*` → `/` com `PageLayout` (skip link, Header provisório, `main#conteudo`, `ScrollRestoration`), páginas placeholder e `useDocumentTitle`; utility `app-container`. `npm run test`: 121/121 (rotas: acesso direto às 3 URLs com título da aba, redirecionamento de rota desconhecida, navegação por link mantendo o mesmo Header montado, skip link); `lint` sem erros; `build` OK. | `feat: configure application routes` |
 
 ## Definition of Done (global)
 

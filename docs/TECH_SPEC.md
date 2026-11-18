@@ -309,7 +309,9 @@ Ação inválida retorna o **mesmo** estado (referência), evitando re-render. O
 | `/success` | `SuccessPage` | Exibição do snapshot (RF-12, RF-13). |
 | `*` | `Navigate` | Redireciona para `/`. |
 
-- `createBrowserRouter` + `RouterProvider`, com `PageLayout` como rota pai.
+- `react-router` v7 (pacote único que substitui `react-router-dom`): `createBrowserRouter` + `RouterProvider`, com `PageLayout` como rota pai. `routes` é exportado de `src/app/router.tsx` para os testes montarem as mesmas rotas com `createMemoryRouter` (`src/tests/renderWithRouter.tsx`).
+- `PageLayout`: link "Pular para o conteúdo", `Header`, `<main id="conteudo">` e `ScrollRestoration`; `useDocumentTitle` define o título da aba por página (ajuda leitores de tela a perceber a navegação).
+- Container: utility `app-container` em `index.css` (1120 px de área útil do Figma + margens de 16/32 px).
 - Após confirmar: `navigate('/success', { replace: true })`, evitando voltar a um checkout já confirmado.
 - `/success` sem snapshot válido exibe `EmptyState` (RN-09).
 - Deploy: `vercel.json` com rewrite de todas as rotas para `index.html`.
