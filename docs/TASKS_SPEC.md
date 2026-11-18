@@ -186,14 +186,14 @@
   - **Commit:** `feat: connect catalog to cart state`
   - **Status:** Concluída
 
-- [ ] **TASK-018 — Criar componentes de revisão do carrinho**
+- [x] **TASK-018 — Criar componentes de revisão do carrinho**
   - **Objetivo:** `CartItem`, `CartSummary` e `EmptyState`.
   - **Requisitos:** RF-05, RF-10, RF-15; RN-01, RN-03, RN-04, RN-09.
   - **Arquivos:** `src/features/cart/components/*`, `src/components/EmptyState/*`.
   - **Critério de pronto:** alterações atualizam valores imediatamente; cada linha exibe `preço unitário × quantidade`; moeda em BRL; estado vazio com retorno à Home.
   - **Teste/validação:** incrementar, decrementar até remover, remover e conferir valores.
   - **Commit:** `feat: add cart item management and order summary`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 ### Fase 4 — Checkout
 
@@ -348,6 +348,7 @@
 | 18/11/2026 | TASK-015 | `cartReducer` puro e imutável com `ADD_ITEM` (acumula na mesma linha; ignora quantidade não inteira/< 1 e café fora do catálogo), `INCREMENT_ITEM`, `DECREMENT_ITEM` (remove ao chegar a 0), `REMOVE_ITEM` e `CLEAR_CART`; ações sem efeito devolvem a mesma referência. `npx vitest run src/features/cart`: 16/16, com estados congelados (`Object.freeze`) provando a imutabilidade; `tsc` e `lint` sem erros. | `feat: implement cart reducer and actions` |
 | 18/11/2026 | TASK-016 | `CartProvider` (useReducer com hidratação síncrona via `loadCart`, persistência em efeito, `useMemo` com `detailedItems`, `invalidItemIds`, `totalUnits`, subtotal, frete e total; ações estáveis com `useCallback`), `useCart`, `lib/storage.ts` (`readJson` com Zod, `writeJson`, `removeKey`, sem exceções) e `cartStorage.ts` (valida item a item, descarta café inexistente e junta duplicados). Instalados zod 4.6, react-hook-form 7.92 e @hookform/resolvers 7.0 (os dois últimos usados a partir da TASK-019); `npm audit`: 0 vulnerabilidades. `npm run test`: 142/142 (13 novos: storage vazio/válido/JSON corrompido/formato incompatível/itens parcialmente válidos/duplicados/storage bloqueado; Provider: valores derivados, ações, persistência a cada mudança, hidratação sem sobrescrever, erro fora do Provider); `lint` sem erros; `build` OK. | `feat: add persistent cart context` |
 | 18/11/2026 | TASK-017 | `HomePage` usa `addItem` do contexto e `PageLayout` passa `totalUnits` ao Header. `npm run test`: 144/144 (integração com rotas reais: 2 Latte + 1 Latte + 1 Cubano → uma linha de Latte com 3, badge "Carrinho, 4 itens" e storage correto; carrinho salvo aparece no Header ao montar); `lint` sem erros; `build` OK. | `feat: connect catalog to cart state` |
+| 18/11/2026 | TASK-018 | `CartItem` (imagem, nome, `QuantityInput` pequeno, "Remover" com nome acessível, valor da linha), `CartSummary` (`dl` com total de itens, entrega e total; botão submit "Confirmar pedido") e `EmptyState` reutilizável. `npm run test`: 149/149 (5 novos: exemplo do Figma 9,90 + 19,80 → R$ 29,70 / 3,50 / 33,20; incremento e decremento atualizam o total na hora; decremento de 1 remove e zera o frete; Remover direto; estado vazio com link para a Home); `lint` sem erros; `build` OK. | `feat: add cart item management and order summary` |
 
 ## Definition of Done (global)
 
