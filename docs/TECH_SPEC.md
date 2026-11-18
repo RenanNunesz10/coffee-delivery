@@ -1,6 +1,6 @@
 # Coffee Delivery — Technical Specification
 
-**Versão:** 1.3.0
+**Versão:** 1.4.0
 **Status:** Base técnica para implementação
 **Última atualização:** 17/11/2026
 **Documentos relacionados:** [`PRD_SPEC.md`](./PRD_SPEC.md) · [`TASKS_SPEC.md`](./TASKS_SPEC.md) · [`AGENTS.md`](../AGENTS.md)
@@ -13,6 +13,7 @@
 | 1.1.0 | 17/11/2026 | Rota `/success`; justificativa Tailwind × styled-components; nomes de componentes do enunciado; tipo `CoffeeTag[]`; validação de storage com Zod; script anti-flash de tema; timeout ViaCEP; configuração de testes e deploy. |
 | 1.2.0 | 17/11/2026 | Fidelidade ao Figma: `DELIVERY_FEE_CENTS = 350`, Phosphor Icons, tokens com nomes do Style Guide, ilustrações geradas com IA. |
 | 1.3.0 | 17/11/2026 | Tokens finais (light/dark) com ajustes WCAG AA e regras de combinação; utilities de tipografia e raio; teste automatizado de contraste. |
+| 1.4.0 | 18/11/2026 | Estrutura de diretórios conforme a implementação; rotas lazy; foco por rota; ViaCEP com contrato real; schema do pedido. |
 
 ## 1. Stack e justificativas
 
@@ -85,17 +86,17 @@ coffee-delivery/
 ├── README.md
 ├── index.html                    # script anti-flash de tema, fontes, favicon
 ├── vercel.json                   # rewrite SPA para deploy
+├── netlify.toml                  # alternativa de deploy (redirect SPA)
 ├── public/
-│   ├── favicon.svg
-│   └── brand/                    # logo e símbolo exportados
+│   └── favicon.svg               # provisório (TASK-005)
 ├── docs/
 │   ├── PRD_SPEC.md
 │   ├── TECH_SPEC.md
 │   ├── TASKS_SPEC.md
 │   ├── BRAND_GUIDE.md
 │   ├── AI_USAGE.md
-│   ├── figma/                    # exports de referência dos frames
-│   └── screenshots/
+│   ├── figma/                    # PDF, Style Guide e análise (README.md)
+│   └── screenshots/              # capturas usadas no README
 └── src/
     ├── main.tsx
     ├── app/
@@ -103,13 +104,17 @@ coffee-delivery/
     │   ├── router.tsx
     │   └── providers.tsx
     ├── assets/
-    │   ├── brand/                # logo light/dark usada no Header
-    │   └── coffees/              # imagens dos cafés
+    │   ├── brand/                # logo light/dark e símbolo (SVG provisórios)
+    │   ├── coffees/              # 14 fotos extraídas do Figma (WebP 256 px)
+    │   ├── hero/                 # ilustração (provisória) e fundo do hero
+    │   └── illustrations/        # entregador da tela de sucesso (provisório)
     ├── components/               # UI reutilizável e sem regra de domínio
     │   ├── PageLayout/
-    │   ├── Header/               # inclui CartBadge
+    │   ├── Header/               # Header, CartLink (badge), LocationChip
     │   ├── ThemeToggle/
     │   ├── QuantityInput/
+    │   ├── TextField/            # campo acessível do formulário
+    │   ├── PageLoading/          # fallback das rotas lazy
     │   └── EmptyState/
     ├── features/
     │   ├── catalog/
@@ -131,6 +136,7 @@ coffee-delivery/
     │   │   ├── services/viacep.ts
     │   │   └── pages/CheckoutPage.tsx
     │   ├── orders/
+    │   │   ├── orderSchema.ts    # contrato Zod do snapshot (criação, storage e navegação)
     │   │   ├── orderService.ts
     │   │   ├── orderStorage.ts
     │   │   ├── components/OrderSuccess.tsx
@@ -144,6 +150,9 @@ coffee-delivery/
     │   ├── types.ts
     │   ├── constants.ts
     │   └── pricing.ts
+    ├── hooks/
+    │   ├── useDocumentTitle.ts
+    │   └── useRouteFocus.ts      # foco no <main> a cada troca de rota
     ├── lib/
     │   ├── formatCurrency.ts
     │   ├── postalCode.ts         # normalização e máscara
@@ -153,7 +162,10 @@ coffee-delivery/
     │   └── index.css
     └── tests/
         ├── setup.ts              # jest-dom; limpa DOM, localStorage, data-theme e mocks
-        └── matchMedia.ts         # mock de prefers-color-scheme (jsdom não tem matchMedia)
+        ├── matchMedia.ts         # mock de prefers-color-scheme (jsdom não tem matchMedia)
+        ├── renderWithRouter.tsx  # app completo com router em memória
+        ├── viacepMock.ts         # fetch simulado da ViaCEP por CEP
+        └── purchaseFlow.test.tsx # aceitação ponta a ponta
 ```
 
 Testes unitários e de componentes ficam ao lado do módulo (`*.test.ts(x)`). Alterações nesta estrutura devem ser registradas aqui.

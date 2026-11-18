@@ -278,20 +278,20 @@ IDs estáveis, referenciados na TECH_SPEC e na TASKS_SPEC.
 - Demonstração breve do fluxo de compra.
 
 ## 11. Critérios de aceite gerais
-- [ ] RF-01 a RF-16 implementados e verificados.
-- [ ] RN-01 a RN-10 respeitadas.
-- [ ] Fluxo `/` → `/checkout` → `/success` concluído sem reload.
-- [ ] Carrinho persiste após refresh e o contador soma unidades.
-- [ ] Consulta real à ViaCEP preenche os campos em CEP válido.
-- [ ] CEP inválido, não encontrado e indisponibilidade tratados.
-- [ ] Snapshot correto após limpeza do carrinho e após refresh.
-- [ ] Nenhum pedido concluído com carrinho vazio ou dados inválidos.
-- [ ] Light/dark mode persiste e cobre todas as telas.
-- [ ] Layout verificado em 320, 375/390, 768 e 1280/1440 px.
-- [ ] `npm run test`, `npm run lint` e `npm run build` sem erros.
-- [ ] Logo no Header, favicon e documentação; seção Branding com IA completa.
-- [ ] `AI_USAGE.md` com ao menos três interações.
-- [ ] Deploy publicado com rotas SPA funcionando por URL direta.
+- [ ] RF-01 a RF-16 implementados e verificados. *(RF-16 parcial: logo e ilustrações provisórias até a TASK-032.)*
+- [x] RN-01 a RN-10 respeitadas.
+- [x] Fluxo `/` → `/checkout` → `/success` concluído sem reload.
+- [x] Carrinho persiste após refresh e o contador soma unidades.
+- [x] Consulta real à ViaCEP preenche os campos em CEP válido.
+- [x] CEP inválido, não encontrado e indisponibilidade tratados.
+- [x] Snapshot correto após limpeza do carrinho e após refresh.
+- [x] Nenhum pedido concluído com carrinho vazio ou dados inválidos.
+- [x] Light/dark mode persiste e cobre todas as telas.
+- [x] Layout verificado em 320, 375/390, 768 e 1280/1440 px.
+- [x] `npm run test`, `npm run lint` e `npm run build` sem erros.
+- [ ] Logo no Header, favicon e documentação; seção Branding com IA completa. *(Pendente: TASK-032.)*
+- [x] `AI_USAGE.md` com ao menos três interações.
+- [ ] Deploy publicado com rotas SPA funcionando por URL direta. *(Configuração pronta; publicação pendente: TASK-030.)*
 
 ## 12. Decisões de produto
 

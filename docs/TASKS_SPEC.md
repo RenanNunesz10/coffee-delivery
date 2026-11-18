@@ -318,14 +318,14 @@
   - **Commit:** `chore: prepare production deployment`
   - **Status:** Bloqueada
 
-- [ ] **TASK-031 — Finalizar documentação e evidências**
+- [x] **TASK-031 — Finalizar documentação e evidências**
   - **Objetivo:** README completo, screenshots, `AI_USAGE.md` com ≥ 3 interações e SPECs refletindo a implementação real.
   - **Requisitos:** RF-16; RN-08; PRD seções 9 e 10.
   - **Arquivos:** `README.md`, `docs/screenshots/*`, `docs/AI_USAGE.md`, `docs/BRAND_GUIDE.md`, SPECs.
   - **Critério de pronto:** README com objetivos, stack, instalação, scripts, decisões, Figma, branding, IA, deploy e screenshots (Home, Checkout, Sucesso e Dark Mode em mobile; desktop); instalação reproduzível.
   - **Teste/validação:** seguir o README em clone limpo.
   - **Commit:** `docs: document setup brand and implementation decisions`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 ## Registro de execução
 
@@ -361,6 +361,7 @@
 | 18/11/2026 | TASK-028 | Auditoria axe-core 4.10 (tags WCAG 2.0/2.1/2.2 A e AA, inclui contraste e tamanho de alvo) no Chrome headless em Home, Checkout vazio, Checkout com itens, Checkout com erros de validação, Sucesso e Sucesso sem pedido, nos dois temas: 0 violações. Teclado: Tab por todas as telas sem nenhum elemento focado sem contorno visível. Fluxo completo apenas com teclado em 390 px com a ViaCEP real: Enter/Espaço adicionam (anunciado), link do carrinho, CEP 90250440 preenchido pela API, foco no Número, pagamento por seta, confirmação, foco no `main`, Header "Carrinho vazio", pedido mantido após refresh, console sem erros. Melhoria: `useRouteFocus` move o foco para o conteúdo principal a cada troca de rota (teste novo). `npm run test`, `lint` e `build` OK. | `fix: improve keyboard and screen reader accessibility` |
 | 18/11/2026 | TASK-029 | Novo teste de aceitação `src/tests/purchaseFlow.test.tsx` (rotas, providers e storage reais; ViaCEP simulada): adicionar e acumular na Home, tema escuro, remover item no Checkout, resumo R$ 29,70 / 3,50 / 33,20, autofill do CEP, número, complemento, pagamento, confirmação, tela de sucesso, carrinho vazio, cidade no Header, refresh mantendo pedido e tema, e Checkout vazio depois da compra. Defeito corrigido: aviso de chunk > 500 kB (rotas lazy, commit `refactor: lazy load checkout and success routes`; testes ajustados para aguardar a navegação assíncrona). Navegador (`vite preview`): fluxo por teclado com ViaCEP real OK; acesso direto a `/`, `/checkout`, `/success` e rota inexistente sem avisos/erros de console; ViaCEP bloqueada → mensagem de falha, preenchimento manual e confirmação OK. `npm run test`: 26 arquivos, 245/245; `npm run lint` sem erros; `npm run build` OK. | `test: cover coffee delivery purchase flow` |
 | 18/11/2026 | TASK-030 | Preparado: `vercel.json` (build, `dist`, rewrite de todas as rotas para `index.html`) e `netlify.toml` (alternativa, redirect 200), `engines.node` igual ao exigido pelo Vite 8 (`^20.19.0 || >=22.12.0`), `.env` no `.gitignore`. Smoke test do build de produção com `vite preview`: `/`, `/checkout`, `/success` e rota inexistente por URL direta sem avisos/erros; ViaCEP real e bloqueada já verificadas na TASK-029. **Bloqueada:** a publicação exige a conta do aluno na Vercel/Netlify e o push para o GitHub (feito pelo aluno ao final); depois de publicar, repetir o smoke test no domínio e registrar o link no README. | `chore: prepare production deployment` |
+| 18/11/2026 | TASK-031 | README completo (funcionalidades por RF, screenshots mobile/desktop nos dois temas, stack com a justificativa do Tailwind, instalação e scripts, deploy, arquitetura e fluxo do estado, decisões, qualidade, branding, uso de IA, limitações); 12 screenshots em `docs/screenshots/` gerados no Chrome sobre o build de produção (checkout preenchido pela ViaCEP real); `AI_USAGE.md` com 10 interações (IA-06 a IA-10 novas, incluindo o erro de lint da IA e sua correção); TECH_SPEC 1.4.0 com a árvore de diretórios real; PRD §11 com critérios verificados marcados e pendências (TASK-030/032) indicadas. Validação: os 21 links e imagens locais do README existem; clone limpo do repositório em pasta temporária seguindo o README → `npm install` OK, `npm run test` 245/245, `npm run lint` OK, `npm run build` OK. | `docs: document setup brand and implementation decisions` |
 
 ## Definition of Done (global)
 

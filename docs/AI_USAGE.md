@@ -66,8 +66,51 @@ Princípios: a IA propõe, o aluno decide; nenhuma sugestão é aceita sem revis
 - **Decisão tomada:** TASK-002 e TASK-003 concluídas.
 - **Evidência:** commits `9f0d7d2` e `880d060`; registro de execução da TASKS_SPEC.
 
+### IA-06 — Contraste do Figma e acessibilidade dos tokens
+- **Data:** 17/11/2026 · **Tarefa:** TASK-006
+- **Prompt:** "Continue!" (execução da TASK-006: tokens e estilos globais).
+- **Objetivo:** transformar o Style Guide em tokens claros e escuros que atendam ao WCAG AA.
+- **Resposta resumida:** a IA calculou o contraste de cada combinação usada no Figma e encontrou 4 que reprovam o AA: texto branco no botão amarelo (2,1:1), descrição cinza (3,2:1), texto da tag (2,7:1) e número do badge (3,3:1). Propôs ajustes mínimos (texto escuro sobre amarelo, `base-label` mais escuro, tokens `yellow-ink`/`purple-ink`), criou uma paleta escura própria e um teste automatizado de contraste.
+- **Análise crítica:** a mudança altera o visual do Figma, então foi apresentada como decisão explícita, com um único token (`--on-yellow`) para reverter, em vez de ser aplicada em silêncio. O teste impede que um ajuste futuro de cor quebre o contraste sem ninguém perceber.
+- **Decisão tomada:** ajustes aceitos e registrados como divergência D10.
+- **Evidência:** commit `aa643d3`; `src/styles/tokens.test.ts`; `docs/figma/README.md`.
+
+### IA-07 — Context API + useReducer no carrinho
+- **Data:** 18/11/2026 · **Tarefas:** TASK-015 a TASK-017
+- **Prompt:** "Continue o restante do projeto e vá fazendo os commits".
+- **Objetivo:** implementar e entender o estado global do carrinho.
+- **Resposta resumida:** a IA separou as responsabilidades: o reducer puro decide como o estado muda, o Provider expõe ações e valores derivados e salva no `localStorage`, e o hook `useCart` dá acesso tipado. Explicou por que o carrinho é lido de forma **síncrona** no inicializador do `useReducer`: se fosse lido em um efeito, o primeiro salvamento gravaria o carrinho vazio por cima dos dados salvos. Os testes congelam o estado (`Object.freeze`) para provar que o reducer não o altera.
+- **Análise crítica:** conferi que ações inválidas devolvem o mesmo objeto (sem re-render) e que a leitura do storage aproveita os itens válidos em vez de descartar o carrinho inteiro.
+- **Decisão tomada:** arquitetura mantida como descrita na TECH_SPEC §5 e no README ("Fluxo do estado do carrinho").
+- **Evidência:** commits `c656570`, `b04122c` e `5ac4124`; `src/features/cart/*`.
+
+### IA-08 — Integração real com a ViaCEP
+- **Data:** 18/11/2026 · **Tarefas:** TASK-020 e TASK-021
+- **Prompt:** execução das tarefas de CEP conforme a TASKS_SPEC.
+- **Objetivo:** consulta real e robusta, com todos os casos de erro tratados.
+- **Resposta resumida:** a IA modelou o resultado como uma união com `success`, `invalid`, `not-found`, `error` (rede, timeout, HTTP, resposta inválida) e `aborted`, e validou a resposta com Zod. Antes de concluir, **conferiu o contrato na API real**: CEP inexistente responde HTTP 200 com `{"erro": "true"}` (string, não booleano) e CEP malformado responde HTTP 400 em HTML. A primeira requisição real não respondeu em 10 s, o que confirmou na prática a necessidade do timeout.
+- **Análise crítica:** o detalhe `"true"` como string não estava na especificação; sem a checagem real, CEPs inexistentes seriam tratados como "resposta inválida". O formulário ignora respostas atrasadas de um CEP antigo e limpa o endereço anterior ao trocar de CEP.
+- **Decisão tomada:** serviço e formulário aceitos; o contrato real foi registrado na TECH_SPEC §8.2.
+- **Evidência:** commits `71f3fb8` e `98859a4`; `src/features/checkout/services/viacep.test.ts`.
+
+### IA-09 — Erro da própria IA detectado pelo lint
+- **Data:** 18/11/2026 · **Tarefa:** TASK-021
+- **Prompt:** execução da TASK-021.
+- **Objetivo:** concluir o formulário de endereço sem erros de qualidade.
+- **Resposta resumida:** a IA fez o commit da TASK-021 com **1 erro de lint** (`react-hooks/refs`: um callback que lia refs era passado ao `register()` durante a renderização). O comando de verificação continuou mesmo com a falha, e o registro da tarefa dizia "lint sem erros". Ao notar o erro, a IA o relatou, corrigiu o código (handlers do CEP como props de evento), **corrigiu o registro na TASKS_SPEC** e criou um script que impede o commit quando teste, lint ou build falham.
+- **Análise crítica:** mostra por que não se aceita "passou" sem evidência: o resultado real do comando precisa ser conferido. A correção foi registrada com transparência, em vez de ser escondida em um commit amend.
+- **Decisão tomada:** correção aceita; todos os commits seguintes passaram pelo script de verificação.
+- **Evidência:** commits `98859a4` (com o erro) e `f3e2b34` (correção); linha da TASK-021 no registro de execução.
+
+### IA-10 — Revisão de responsividade, acessibilidade e desempenho
+- **Data:** 18/11/2026 · **Tarefas:** TASK-027 a TASK-029
+- **Prompt:** "continue de onde paramos".
+- **Objetivo:** verificar o produto como o usuário o usa, além dos testes unitários.
+- **Resposta resumida:** a IA automatizou o Chrome sobre o build de produção. Mediu a rolagem horizontal em 6 larguras, rodou o axe-core (WCAG 2.2 AA) em todas as telas e estados, percorreu o fluxo inteiro só com teclado usando a ViaCEP real e simulou a ViaCEP fora do ar. Encontrou e corrigiu: o nome do café encostando no preço em 320 px; a falta de gestão de foco ao trocar de rota (agora o foco vai para o conteúdo); e o aviso de bundle acima de 500 kB, resolvido com carregamento sob demanda das rotas de Checkout e Sucesso.
+- **Análise crítica:** o defeito de 320 px só apareceu com um carrinho de valores altos; testes com dados "bonitos" não o revelariam. Antes de otimizar, a IA mediu o que pesava no bundle e confirmou que os ícones não eram a causa.
+- **Decisão tomada:** correções aceitas; o axe-core e os scripts do navegador ficam fora do projeto (não são dependências), e os resultados estão no registro de execução.
+- **Evidência:** commits `77fee29`, `c13c83b`, `9771502` e `4971f02`.
+
 ## Próximos registros previstos
-- Explicação de Context API + `useReducer` aplicada ao carrinho (TASK-015/016).
-- Integração ViaCEP e tratamento de erros (TASK-020/021).
-- Geração da logo e das ilustrações com IA (TASK-032), com ferramenta, prompt e curadoria.
-- Depuração de defeitos encontrados nos testes integrados (TASK-029).
+- Geração da logo e das ilustrações com IA (TASK-032): ferramenta, prompt e curadoria.
+- Publicação e smoke test no domínio publicado (TASK-030).
