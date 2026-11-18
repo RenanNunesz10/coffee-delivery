@@ -65,14 +65,14 @@
 
 ### Fase 1 — Identidade e fundação visual
 
-- [ ] **TASK-005 — Criar identidade visual provisória em SVG**
+- [x] **TASK-005 — Criar identidade visual provisória em SVG**
   - **Objetivo:** criar logo, símbolo/favicon, ilustração do hero e ilustração de sucesso em SVG **provisórios**, coerentes com a paleta do Figma, para permitir visualizar o projeto enquanto as imagens finais com IA não ficam prontas (substituídas na TASK-032).
   - **Requisitos:** RF-16 (parcial), RF-14.
   - **Arquivos:** `public/favicon.svg`, `src/assets/brand/*`, `src/assets/hero/*`, `src/assets/illustrations/*`, `docs/BRAND_GUIDE.md` (rascunho: paleta, tipografia, lista de assets provisórios).
   - **Critério de pronto:** SVGs com mesmos nomes/dimensões que os assets finais terão; logo com variação light/dark; favicon legível em 16–48 px; assets marcados como provisórios no `BRAND_GUIDE.md`.
   - **Teste/validação:** visualização dos SVGs em tamanho pequeno e nos dois temas; `npm run build`.
   - **Commit:** `feat: add provisional svg brand assets`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-006 — Definir tokens e estilos globais**
   - **Objetivo:** tokens semânticos de cor (light/dark), tipografia (Baloo 2, Roboto), raios e sombras; integração com `@theme`.
@@ -335,6 +335,7 @@
 | 17/11/2026 | TASK-002 | Boilerplate do Vite removido; `App` em `src/app/`; `lang="pt-BR"` e título. `npm run build` OK (15 módulos, 219,65 kB JS); `npm run lint` sem erros; `vite` servindo `/` com HTTP 200, `lang="pt-BR"` e `<title>Coffee Delivery</title>`. | `chore: clean up vite scaffold and app structure` |
 | 17/11/2026 | TASK-003 | Instalados Tailwind CSS 4.3.5 (`@tailwindcss/vite`), Vitest 5.1.0, jsdom 29, Testing Library (react 16, user-event 14, jest-dom 7); `strict: true` explícito nos tsconfig; scripts `test`/`test:watch`. `npm run test`: 1 arquivo, 1 teste passou; `npm run lint` sem erros; `npm run build` OK (CSS 7,30 kB com classes Tailwind geradas); `vite` HTTP 200. `npm audit`: 0 vulnerabilidades em produção; 12 altas apenas em dependências de desenvolvimento (`picomatch`), sem correção não-breaking. | `chore: configure styling lint and test tooling` |
 | 17/11/2026 | TASK-004 | `docs/AI_USAGE.md` criado com modelo (prompt, objetivo, resposta, análise crítica, decisão, evidência) e 5 interações reais (IA-01 a IA-05) com commits de evidência conferidos em `git log`. | `docs: add ai usage log` |
+| 17/11/2026 | TASK-005 | Criados SVGs provisórios: símbolo, logo light/dark, favicon, ilustração do hero (substitui a foto com a logo original) e ilustração de sucesso; `BRAND_GUIDE.md` em rascunho. SVGs renderizados em PNG para revisão: favicon reconhecível em 16 e 96 px; logo legível em fundo claro e escuro; ilustrações sem cortes. `npm run build` OK, `npm run lint` sem erros, `npm run test` 1/1. | `feat: add provisional svg brand assets` |
 
 ## Definition of Done (global)
 

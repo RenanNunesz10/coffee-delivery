@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 492 293" width="492" height="293" role="img" aria-label="Entregador em uma scooter levando o pedido">
+  <!-- PROVISÓRIO (TASK-005): será substituído por ilustração criada com IA (TASK-032) -->
+  <line x1="30" y1="280" x2="476" y2="280" stroke="#D7D5D5" stroke-width="2" stroke-linecap="round"/>
+  <g stroke="#DBAC2C" stroke-width="4" stroke-linecap="round">
+    <line x1="150" y1="140" x2="230" y2="140"/>
+    <line x1="120" y1="165" x2="240" y2="165"/>
+    <line x1="165" y1="190" x2="245" y2="190"/>
+  </g>
+  <g fill="#4E8B3A">
+    <path d="M80 280c-6-40-30-60-48-64 18 18 30 40 40 64Z"/>
+    <path d="M84 280c0-48 14-78 32-90-8 26-16 56-24 90Z"/>
+    <path d="M88 280c10-34 30-50 50-52-18 14-30 32-40 52Z"/>
+  </g>
+  <g fill="#6FAF5B">
+    <path d="M82 280c-14-30-34-40-52-40 18 10 32 22 44 40Z"/>
+    <path d="M86 280c4-36 20-56 38-62-12 18-22 38-30 62Z"/>
+  </g>
+  <rect x="244" y="118" width="78" height="66" rx="6" fill="#C47F17"/>
+  <rect x="244" y="118" width="78" height="14" rx="6" fill="#DBAC2C"/>
+  <path d="M296 250c0-38 26-58 64-56l46 4c18 2 26 16 24 34v18Z" fill="#8047F8"/>
+  <rect x="352" y="232" width="66" height="14" rx="6" fill="#4B2995"/>
+  <path d="M410 234 434 148" stroke="#4B2995" stroke-width="11" stroke-linecap="round"/>
+  <path d="M424 146l28-6" stroke="#272221" stroke-width="7" stroke-linecap="round"/>
+  <path d="M412 232c14-10 34-10 46 2" stroke="#8047F8" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <rect x="300" y="182" width="66" height="14" rx="7" fill="#272221"/>
+  <circle cx="330" cy="252" r="27" fill="#272221"/><circle cx="330" cy="252" r="11" fill="#8D8686"/>
+  <circle cx="440" cy="252" r="27" fill="#272221"/><circle cx="440" cy="252" r="11" fill="#8D8686"/>
+  <path d="M342 186l40 6 8 40" stroke="#403937" stroke-width="15" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M384 236h20" stroke="#272221" stroke-width="9" stroke-linecap="round"/>
+  <path d="M340 180l18-62" stroke="#DBAC2C" stroke-width="30" stroke-linecap="round"/>
+  <path d="M362 126l38 12 28 4" stroke="#C68A5A" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M356 116l40 14" stroke="#DBAC2C" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="368" cy="84" r="17" fill="#C68A5A"/>
+  <path d="M350 82a18 18 0 0 1 36-4c-10-6-24-6-36 4Z" fill="#272221"/>
+</svg>

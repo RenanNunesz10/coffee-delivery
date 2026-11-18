@@ -111,7 +111,7 @@ As imagens foram extraídas do PDF exportado do Figma, associadas aos cafés pel
 ### 6.3 Outros assets
 | Asset | Situação |
 |---|---|
-| `src/assets/hero/hero-coffee.webp` | Extraído (952 px) apenas como referência: o copo exibe a logo original do desafio. Substituído por SVG provisório (TASK-005) e depois por versão com IA (TASK-032). |
+| `src/assets/hero/hero-illustration.svg` | SVG provisório (TASK-005) no lugar da foto do hero, que exibia a logo original do desafio. Versão final com IA na TASK-032. |
 | `src/assets/hero/hero-background.webp` | Fundo desfocado do hero, extraído (1440 px). Pode ser substituído por gradiente CSS. |
 | Ilustração do entregador (sucesso) | Vetorial, não extraída. SVG provisório (TASK-005); versão com IA (TASK-032). |
 | Logo original | Vetorial; não será usada (a marca própria será criada com IA, RF-16). |

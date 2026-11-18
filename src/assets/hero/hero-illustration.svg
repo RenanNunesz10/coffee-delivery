@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 476 360" width="476" height="360" role="img" aria-label="Copo de café para viagem cercado por grãos de café">
+  <!-- PROVISÓRIO (TASK-005): será substituído por imagem criada com IA (TASK-032) -->
+  <path d="M62 200C54 108 148 36 250 42c104 6 176 70 170 160-6 92-90 148-188 142C134 338 70 290 62 200Z" fill="none" stroke="#8047F8" stroke-width="1.5" opacity=".5"/>
+  <path d="M74 198C66 116 154 54 248 58c96 4 160 64 155 144-5 82-82 132-172 127C142 324 82 280 74 198Z" fill="#DBAC2C"/>
+  <g fill="#6B4226">
+    <ellipse cx="96" cy="262" rx="11" ry="7" transform="rotate(-25 96 262)"/>
+    <ellipse cx="118" cy="282" rx="11" ry="7" transform="rotate(20 118 282)"/>
+    <ellipse cx="84" cy="290" rx="11" ry="7" transform="rotate(60 84 290)"/>
+    <ellipse cx="370" cy="270" rx="12" ry="8" transform="rotate(30 370 270)"/>
+    <ellipse cx="396" cy="250" rx="12" ry="8" transform="rotate(-15 396 250)"/>
+    <ellipse cx="388" cy="292" rx="12" ry="8" transform="rotate(75 388 292)"/>
+    <ellipse cx="360" cy="110" rx="10" ry="6.5" transform="rotate(-40 360 110)"/>
+  </g>
+  <g stroke="#3B2414" stroke-width="2" stroke-linecap="round" fill="none">
+    <path d="M89 259q7 2 14 6"/><path d="M112 278q6 4 12 8"/><path d="M80 284q4 6 8 12"/>
+    <path d="M363 266q7 4 14 8"/><path d="M389 252q7-2 14-4"/><path d="M385 285q3 7 6 14"/><path d="M354 115q6-5 12-10"/>
+  </g>
+  <path d="M168 92h140l-15 232a10 10 0 0 1-10 9h-90a10 10 0 0 1-10-9Z" fill="#FAFAFA" stroke="#D7D5D5" stroke-width="2"/>
+  <path d="M173 158h130l-6 104H179Z" fill="#4B2995"/>
+  <g transform="translate(212 182) scale(1.7)">
+    <path d="M7 12h17l-1.7 13.2a2 2 0 0 1-2 1.8h-9.6a2 2 0 0 1-2-1.8Z" fill="#8047F8"/>
+    <path d="M7.7 16.5h15.6l-.6 4.8H8.3Z" fill="#DBAC2C"/>
+    <rect x="5.5" y="9" width="20" height="3.6" rx="1.6" fill="#EBE5F9"/>
+    <rect x="9" y="6" width="13" height="3.6" rx="1.6" fill="#EBE5F9"/>
+  </g>
+  <rect x="160" y="66" width="156" height="28" rx="10" fill="#272221"/>
+  <rect x="176" y="46" width="124" height="24" rx="9" fill="#403937"/>
+  <rect x="226" y="40" width="24" height="8" rx="3" fill="#272221"/>
+</svg>
