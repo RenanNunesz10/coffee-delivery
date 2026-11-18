@@ -148,14 +148,14 @@
   - **Commit:** `feat: build coffee cards and quantity input`
   - **Status:** Concluída
 
-- [ ] **TASK-014 — Montar Home**
+- [x] **TASK-014 — Montar Home**
   - **Objetivo:** Hero e `CoffeeCatalog` conforme Figma.
   - **Requisitos:** RF-01, RF-02, RF-15.
   - **Arquivos:** `src/features/catalog/pages/HomePage.tsx`, `src/features/catalog/components/*`.
   - **Critério de pronto:** catálogo completo e grid responsivo.
   - **Teste/validação:** inspeção em 320, 375, 768 e 1280 px.
   - **Commit:** `feat: implement coffee catalog home page`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 ### Fase 3 — Carrinho
 
@@ -344,6 +344,7 @@
 | 18/11/2026 | TASK-011 | `react-router` 7.18 instalado; rotas `/`, `/checkout`, `/success` e `*` → `/` com `PageLayout` (skip link, Header provisório, `main#conteudo`, `ScrollRestoration`), páginas placeholder e `useDocumentTitle`; utility `app-container`. `npm run test`: 121/121 (rotas: acesso direto às 3 URLs com título da aba, redirecionamento de rota desconhecida, navegação por link mantendo o mesmo Header montado, skip link); `lint` sem erros; `build` OK. | `feat: configure application routes` |
 | 18/11/2026 | TASK-012 | Header do Figma com logo por tema, `LocationChip` (só ícone abaixo de 640 px), `ThemeToggle` e `CartLink` com badge (oculto em zero, nome acessível "Carrinho, N itens"); Header fixo (decisão D11). `npm run test`: 127/127 (6 novos: link da logo, badge oculto/1/5 com singular e plural, localização condicional, troca de logo por tema); `lint` sem erros; `build` OK. Navegador: 320 e 1280 px nos dois temas sem overflow horizontal e sem erros de console. | `feat: add responsive application header` |
 | 18/11/2026 | TASK-013 | `QuantityInput` (−/+ rotulados "Diminuir/Aumentar quantidade de {café}", `output` com `aria-live`, diminuir desabilitável, só inteiros) e `CoffeeCard` (imagem, tags, nome, descrição, preço com `formatCurrencyParts`, quantidade inicial 1 sem descer abaixo de 1, botão "Adicionar N {café} ao carrinho", anúncio em `role=status` e ícone de confirmação por 2 s). `npx vitest` nos componentes: 7/7 (rótulos, clique, limite, teclado Enter/Espaço, dados do card, adicionar com reset para 1); `tsc` e `lint` sem erros. | `feat: build coffee cards and quantity input` |
+| 18/11/2026 | TASK-014 | Home com `Hero` (título, subtítulo, 4 benefícios com ícones decorativos, ilustração provisória, fundo desfocado do Figma com máscara) e `CoffeeCatalog` (grade `auto-fill` de 16 rem: 1/2/4 colunas). `npm run test`: 129/129 (Home: hero e benefícios; 14 cafés renderizados; rotas atualizadas para o novo h1); `lint` sem erros; `build` OK. Navegador: 320, 768 e 1440 px nos dois temas sem overflow horizontal e sem erros de console; desktop confere com o Figma (4 colunas, hero em 2 colunas). | `feat: implement coffee catalog home page` |
 
 ## Definition of Done (global)
 

@@ -3,9 +3,11 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { renderApp } from '../tests/renderWithRouter'
 
+const HOME_HEADING = 'Encontre o café perfeito para qualquer hora do dia'
+
 describe('rotas', () => {
   it.each([
-    ['/', 'Nossos cafés', 'Coffee Delivery'],
+    ['/', 'Encontre o café perfeito para qualquer hora do dia', 'Coffee Delivery'],
     ['/checkout', 'Complete seu pedido', 'Checkout | Coffee Delivery'],
     ['/success', 'Uhu! Pedido confirmado', 'Pedido confirmado | Coffee Delivery'],
   ])('acesso direto a %s mostra a página certa', async (path, heading, title) => {
@@ -18,14 +20,14 @@ describe('rotas', () => {
   it('redireciona rotas desconhecidas para a Home', async () => {
     const { router } = renderApp('/rota-que-nao-existe')
 
-    expect(await screen.findByRole('heading', { level: 1, name: 'Nossos cafés' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: HOME_HEADING })).toBeInTheDocument()
     expect(router.state.location.pathname).toBe('/')
   })
 
   it('navega pelo link sem recarregar a página (SPA)', async () => {
     const user = userEvent.setup()
     const { router } = renderApp('/')
-    const homeHeading = await screen.findByRole('heading', { level: 1, name: 'Nossos cafés' })
+    const homeHeading = await screen.findByRole('heading', { level: 1, name: HOME_HEADING })
     const header = screen.getByRole('banner')
 
     await user.click(screen.getByRole('link', { name: /carrinho/i }))

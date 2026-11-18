@@ -6,7 +6,7 @@ describe('App', () => {
   it('monta providers e router reais e abre na Home', async () => {
     render(<App />)
 
-    expect(await screen.findByRole('heading', { level: 1, name: 'Nossos cafés' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { level: 1, name: /Encontre o café perfeito/ })).toBeInTheDocument()
     expect(screen.getByRole('banner')).toBeInTheDocument()
   })
 })

@@ -1,13 +1,16 @@
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle'
+import { CoffeeCatalog } from '../components/CoffeeCatalog'
+import { Hero } from '../components/Hero'
+import { COFFEES } from '../data/coffees'
 
+/** Home: apresentação + catálogo (RF-01, RF-02). A adição ao carrinho é conectada na TASK-017. */
 export function HomePage() {
   useDocumentTitle()
 
   return (
-    <section aria-labelledby="catalogo-titulo">
-      <h1 id="catalogo-titulo" className="text-title-l text-base-subtitle">
-        Nossos cafés
-      </h1>
-    </section>
+    <>
+      <Hero />
+      <CoffeeCatalog coffees={COFFEES} onAdd={() => {}} />
+    </>
   )
 }
