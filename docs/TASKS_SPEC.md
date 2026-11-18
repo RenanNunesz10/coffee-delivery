@@ -197,14 +197,14 @@
 
 ### Fase 4 — Checkout
 
-- [ ] **TASK-019 — Definir schema do checkout**
+- [x] **TASK-019 — Definir schema do checkout**
   - **Objetivo:** schema Zod de endereço e pagamento; utilitário de CEP.
   - **Requisitos:** RF-08, RF-09, RF-11; RN-07, RN-10.
   - **Arquivos:** `src/features/checkout/schemas/checkoutSchema.ts`, `src/lib/postalCode.ts`.
   - **Critério de pronto:** obrigatórios, CEP, UF e pagamento validados; complemento opcional.
   - **Teste/validação:** testes de schema válidos e inválidos.
   - **Commit:** `feat: add checkout form validation schemas`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-020 — Integrar consulta ViaCEP**
   - **Objetivo:** `lookupPostalCode` com timeout, validação de resposta e resultados discriminados.
@@ -349,6 +349,7 @@
 | 18/11/2026 | TASK-016 | `CartProvider` (useReducer com hidratação síncrona via `loadCart`, persistência em efeito, `useMemo` com `detailedItems`, `invalidItemIds`, `totalUnits`, subtotal, frete e total; ações estáveis com `useCallback`), `useCart`, `lib/storage.ts` (`readJson` com Zod, `writeJson`, `removeKey`, sem exceções) e `cartStorage.ts` (valida item a item, descarta café inexistente e junta duplicados). Instalados zod 4.6, react-hook-form 7.92 e @hookform/resolvers 7.0 (os dois últimos usados a partir da TASK-019); `npm audit`: 0 vulnerabilidades. `npm run test`: 142/142 (13 novos: storage vazio/válido/JSON corrompido/formato incompatível/itens parcialmente válidos/duplicados/storage bloqueado; Provider: valores derivados, ações, persistência a cada mudança, hidratação sem sobrescrever, erro fora do Provider); `lint` sem erros; `build` OK. | `feat: add persistent cart context` |
 | 18/11/2026 | TASK-017 | `HomePage` usa `addItem` do contexto e `PageLayout` passa `totalUnits` ao Header. `npm run test`: 144/144 (integração com rotas reais: 2 Latte + 1 Latte + 1 Cubano → uma linha de Latte com 3, badge "Carrinho, 4 itens" e storage correto; carrinho salvo aparece no Header ao montar); `lint` sem erros; `build` OK. | `feat: connect catalog to cart state` |
 | 18/11/2026 | TASK-018 | `CartItem` (imagem, nome, `QuantityInput` pequeno, "Remover" com nome acessível, valor da linha), `CartSummary` (`dl` com total de itens, entrega e total; botão submit "Confirmar pedido") e `EmptyState` reutilizável. `npm run test`: 149/149 (5 novos: exemplo do Figma 9,90 + 19,80 → R$ 29,70 / 3,50 / 33,20; incremento e decremento atualizam o total na hora; decremento de 1 remove e zera o frete; Remover direto; estado vazio com link para a Home); `lint` sem erros; `build` OK. | `feat: add cart item management and order summary` |
+| 18/11/2026 | TASK-019 | `checkoutSchema` (Zod 4) com CEP normalizado para 8 dígitos, rua/número/bairro/cidade obrigatórios, complemento opcional, UF em maiúsculas validada contra `BRAZILIAN_STATES` e `paymentMethod` contra `PAYMENT_METHODS`; tipos `CheckoutFormInput`/`CheckoutFormData` inferidos; `toDeliveryAddress`; `lib/postalCode.ts` (normalizar, validar completo, máscara progressiva). `npx vitest`: 30/30 (válido do Figma, complemento, 4 CEPs malformados, 4 obrigatórios, UF minúscula, 4 UFs inválidas, 3 pagamentos válidos, 3 ausentes/inválidos, máscara); `tsc`, `lint` e `build` OK. | `feat: add checkout form validation schemas` |
 
 ## Definition of Done (global)
 
