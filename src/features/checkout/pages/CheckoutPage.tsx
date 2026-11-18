@@ -1,11 +1,15 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ShoppingCartIcon, WarningCircleIcon } from '@phosphor-icons/react'
+import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router'
 import { EmptyState } from '../../../components/EmptyState/EmptyState'
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle'
 import { CartItem } from '../../cart/components/CartItem'
 import { CartSummary } from '../../cart/components/CartSummary'
 import { useCart } from '../../cart/useCart'
+import { createOrder, type CreateOrderResult } from '../../orders/orderService'
+import { saveLastOrder } from '../../orders/orderStorage'
 import { DeliveryAddressForm } from '../components/DeliveryAddressForm'
 import { PaymentMethodSelector } from '../components/PaymentMethodSelector'
 import {
@@ -13,12 +17,21 @@ import {
   checkoutSchema,
   type CheckoutFormData,
   type CheckoutFormInput,
+  toDeliveryAddress,
 } from '../schemas/checkoutSchema'
+
+const CONFIRMATION_ERRORS: Record<Exclude<CreateOrderResult, { ok: true }>['reason'], string> = {
+  'empty-cart': 'Seu carrinho está vazio. Adicione cafés para confirmar o pedido.',
+  'invalid-items': 'Alguns cafés do carrinho não estão mais disponíveis. Remova-os para continuar.',
+  'invalid-order': 'Não foi possível confirmar o pedido. Revise os dados e tente novamente.',
+}
 
 /** Checkout (RF-05, RF-08 a RF-11): revisão do carrinho, endereço, pagamento e confirmação. */
 export function CheckoutPage() {
   useDocumentTitle('Checkout')
   const cart = useCart()
+  const navigate = useNavigate()
+  const [confirmationError, setConfirmationError] = useState<string | null>(null)
   const form = useForm<CheckoutFormInput, unknown, CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: CHECKOUT_DEFAULT_VALUES,
@@ -41,8 +54,29 @@ export function CheckoutPage() {
     )
   }
 
-  // A confirmação do pedido (snapshot, limpeza do carrinho e navegação) é implementada na TASK-025.
-  const handleConfirm = () => {}
+  /**
+   * Confirmação (RF-12, RF-13, RN-06, RN-10). Só roda com o formulário válido, mas revalida
+   * carrinho, itens e endereço em createOrder: não confia apenas no estado do botão.
+   * Ordem importa: o snapshot é salvo ANTES de limpar o carrinho.
+   */
+  function handleConfirm(data: CheckoutFormData) {
+    const result = createOrder({
+      items: cart.items,
+      address: toDeliveryAddress(data),
+      paymentMethod: data.paymentMethod,
+    })
+
+    if (!result.ok) {
+      setConfirmationError(CONFIRMATION_ERRORS[result.reason])
+      return
+    }
+
+    setConfirmationError(null)
+    // Se o storage estiver indisponível, o snapshot ainda segue pelo estado da navegação.
+    saveLastOrder(result.order)
+    cart.clearCart()
+    navigate('/success', { replace: true, state: { order: result.order } })
+  }
 
   return (
     <FormProvider {...form}>
@@ -75,10 +109,10 @@ export function CheckoutPage() {
               ))}
             </ul>
 
-            {isSubmitted && !isValid && (
+            {(confirmationError || (isSubmitted && !isValid)) && (
               <p role="alert" className="mt-6 flex items-center gap-2 text-s text-danger">
                 <WarningCircleIcon size={18} weight="fill" aria-hidden="true" className="shrink-0" />
-                Revise os campos destacados para confirmar o pedido.
+                {confirmationError ?? 'Revise os campos destacados para confirmar o pedido.'}
               </p>
             )}
 

@@ -253,14 +253,14 @@
   - **Commit:** `feat: create independent order snapshot`
   - **Status:** Concluída
 
-- [ ] **TASK-025 — Implementar confirmação do pedido**
+- [x] **TASK-025 — Implementar confirmação do pedido**
   - **Objetivo:** revalidar, salvar snapshot, limpar carrinho e navegar para `/success`.
   - **Requisitos:** RF-11, RF-12, RF-13; RN-06, RN-10.
   - **Arquivos:** `CheckoutPage`, `orderService`, `CartContext`.
   - **Critério de pronto:** somente pedido válido é salvo; snapshot gravado antes da limpeza.
   - **Teste/validação:** pedido válido, carrinho vazio e produto inexistente.
   - **Commit:** `feat: confirm valid orders and clear cart`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-026 — Criar SuccessPage**
   - **Objetivo:** `OrderSuccess` com endereço, previsão e pagamento; estado vazio sem pedido.
@@ -355,6 +355,7 @@
 | 18/11/2026 | TASK-022 | `PaymentMethodSelector` com rádios nativos estilizados (borda `purple` + fundo `purple-light` quando selecionado, anel de foco no cartão, ícones Phosphor do Figma), `fieldset`/`legend` e erro ligado por `aria-describedby`. `npm run test`: todos passando (7 novos: três opções sem seleção inicial, obrigatoriedade com descrição acessível, aceite de crédito/débito/dinheiro, setas do teclado, nenhum campo de cartão); `lint` sem erros; `build` OK, variantes `has-checked`/`has-focus-visible` presentes no CSS gerado. | `feat: add checkout payment method selection` |
 | 18/11/2026 | TASK-023 | `CheckoutPage` com `FormProvider` envolvendo endereço, pagamento, itens (`CartItem`) e `CartSummary`; layout em 2 colunas (40 rem + 28 rem) no desktop e empilhado no celular; estado vazio com h1 "Seu carrinho está vazio"; alerta `role=alert` e foco no primeiro campo inválido ao enviar com erros. `npm run test`: todos passando (4 novos: estado vazio e link para a Home, seções e total R$ 33,20 do Figma, bloqueio com formulário inválido mantendo a rota e descrevendo erros, remoção do último item volta ao estado vazio; teste de rota atualizado); `lint` sem erros; `build` OK. Navegador com carrinho do Figma: 375 e 1440 px nos dois temas, sem overflow horizontal e sem erros de console; desktop confere com o frame de Checkout. | `feat: implement checkout page` |
 | 18/11/2026 | TASK-024 | `orderSchema` (Zod: itens, endereço, pagamento, ISO datetime e consistência subtotal/total), `createOrder` (revalida carrinho vazio, café inexistente e quantidade inválida; copia nome/preço/imagem; congela pedido, itens e endereço; ID por `crypto.randomUUID`) e `orderStorage` (`saveLastOrder`/`readLastOrder` em `coffee-delivery:last-order:v1`). `npm run test`: todos passando (17 novos: snapshot completo com R$ 33,20; independência após mutar carrinho e catálogo; congelamento; carrinho vazio; café inexistente; quantidade 0; endereço inválido; IDs únicos; salvar/ler; chave separada; ausência; JSON corrompido; totais adulterados; 4 valores inválidos em `parseOrder`); `lint` sem erros; `build` OK. | `feat: create independent order snapshot` |
+| 18/11/2026 | TASK-025 | `CheckoutPage.handleConfirm`: revalida via `createOrder` (carrinho vazio, café inexistente, quantidade, endereço), exibe erro `role=alert` se falhar, grava o snapshot com `saveLastOrder` ANTES de `clearCart` e navega para `/success` com `replace` e o pedido no estado da navegação. `npm run test`: todos passando (4 novos de integração com ViaCEP simulada: fluxo válido salva pedido R$ 33,20 com endereço do Figma, esvazia carrinho e badge e navega; ordem das gravações no storage (pedido antes do carrinho); confirmação com storage indisponível segue com o snapshot no estado; formulário inválido não grava pedido nem limpa carrinho). Carrinho vazio e café inexistente cobertos nos testes unitários de `createOrder` (a interface não permite chegar a esses estados). `lint` sem erros; `build` OK. | `feat: confirm valid orders and clear cart` |
 
 ## Definition of Done (global)
 

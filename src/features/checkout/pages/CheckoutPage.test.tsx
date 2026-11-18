@@ -1,8 +1,9 @@
 import { screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { STORAGE_KEYS } from '../../../domain/constants'
 import { renderApp } from '../../../tests/renderWithRouter'
+import { FIGMA_VIACEP_RESPONSE, mockViaCep } from '../../../tests/viacepMock'
 
 function withCart(items: { coffeeId: string; quantity: number }[]) {
   localStorage.setItem(STORAGE_KEYS.cart, JSON.stringify({ items }))
@@ -59,5 +60,90 @@ describe('CheckoutPage', () => {
 
     expect(screen.getByRole('heading', { level: 1, name: 'Seu carrinho está vazio' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Carrinho vazio' })).toBeInTheDocument()
+  })
+})
+
+describe('CheckoutPage: confirmação do pedido', () => {
+  async function fillValidCheckout(user: ReturnType<typeof userEvent.setup>) {
+    await user.type(await screen.findByLabelText('CEP'), '90250440')
+    await screen.findByText(/Endereço encontrado/)
+    await user.type(screen.getByLabelText('Número'), '102')
+    await user.click(screen.getByRole('radio', { name: 'Cartão de crédito' }))
+  }
+
+  it('salva o snapshot, limpa o carrinho e navega para /success (RF-12, RF-13)', async () => {
+    const user = userEvent.setup()
+    mockViaCep({ '90250440': { body: FIGMA_VIACEP_RESPONSE } })
+    withCart([
+      { coffeeId: 'expresso-tradicional', quantity: 1 },
+      { coffeeId: 'latte', quantity: 2 },
+    ])
+    const { router } = renderApp('/checkout')
+    await fillValidCheckout(user)
+
+    await user.click(screen.getByRole('button', { name: 'Confirmar pedido' }))
+
+    expect(router.state.location.pathname).toBe('/success')
+    const order = JSON.parse(localStorage.getItem(STORAGE_KEYS.lastOrder) ?? 'null')
+    expect(order).toMatchObject({
+      items: [
+        { coffeeId: 'expresso-tradicional', quantity: 1 },
+        { coffeeId: 'latte', quantity: 2 },
+      ],
+      address: { postalCode: '90250440', street: 'Rua João Daniel Martinelli', number: '102', city: 'Porto Alegre', state: 'RS' },
+      paymentMethod: 'credit',
+      subtotalCents: 2970,
+      deliveryFeeCents: 350,
+      totalCents: 3320,
+    })
+    expect(JSON.parse(localStorage.getItem(STORAGE_KEYS.cart) ?? 'null')).toEqual({ items: [] })
+    expect(screen.getByRole('link', { name: 'Carrinho vazio' })).toBeInTheDocument()
+    expect(router.state.location.state).toEqual({ order })
+  })
+
+  it('grava o snapshot antes de limpar o carrinho (RN-06)', async () => {
+    const user = userEvent.setup()
+    mockViaCep({ '90250440': { body: FIGMA_VIACEP_RESPONSE } })
+    withCart([{ coffeeId: 'latte', quantity: 1 }])
+    renderApp('/checkout')
+    await fillValidCheckout(user)
+    const writes: string[] = []
+    const originalSetItem = Storage.prototype.setItem
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(function (this: Storage, key: string, value: string) {
+      writes.push(key)
+      originalSetItem.call(this, key, value)
+    })
+
+    await user.click(screen.getByRole('button', { name: 'Confirmar pedido' }))
+
+    expect(writes.indexOf(STORAGE_KEYS.lastOrder)).toBeGreaterThanOrEqual(0)
+    expect(writes.indexOf(STORAGE_KEYS.lastOrder)).toBeLessThan(writes.lastIndexOf(STORAGE_KEYS.cart))
+  })
+
+  it('confirma mesmo com localStorage indisponível, levando o snapshot pela navegação', async () => {
+    const user = userEvent.setup()
+    mockViaCep({ '90250440': { body: FIGMA_VIACEP_RESPONSE } })
+    withCart([{ coffeeId: 'latte', quantity: 1 }])
+    const { router } = renderApp('/checkout')
+    await fillValidCheckout(user)
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('cota cheia')
+    })
+
+    await user.click(screen.getByRole('button', { name: 'Confirmar pedido' }))
+
+    expect(router.state.location.pathname).toBe('/success')
+    expect(router.state.location.state).toMatchObject({ order: { paymentMethod: 'credit', totalCents: 1340 } })
+  })
+
+  it('não salva pedido nem limpa o carrinho com formulário inválido (RN-10)', async () => {
+    const user = userEvent.setup()
+    withCart([{ coffeeId: 'latte', quantity: 1 }])
+    renderApp('/checkout')
+
+    await user.click(await screen.findByRole('button', { name: 'Confirmar pedido' }))
+
+    expect(localStorage.getItem(STORAGE_KEYS.lastOrder)).toBeNull()
+    expect(JSON.parse(localStorage.getItem(STORAGE_KEYS.cart) ?? 'null')).toEqual({ items: [{ coffeeId: 'latte', quantity: 1 }] })
   })
 })
