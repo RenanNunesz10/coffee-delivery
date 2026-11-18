@@ -139,14 +139,14 @@
   - **Commit:** `feat: add responsive application header`
   - **Status:** Concluída
 
-- [ ] **TASK-013 — Implementar QuantityInput e CoffeeCard**
+- [x] **TASK-013 — Implementar QuantityInput e CoffeeCard**
   - **Objetivo:** card do café e controle de quantidade acessível.
   - **Requisitos:** RF-01, RF-02, RF-15.
   - **Arquivos:** `src/components/QuantityInput/*`, `src/features/catalog/components/CoffeeCard.tsx`.
   - **Critério de pronto:** dados do café exibidos; quantidade ≥ 1; operável por mouse e teclado.
   - **Teste/validação:** testes de incremento/decremento, limite e rótulos acessíveis.
   - **Commit:** `feat: build coffee cards and quantity input`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-014 — Montar Home**
   - **Objetivo:** Hero e `CoffeeCatalog` conforme Figma.
@@ -343,6 +343,7 @@
 | 18/11/2026 | TASK-010 | `pricing.ts` (linha, subtotal, frete, total, itens inválidos, contagem de unidades) e `formatCurrency`/`formatCurrencyParts`. `npm run test`: 92/92 (14 novos: soma em centavos, 0,10 × 3 sem erro de float, frete 0/350, carrinho vazio, exemplo do Figma R$ 33,20, item inexistente reportado, unidades × tipos, formatos BRL incl. milhar); `lint` sem erros; `build` OK. | `feat: centralize monetary calculations and delivery fee` |
 | 18/11/2026 | TASK-011 | `react-router` 7.18 instalado; rotas `/`, `/checkout`, `/success` e `*` → `/` com `PageLayout` (skip link, Header provisório, `main#conteudo`, `ScrollRestoration`), páginas placeholder e `useDocumentTitle`; utility `app-container`. `npm run test`: 121/121 (rotas: acesso direto às 3 URLs com título da aba, redirecionamento de rota desconhecida, navegação por link mantendo o mesmo Header montado, skip link); `lint` sem erros; `build` OK. | `feat: configure application routes` |
 | 18/11/2026 | TASK-012 | Header do Figma com logo por tema, `LocationChip` (só ícone abaixo de 640 px), `ThemeToggle` e `CartLink` com badge (oculto em zero, nome acessível "Carrinho, N itens"); Header fixo (decisão D11). `npm run test`: 127/127 (6 novos: link da logo, badge oculto/1/5 com singular e plural, localização condicional, troca de logo por tema); `lint` sem erros; `build` OK. Navegador: 320 e 1280 px nos dois temas sem overflow horizontal e sem erros de console. | `feat: add responsive application header` |
+| 18/11/2026 | TASK-013 | `QuantityInput` (−/+ rotulados "Diminuir/Aumentar quantidade de {café}", `output` com `aria-live`, diminuir desabilitável, só inteiros) e `CoffeeCard` (imagem, tags, nome, descrição, preço com `formatCurrencyParts`, quantidade inicial 1 sem descer abaixo de 1, botão "Adicionar N {café} ao carrinho", anúncio em `role=status` e ícone de confirmação por 2 s). `npx vitest` nos componentes: 7/7 (rótulos, clique, limite, teclado Enter/Espaço, dados do card, adicionar com reset para 1); `tsc` e `lint` sem erros. | `feat: build coffee cards and quantity input` |
 
 ## Definition of Done (global)
 
