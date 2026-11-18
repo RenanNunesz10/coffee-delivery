@@ -1,8 +1,11 @@
 import { Outlet, ScrollRestoration } from 'react-router'
+import { useCart } from '../../features/cart/useCart'
 import { Header } from '../Header/Header'
 
 /** Estrutura comum das rotas: link de pular, Header e conteúdo da página (RF-07). */
 export function PageLayout() {
+  const { totalUnits } = useCart()
+
   return (
     <>
       <a
@@ -11,8 +14,8 @@ export function PageLayout() {
       >
         Pular para o conteúdo
       </a>
-      {/* Unidades do carrinho e localização são conectadas nas TASK-017 e TASK-026. */}
-      <Header cartUnits={0} />
+      {/* A localização do último pedido é conectada na TASK-026. */}
+      <Header cartUnits={totalUnits} />
       <main id="conteudo" tabIndex={-1} className="app-container pb-16 outline-none">
         <Outlet />
       </main>

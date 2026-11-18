@@ -177,14 +177,14 @@
   - **Commit:** `feat: add persistent cart context`
   - **Status:** Concluída
 
-- [ ] **TASK-017 — Integrar adicionar ao carrinho e contador**
+- [x] **TASK-017 — Integrar adicionar ao carrinho e contador**
   - **Objetivo:** conectar `CoffeeCard` ao contexto e `CartBadge` a `totalUnits`; feedback acessível ao adicionar.
   - **Requisitos:** RF-02, RF-03, RF-04; RN-02.
   - **Arquivos:** `CoffeeCard`, `Header`, `useCart`.
   - **Critério de pronto:** adicionar o mesmo café acumula; contador soma unidades.
   - **Teste/validação:** teste de integração com itens iguais e diferentes.
   - **Commit:** `feat: connect catalog to cart state`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-018 — Criar componentes de revisão do carrinho**
   - **Objetivo:** `CartItem`, `CartSummary` e `EmptyState`.
@@ -347,6 +347,7 @@
 | 18/11/2026 | TASK-014 | Home com `Hero` (título, subtítulo, 4 benefícios com ícones decorativos, ilustração provisória, fundo desfocado do Figma com máscara) e `CoffeeCatalog` (grade `auto-fill` de 16 rem: 1/2/4 colunas). `npm run test`: 129/129 (Home: hero e benefícios; 14 cafés renderizados; rotas atualizadas para o novo h1); `lint` sem erros; `build` OK. Navegador: 320, 768 e 1440 px nos dois temas sem overflow horizontal e sem erros de console; desktop confere com o Figma (4 colunas, hero em 2 colunas). | `feat: implement coffee catalog home page` |
 | 18/11/2026 | TASK-015 | `cartReducer` puro e imutável com `ADD_ITEM` (acumula na mesma linha; ignora quantidade não inteira/< 1 e café fora do catálogo), `INCREMENT_ITEM`, `DECREMENT_ITEM` (remove ao chegar a 0), `REMOVE_ITEM` e `CLEAR_CART`; ações sem efeito devolvem a mesma referência. `npx vitest run src/features/cart`: 16/16, com estados congelados (`Object.freeze`) provando a imutabilidade; `tsc` e `lint` sem erros. | `feat: implement cart reducer and actions` |
 | 18/11/2026 | TASK-016 | `CartProvider` (useReducer com hidratação síncrona via `loadCart`, persistência em efeito, `useMemo` com `detailedItems`, `invalidItemIds`, `totalUnits`, subtotal, frete e total; ações estáveis com `useCallback`), `useCart`, `lib/storage.ts` (`readJson` com Zod, `writeJson`, `removeKey`, sem exceções) e `cartStorage.ts` (valida item a item, descarta café inexistente e junta duplicados). Instalados zod 4.6, react-hook-form 7.92 e @hookform/resolvers 7.0 (os dois últimos usados a partir da TASK-019); `npm audit`: 0 vulnerabilidades. `npm run test`: 142/142 (13 novos: storage vazio/válido/JSON corrompido/formato incompatível/itens parcialmente válidos/duplicados/storage bloqueado; Provider: valores derivados, ações, persistência a cada mudança, hidratação sem sobrescrever, erro fora do Provider); `lint` sem erros; `build` OK. | `feat: add persistent cart context` |
+| 18/11/2026 | TASK-017 | `HomePage` usa `addItem` do contexto e `PageLayout` passa `totalUnits` ao Header. `npm run test`: 144/144 (integração com rotas reais: 2 Latte + 1 Latte + 1 Cubano → uma linha de Latte com 3, badge "Carrinho, 4 itens" e storage correto; carrinho salvo aparece no Header ao montar); `lint` sem erros; `build` OK. | `feat: connect catalog to cart state` |
 
 ## Definition of Done (global)
 

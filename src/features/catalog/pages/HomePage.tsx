@@ -1,16 +1,18 @@
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle'
+import { useCart } from '../../cart/useCart'
 import { CoffeeCatalog } from '../components/CoffeeCatalog'
 import { Hero } from '../components/Hero'
 import { COFFEES } from '../data/coffees'
 
-/** Home: apresentação + catálogo (RF-01, RF-02). A adição ao carrinho é conectada na TASK-017. */
+/** Home: apresentação + catálogo conectado ao carrinho (RF-01 a RF-04). */
 export function HomePage() {
   useDocumentTitle()
+  const { addItem } = useCart()
 
   return (
     <>
       <Hero />
-      <CoffeeCatalog coffees={COFFEES} onAdd={() => {}} />
+      <CoffeeCatalog coffees={COFFEES} onAdd={addItem} />
     </>
   )
 }
