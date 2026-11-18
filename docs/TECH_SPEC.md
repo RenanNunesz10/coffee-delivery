@@ -135,7 +135,8 @@ coffee-delivery/
     │   │   ├── components/OrderSuccess.tsx
     │   │   └── pages/SuccessPage.tsx
     │   └── theme/
-    │       ├── ThemeContext.tsx
+    │       ├── themeContext.ts   # createContext (separado do Provider por causa do react-refresh)
+    │       ├── ThemeProvider.tsx
     │       ├── themeStorage.ts
     │       └── useTheme.ts
     ├── domain/
@@ -150,7 +151,8 @@ coffee-delivery/
     │   ├── tokens.css
     │   └── index.css
     └── tests/
-        └── setup.ts              # jest-dom, limpeza de localStorage
+        ├── setup.ts              # jest-dom; limpa DOM, localStorage, data-theme e mocks
+        └── matchMedia.ts         # mock de prefers-color-scheme (jsdom não tem matchMedia)
 ```
 
 Testes unitários e de componentes ficam ao lado do módulo (`*.test.ts(x)`). Alterações nesta estrutura devem ser registradas aqui.

@@ -5,6 +5,25 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Coffee Delivery: escolha seu café e receba onde estiver." />
+    <!--
+      Aplica o tema antes do primeiro paint para evitar "flash" do tema errado (RF-14).
+      Mesma regra de src/features/theme/themeStorage.ts: escolha salva > preferência do sistema.
+      A chave deve ser igual a STORAGE_KEYS.theme (src/domain/constants.ts).
+    -->
+    <script>
+      ;(function () {
+        var theme = 'light'
+        try {
+          var stored = localStorage.getItem('coffee-delivery:theme:v1')
+          if (stored === 'light' || stored === 'dark') {
+            theme = stored
+          } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            theme = 'dark'
+          }
+        } catch (error) {}
+        document.documentElement.dataset.theme = theme
+      })()
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
