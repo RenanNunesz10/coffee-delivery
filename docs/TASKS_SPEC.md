@@ -130,14 +130,14 @@
   - **Commit:** `feat: configure application routes`
   - **Status:** Concluída
 
-- [ ] **TASK-012 — Criar Header responsivo**
+- [x] **TASK-012 — Criar Header responsivo**
   - **Objetivo:** logo, indicador de localização, `ThemeToggle` e link do carrinho com `CartBadge`.
   - **Requisitos:** RF-04, RF-14, RF-15, RF-16.
   - **Arquivos:** `src/components/Header/*`.
   - **Critério de pronto:** Header fiel ao Figma, adaptado a 320 px; badge oculto quando zero.
   - **Teste/validação:** teste do badge com valores; verificação responsiva.
   - **Commit:** `feat: add responsive application header`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-013 — Implementar QuantityInput e CoffeeCard**
   - **Objetivo:** card do café e controle de quantidade acessível.
@@ -342,6 +342,7 @@
 | 18/11/2026 | TASK-009 | `coffees.ts` com os 14 cafés do Figma (textos, tags, 990 centavos, imagens WebP) e helpers `findCoffee`/`isKnownCoffee`. `npm run test`: 78/78 (18 novos: quantidade, IDs únicos em slug, campos obrigatórios por café, imagem própria por café, busca por ID); `lint` sem erros; `build` OK. | `feat: add typed coffee catalog` |
 | 18/11/2026 | TASK-010 | `pricing.ts` (linha, subtotal, frete, total, itens inválidos, contagem de unidades) e `formatCurrency`/`formatCurrencyParts`. `npm run test`: 92/92 (14 novos: soma em centavos, 0,10 × 3 sem erro de float, frete 0/350, carrinho vazio, exemplo do Figma R$ 33,20, item inexistente reportado, unidades × tipos, formatos BRL incl. milhar); `lint` sem erros; `build` OK. | `feat: centralize monetary calculations and delivery fee` |
 | 18/11/2026 | TASK-011 | `react-router` 7.18 instalado; rotas `/`, `/checkout`, `/success` e `*` → `/` com `PageLayout` (skip link, Header provisório, `main#conteudo`, `ScrollRestoration`), páginas placeholder e `useDocumentTitle`; utility `app-container`. `npm run test`: 121/121 (rotas: acesso direto às 3 URLs com título da aba, redirecionamento de rota desconhecida, navegação por link mantendo o mesmo Header montado, skip link); `lint` sem erros; `build` OK. | `feat: configure application routes` |
+| 18/11/2026 | TASK-012 | Header do Figma com logo por tema, `LocationChip` (só ícone abaixo de 640 px), `ThemeToggle` e `CartLink` com badge (oculto em zero, nome acessível "Carrinho, N itens"); Header fixo (decisão D11). `npm run test`: 127/127 (6 novos: link da logo, badge oculto/1/5 com singular e plural, localização condicional, troca de logo por tema); `lint` sem erros; `build` OK. Navegador: 320 e 1280 px nos dois temas sem overflow horizontal e sem erros de console. | `feat: add responsive application header` |
 
 ## Definition of Done (global)
 

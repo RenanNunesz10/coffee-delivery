@@ -11,7 +11,8 @@ export function PageLayout() {
       >
         Pular para o conteúdo
       </a>
-      <Header />
+      {/* Unidades do carrinho e localização são conectadas nas TASK-017 e TASK-026. */}
+      <Header cartUnits={0} />
       <main id="conteudo" tabIndex={-1} className="app-container pb-16 outline-none">
         <Outlet />
       </main>
