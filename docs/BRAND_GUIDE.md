@@ -18,11 +18,11 @@ A paleta vem do Style Guide do Figma. Os nomes são os mesmos dos tokens CSS (TE
 |---|---|---|
 | Ação primária | `yellow` / `yellow-dark` / `yellow-light` | `#DBAC2C` / `#C47F17` / `#F1E9C9` |
 | Destaque e marca | `purple` / `purple-dark` / `purple-light` | `#8047F8` / `#4B2995` / `#EBE5F9` |
-| Texto | `base-title` / `base-subtitle` / `base-text` / `base-label` | `#272221` / `#403937` / `#574F4D` / `#8D8686` |
+| Texto | `base-title` / `base-subtitle` / `base-text` / `base-label` | `#272221` / `#403937` / `#574F4D` / `#6E6767` (Figma: `#8D8686`) |
 | Superfícies | `base-card` / `base-input` / `base-button` / `base-hover` | `#F3F2F2` / `#EDEDED` / `#E6E5E5` / `#D7D5D5` |
 | Fundo | `background` / `white` | `#FAFAFA` / `#FFFFFF` |
 
-A paleta do dark mode será definida na TASK-006.
+Na TASK-006 foram definidos a **paleta do dark mode** (tons de café escuro, mesmos nomes de token) e **ajustes de acessibilidade** no tema claro: texto escuro sobre amarelo, `base-label` mais escuro (`#6E6767`) e os tokens `yellow-ink`/`purple-ink`. Valores completos e regras de combinação: [TECH_SPEC §10.1](./TECH_SPEC.md#101-tokens-stylestokenscss).
 
 ## 3. Tipografia
 

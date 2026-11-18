@@ -1,1 +1,125 @@
 @import 'tailwindcss';
+@import './tokens.css';
+
+/* `dark:` passa a depender do atributo data-theme (alternância manual), não do sistema. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * `inline` faz as utilities referenciarem as variáveis diretamente,
+ * então trocar data-theme troca todas as cores sem re-render.
+ * `--color-*: initial` remove a paleta padrão do Tailwind: só tokens do projeto.
+ */
+@theme inline {
+  --color-*: initial;
+
+  --color-yellow-dark: var(--yellow-dark);
+  --color-yellow: var(--yellow);
+  --color-yellow-light: var(--yellow-light);
+  --color-yellow-ink: var(--yellow-ink);
+
+  --color-purple-dark: var(--purple-dark);
+  --color-purple: var(--purple);
+  --color-purple-light: var(--purple-light);
+  --color-purple-ink: var(--purple-ink);
+
+  --color-base-title: var(--base-title);
+  --color-base-subtitle: var(--base-subtitle);
+  --color-base-text: var(--base-text);
+  --color-base-label: var(--base-label);
+  --color-base-hover: var(--base-hover);
+  --color-base-button: var(--base-button);
+  --color-base-input: var(--base-input);
+  --color-base-card: var(--base-card);
+  --color-background: var(--background);
+  --color-white: var(--white);
+
+  --color-on-yellow: var(--on-yellow);
+  --color-focus: var(--focus);
+  --color-danger: var(--danger);
+}
+
+@theme {
+  --font-sans: 'Roboto', ui-sans-serif, system-ui, sans-serif;
+  --font-title: 'Baloo 2', 'Roboto', ui-sans-serif, system-ui, sans-serif;
+
+  /* Escala tipográfica do Figma (line-height 130%, botões 160%). */
+  --text-title-xl: 3rem;
+  --text-title-xl--line-height: 1.3;
+  --text-title-xl--font-weight: 800;
+  --text-title-l: 2rem;
+  --text-title-l--line-height: 1.3;
+  --text-title-l--font-weight: 800;
+  --text-title-m: 1.5rem;
+  --text-title-m--line-height: 1.3;
+  --text-title-m--font-weight: 800;
+  --text-title-s: 1.25rem;
+  --text-title-s--line-height: 1.3;
+  --text-title-s--font-weight: 700;
+  --text-title-xs: 1.125rem;
+  --text-title-xs--line-height: 1.3;
+  --text-title-xs--font-weight: 700;
+
+  --text-l: 1.25rem;
+  --text-l--line-height: 1.3;
+  --text-m: 1rem;
+  --text-m--line-height: 1.3;
+  --text-s: 0.875rem;
+  --text-s--line-height: 1.3;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.3;
+  --text-xs--font-weight: 700;
+
+  --text-tag: 0.625rem;
+  --text-tag--line-height: 1.3;
+  --text-tag--font-weight: 700;
+  --text-button-g: 0.875rem;
+  --text-button-g--line-height: 1.6;
+  --text-button-g--font-weight: 700;
+  --text-button-m: 0.75rem;
+  --text-button-m--line-height: 1.6;
+
+  /* Raios do Figma: padrão e cantos assimétricos (TL/BR 6px, TR/BL maiores). */
+  --radius-sm: 6px;
+  --radius-card: 6px 36px;
+  --radius-cart: 6px 44px;
+}
+
+@layer base {
+  body {
+    min-height: 100dvh;
+    background-color: var(--background);
+    color: var(--base-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-title);
+    color: var(--base-title);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--purple-light);
+    color: var(--purple-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

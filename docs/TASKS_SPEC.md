@@ -74,14 +74,14 @@
   - **Commit:** `feat: add provisional svg brand assets`
   - **Status:** Concluída
 
-- [ ] **TASK-006 — Definir tokens e estilos globais**
+- [x] **TASK-006 — Definir tokens e estilos globais**
   - **Objetivo:** tokens semânticos de cor (light/dark), tipografia (Baloo 2, Roboto), raios e sombras; integração com `@theme`.
   - **Requisitos:** RF-14, RF-15, RF-16.
   - **Arquivos:** `src/styles/tokens.css`, `src/styles/index.css`, `index.html` (fontes).
   - **Critério de pronto:** estilos globais usam somente tokens; sem cores arbitrárias.
   - **Teste/validação:** contraste e renderização básica nos dois temas.
   - **Commit:** `style: define design tokens and global styles`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-007 — Implementar tema**
   - **Objetivo:** `ThemeProvider`, `useTheme`, `ThemeToggle`, persistência e script anti-flash.
@@ -336,6 +336,7 @@
 | 17/11/2026 | TASK-003 | Instalados Tailwind CSS 4.3.5 (`@tailwindcss/vite`), Vitest 5.1.0, jsdom 29, Testing Library (react 16, user-event 14, jest-dom 7); `strict: true` explícito nos tsconfig; scripts `test`/`test:watch`. `npm run test`: 1 arquivo, 1 teste passou; `npm run lint` sem erros; `npm run build` OK (CSS 7,30 kB com classes Tailwind geradas); `vite` HTTP 200. `npm audit`: 0 vulnerabilidades em produção; 12 altas apenas em dependências de desenvolvimento (`picomatch`), sem correção não-breaking. | `chore: configure styling lint and test tooling` |
 | 17/11/2026 | TASK-004 | `docs/AI_USAGE.md` criado com modelo (prompt, objetivo, resposta, análise crítica, decisão, evidência) e 5 interações reais (IA-01 a IA-05) com commits de evidência conferidos em `git log`. | `docs: add ai usage log` |
 | 17/11/2026 | TASK-005 | Criados SVGs provisórios: símbolo, logo light/dark, favicon, ilustração do hero (substitui a foto com a logo original) e ilustração de sucesso; `BRAND_GUIDE.md` em rascunho. SVGs renderizados em PNG para revisão: favicon reconhecível em 16 e 96 px; logo legível em fundo claro e escuro; ilustrações sem cortes. `npm run build` OK, `npm run lint` sem erros, `npm run test` 1/1. | `feat: add provisional svg brand assets` |
+| 17/11/2026 | TASK-006 | Tokens light/dark com nomes do Figma em `tokens.css`; `@theme inline` sem paleta padrão do Tailwind; tipografia, raios, foco, `prefers-reduced-motion`; fontes Baloo 2/Roboto. Contraste: 4 combinações do Figma reprovavam AA e foram ajustadas (D10). `npm run test`: 42/42 (20 pares × 2 temas + paridade + App); `lint` sem erros; `build` OK (CSS 9,83 kB, sem `--color-red-500`, com `[data-theme=dark]`). Página de amostra renderizada no Chrome headless nos dois temas: fontes carregadas, cantos assimétricos e textos legíveis. | `style: define design tokens and global styles` |
 
 ## Definition of Done (global)
 

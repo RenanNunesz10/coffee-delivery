@@ -1,6 +1,6 @@
 # Coffee Delivery — Technical Specification
 
-**Versão:** 1.2.0
+**Versão:** 1.3.0
 **Status:** Base técnica para implementação
 **Última atualização:** 17/11/2026
 **Documentos relacionados:** [`PRD_SPEC.md`](./PRD_SPEC.md) · [`TASKS_SPEC.md`](./TASKS_SPEC.md) · [`AGENTS.md`](../AGENTS.md)
@@ -12,6 +12,7 @@
 | 1.0.0 | 17/11/2026 | Versão inicial. |
 | 1.1.0 | 17/11/2026 | Rota `/success`; justificativa Tailwind × styled-components; nomes de componentes do enunciado; tipo `CoffeeTag[]`; validação de storage com Zod; script anti-flash de tema; timeout ViaCEP; configuração de testes e deploy. |
 | 1.2.0 | 17/11/2026 | Fidelidade ao Figma: `DELIVERY_FEE_CENTS = 350`, Phosphor Icons, tokens com nomes do Style Guide, ilustrações geradas com IA. |
+| 1.3.0 | 17/11/2026 | Tokens finais (light/dark) com ajustes WCAG AA e regras de combinação; utilities de tipografia e raio; teste automatizado de contraste. |
 
 ## 1. Stack e justificativas
 
@@ -368,23 +369,33 @@ export function findInvalidItems(items: CartItem[], coffees: Coffee[]): string[]
 ## 10. Tema, tokens, breakpoints e acessibilidade
 
 ### 10.1 Tokens (`styles/tokens.css`)
-Os tokens usam **os mesmos nomes do Style Guide do Figma** (ver [`docs/figma/README.md`](./figma/README.md)), facilitando a conferência design ↔ código. Os valores light são os do Figma; os valores dark são definidos na TASK-006, mantendo os mesmos nomes.
+Os tokens usam **os mesmos nomes do Style Guide do Figma** (ver [`docs/figma/README.md`](./figma/README.md)), facilitando a conferência design ↔ código. Valores light = Figma, salvo ajustes de acessibilidade (**AA**); valores dark são próprios (o Figma não tem dark mode). Utilities: `bg-<token>`, `text-<token>`, `border-<token>`.
 
-| Token | Light (Figma) | Uso |
-|---|---|---|
-| `--color-yellow-dark` / `--color-yellow` / `--color-yellow-light` | `#C47F17` / `#DBAC2C` / `#F1E9C9` | Ação primária, hover, carrinho, tags |
-| `--color-purple-dark` / `--color-purple` / `--color-purple-light` | `#4B2995` / `#8047F8` / `#EBE5F9` | Botão de adicionar, quantidade, pagamento selecionado, localização |
-| `--color-base-title` / `--color-base-subtitle` / `--color-base-text` / `--color-base-label` | `#272221` / `#403937` / `#574F4D` / `#8D8686` | Textos |
-| `--color-base-hover` / `--color-base-button` / `--color-base-input` / `--color-base-card` | `#D7D5D5` / `#E6E5E5` / `#EDEDED` / `#F3F2F2` | Superfícies e estados |
-| `--color-background` / `--color-white` | `#FAFAFA` / `#FFFFFF` | Fundo e texto sobre botões |
-| `--color-focus` | `#8047F8` | Anel de foco (não existe no Figma) |
-| `--color-danger` | a definir (AA nos dois temas) | Mensagens de erro (não existe no Figma) |
+| Token | Light | Dark | Uso |
+|---|---|---|---|
+| `yellow-dark` / `yellow` / `yellow-light` | `#C47F17` / `#DBAC2C` / `#F1E9C9` | `#C47F17` / `#DBAC2C` / `#3A2F17` | Ação primária, hover, badge, fundo de tag e carrinho |
+| `yellow-ink` *(novo)* | `#8A5A12` | `#E8C063` | Texto/ícone sobre `yellow-light` (tag, ícone do carrinho) |
+| `purple-dark` / `purple` / `purple-light` | `#4B2995` / `#8047F8` / `#EBE5F9` | `#5B34C0` / `#A27BFA` / `#2C2342` | Botão de adicionar, ícones, pagamento selecionado, chip de localização |
+| `purple-ink` *(novo)* | `#4B2995` | `#CDB8FF` | Texto/ícone sobre `purple-light` |
+| `base-title` / `base-subtitle` / `base-text` | `#272221` / `#403937` / `#574F4D` | `#F5F2F1` / `#E6E1DF` / `#D3CCCA` | Textos |
+| `base-label` | `#6E6767` **AA** (Figma `#8D8686`) | `#A39C9A` | Descrições, placeholder, "Opcional" |
+| `base-hover` / `base-button` / `base-input` / `base-card` | `#D7D5D5` / `#E6E5E5` / `#EDEDED` / `#F3F2F2` | `#4A4341` / `#38312F` / `#2A2625` / `#221F1E` | Superfícies e estados |
+| `background` / `white` | `#FAFAFA` / `#FFFFFF` | `#161413` / `#FFFFFF` | Fundo da página; ícone sobre `purple-dark` |
+| `on-yellow` *(novo, AA)* | `#272221` | `#272221` | Texto sobre `yellow`/`yellow-dark` (Figma usava branco: 2,1:1) |
+| `focus` *(novo)* | `#8047F8` | `#A27BFA` | Anel de foco |
+| `danger` *(novo)* | `#C0392B` | `#FF8A80` | Mensagens de erro |
 
-- Light em `:root, [data-theme='light']`; dark em `[data-theme='dark']`.
-- Tailwind consome via `@theme` (ex.: `bg-base-card`, `text-base-title`, `bg-yellow`).
-- Raios: `--radius-sm: 6px`; cards com raio assimétrico `6px 36px` (catálogo, sucesso) e `6px 44px` (carrinho).
-- Escala tipográfica conforme Figma (Title XL–XS, Text L–XS, Tag, Button G/M).
-- Fontes: `--font-title` (Baloo 2) e `--font-body` (Roboto), carregadas do Google Fonts com `display=swap`.
+**Regras de combinação** (verificadas por `src/styles/tokens.test.ts` nos dois temas, 20 pares):
+- Texto sobre amarelo (`yellow`, `yellow-dark`) usa sempre `on-yellow`; texto sobre `yellow-light` usa `yellow-ink`; sobre `purple-light`, `purple-ink`.
+- Texto ≥ 4,5:1; texto grande (título do sucesso) e componentes/foco ≥ 3:1.
+- Ícones dentro dos círculos de benefícios da Home são decorativos (`aria-hidden`), pois o texto ao lado comunica a informação.
+
+Implementação:
+- `src/styles/tokens.css`: variáveis em `:root, [data-theme='light']` e `[data-theme='dark']`.
+- `src/styles/index.css`: `@theme inline` mapeia as variáveis para utilities (a troca de tema não exige re-render); `--color-*: initial` remove a paleta padrão do Tailwind, impedindo cores fora dos tokens; `@custom-variant dark` usa `data-theme`.
+- Raios: `rounded-sm` (6 px), `rounded-card` (`6px 36px`, catálogo e sucesso) e `rounded-cart` (`6px 44px`, carrinho).
+- Tipografia: `text-title-xl|l|m|s|xs`, `text-l|m|s|xs`, `text-tag`, `text-button-g|m` (tamanho, line-height e peso do Figma); famílias `font-title` (Baloo 2) e `font-sans` (Roboto, padrão do `body`), carregadas do Google Fonts com `display=swap`.
+- Base: foco visível global (`:focus-visible`), `::selection` e `prefers-reduced-motion`.
 
 ### 10.2 Breakpoints (padrão Tailwind)
 `sm` 640 · `md` 768 · `lg` 1024 · `xl` 1280 px. Mobile-first; verificação em 320, 375/390, 768 e 1280/1440 px.

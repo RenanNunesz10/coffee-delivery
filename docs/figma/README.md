@@ -129,3 +129,4 @@ As imagens foram extraídas do PDF exportado do Figma, associadas aos cafés pel
 | D7 | Logo no copo do hero | Logo original do desafio | Marca própria (RF-16) | **Resolvido:** SVG provisório na TASK-005; versão com IA na TASK-032. |
 | D8 | Ilustração do sucesso | Vetorial | — | **Resolvido:** SVG provisório na TASK-005; versão com IA na TASK-032. |
 | D9 | Orientação de 2 fotos | Café com Leite e Havaiano aparecem espelhados na Home | — | Detalhe visual sem impacto; usar as imagens como exportadas. |
+| D10 | Contraste (WCAG AA) | Texto branco sobre amarelo (2,1:1), `base-label` em descrições (3,2:1), texto da tag (2,7:1), número do badge (3,3:1) | WCAG 2.2 AA (PRD 8.1) | **Resolvido na TASK-006:** texto escuro `on-yellow` sobre amarelo, `base-label` escurecido para `#6E6767`, novos tokens `yellow-ink`/`purple-ink`. Verificado por teste automatizado. |

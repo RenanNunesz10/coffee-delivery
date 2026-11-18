@@ -8,6 +8,7 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/tests/setup.ts'],
-    css: false,
+    // Demais CSS são ignorados nos testes; tokens.css é lido como texto (?raw) em tokens.test.ts.
+    css: { include: [/tokens\.css/] },
   },
 })

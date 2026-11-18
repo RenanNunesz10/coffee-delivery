@@ -1,0 +1,66 @@
+/*
+ * Tokens de cor do Coffee Delivery.
+ * Nomes = Style Guide do Figma (docs/figma/README.md). Valores light = Figma,
+ * exceto ajustes de acessibilidade (WCAG 2.2 AA) marcados com "AA".
+ * Tokens marcados com "novo" não existem no Figma.
+ * O contraste das combinações usadas é verificado em tokens.test.ts.
+ */
+
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+
+  --yellow-dark: #c47f17;
+  --yellow: #dbac2c;
+  --yellow-light: #f1e9c9;
+  --yellow-ink: #8a5a12; /* novo: texto/ícone sobre yellow-light (AA) */
+
+  --purple-dark: #4b2995;
+  --purple: #8047f8;
+  --purple-light: #ebe5f9;
+  --purple-ink: #4b2995; /* novo: texto/ícone sobre purple-light */
+
+  --base-title: #272221;
+  --base-subtitle: #403937;
+  --base-text: #574f4d;
+  --base-label: #6e6767; /* AA: Figma #8D8686 tinha 3,2:1 sobre base-card */
+  --base-hover: #d7d5d5;
+  --base-button: #e6e5e5;
+  --base-input: #ededed;
+  --base-card: #f3f2f2;
+  --background: #fafafa;
+  --white: #ffffff;
+
+  --on-yellow: #272221; /* novo (AA): texto sobre yellow/yellow-dark; Figma usava branco (2,1:1) */
+  --focus: #8047f8; /* novo */
+  --danger: #c0392b; /* novo */
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --yellow-dark: #c47f17;
+  --yellow: #dbac2c;
+  --yellow-light: #3a2f17;
+  --yellow-ink: #e8c063;
+
+  --purple-dark: #5b34c0;
+  --purple: #a27bfa;
+  --purple-light: #2c2342;
+  --purple-ink: #cdb8ff;
+
+  --base-title: #f5f2f1;
+  --base-subtitle: #e6e1df;
+  --base-text: #d3ccca;
+  --base-label: #a39c9a;
+  --base-hover: #4a4341;
+  --base-button: #38312f;
+  --base-input: #2a2625;
+  --base-card: #221f1e;
+  --background: #161413;
+  --white: #ffffff;
+
+  --on-yellow: #272221;
+  --focus: #a27bfa;
+  --danger: #ff8a80;
+}
