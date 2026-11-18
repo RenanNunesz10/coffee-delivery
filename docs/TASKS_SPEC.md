@@ -206,14 +206,14 @@
   - **Commit:** `feat: add checkout form validation schemas`
   - **Status:** Concluída
 
-- [ ] **TASK-020 — Integrar consulta ViaCEP**
+- [x] **TASK-020 — Integrar consulta ViaCEP**
   - **Objetivo:** `lookupPostalCode` com timeout, validação de resposta e resultados discriminados.
   - **Requisitos:** RF-08; RN-07.
   - **Arquivos:** `src/features/checkout/services/viacep.ts`, testes.
   - **Critério de pronto:** CEP válido retorna endereço normalizado; erros diferenciados.
   - **Teste/validação:** testes de sucesso, inválido, não encontrado, rede, timeout e JSON inválido.
   - **Commit:** `feat: integrate viacep postal code lookup`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-021 — Construir DeliveryAddressForm**
   - **Objetivo:** campos, máscara de CEP, `usePostalCodeLookup`, loading, feedback e preenchimento automático.
@@ -350,6 +350,7 @@
 | 18/11/2026 | TASK-017 | `HomePage` usa `addItem` do contexto e `PageLayout` passa `totalUnits` ao Header. `npm run test`: 144/144 (integração com rotas reais: 2 Latte + 1 Latte + 1 Cubano → uma linha de Latte com 3, badge "Carrinho, 4 itens" e storage correto; carrinho salvo aparece no Header ao montar); `lint` sem erros; `build` OK. | `feat: connect catalog to cart state` |
 | 18/11/2026 | TASK-018 | `CartItem` (imagem, nome, `QuantityInput` pequeno, "Remover" com nome acessível, valor da linha), `CartSummary` (`dl` com total de itens, entrega e total; botão submit "Confirmar pedido") e `EmptyState` reutilizável. `npm run test`: 149/149 (5 novos: exemplo do Figma 9,90 + 19,80 → R$ 29,70 / 3,50 / 33,20; incremento e decremento atualizam o total na hora; decremento de 1 remove e zera o frete; Remover direto; estado vazio com link para a Home); `lint` sem erros; `build` OK. | `feat: add cart item management and order summary` |
 | 18/11/2026 | TASK-019 | `checkoutSchema` (Zod 4) com CEP normalizado para 8 dígitos, rua/número/bairro/cidade obrigatórios, complemento opcional, UF em maiúsculas validada contra `BRAZILIAN_STATES` e `paymentMethod` contra `PAYMENT_METHODS`; tipos `CheckoutFormInput`/`CheckoutFormData` inferidos; `toDeliveryAddress`; `lib/postalCode.ts` (normalizar, validar completo, máscara progressiva). `npx vitest`: 30/30 (válido do Figma, complemento, 4 CEPs malformados, 4 obrigatórios, UF minúscula, 4 UFs inválidas, 3 pagamentos válidos, 3 ausentes/inválidos, máscara); `tsc`, `lint` e `build` OK. | `feat: add checkout form validation schemas` |
+| 18/11/2026 | TASK-020 | `lookupPostalCode` com resultados discriminados (`success`, `invalid` sem requisição, `not-found` para `erro` true/"true" ou HTTP 400, `error` network/timeout/http/invalid-response, `aborted`), timeout de 8 s com `AbortController` único, validação da resposta com Zod e mapeamento logradouro/bairro/localidade/uf. `npx vitest`: 19/19 (URL normalizada, mapeamento do CEP do Figma, CEP geral com campos vazios, 4 malformados sem fetch, `erro` booleano e string, HTTP 400 e 503, rede, JSON inválido, 3 respostas fora do contrato, timeout com timers falsos, cancelamento antes e durante). API real via curl: 90250440 → Rua João Daniel Martinelli/Farrapos/Porto Alegre/RS; 99999999 → `{"erro":"true"}`; 1234 → HTTP 400 (primeira tentativa sem resposta em 10 s, confirmando a necessidade do timeout). `tsc`, `lint` e `build` OK. | `feat: integrate viacep postal code lookup` |
 
 ## Definition of Done (global)
 

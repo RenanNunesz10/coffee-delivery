@@ -344,15 +344,17 @@ type PostalCodeLookupResult =
   | { status: 'invalid' }      // não tem 8 dígitos (nenhuma requisição)
   | { status: 'not-found' }    // { erro: true } ou HTTP 400
   | { status: 'error'; reason: 'network' | 'timeout' | 'http' | 'invalid-response' };
+  | { status: 'aborted' };     // cancelada pelo chamador; não é exibida como erro
 
-lookupPostalCode(cep: string, signal?: AbortSignal): Promise<PostalCodeLookupResult>
+lookupPostalCode(cep: string, options?: { signal?: AbortSignal; timeoutMs?: number; fetchFn?: typeof fetch }): Promise<PostalCodeLookupResult>
 ```
 - Normaliza para dígitos e exige 8 antes da chamada.
-- `fetch` com timeout de 8 s (`AbortSignal.timeout` combinado ao sinal externo).
+- `fetch` com timeout de 8 s (`VIACEP_TIMEOUT_MS`) implementado com um único `AbortController` que também recebe o cancelamento do chamador (sem depender de `AbortSignal.any`/`timeout`, ausentes em alguns ambientes). `fetchFn` permite injetar o `fetch` nos testes.
 - Verifica `response.ok`; trata `erro: true`/`"true"` como não encontrado.
 - Valida o JSON com schema Zod; formato inesperado → `invalid-response`.
 - Mapeia `logradouro → street`, `bairro → district`, `localidade → city`, `uf → state`.
-- Cancelamento pelo chamador (`AbortError`) não é tratado como erro exibido.
+- Cancelamento pelo chamador devolve `{ status: "aborted" }`, que a interface ignora.
+- Contrato conferido na API real em 18/11/2026: CEP válido → HTTP 200 com os campos acima; CEP inexistente → HTTP 200 `{"erro": "true"}` (string); CEP malformado → HTTP 400 (HTML).
 
 ### 8.3 Comportamento no formulário
 - Consulta disparada quando o CEP atinge 8 dígitos (e no blur, se ainda não consultado); consulta anterior é abortada.
