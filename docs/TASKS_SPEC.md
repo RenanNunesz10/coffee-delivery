@@ -282,14 +282,14 @@
   - **Commit:** `style: refine responsive layouts across the app`
   - **Status:** Concluída
 
-- [ ] **TASK-028 — Revisar acessibilidade**
+- [x] **TASK-028 — Revisar acessibilidade**
   - **Objetivo:** labels, foco, teclado, anúncios e contraste.
   - **Requisitos:** RF-08, RF-11, RF-14, RF-15.
   - **Arquivos:** componentes de formulário, botões, estados e estilos.
   - **Critério de pronto:** fluxo completo por teclado; erros e loading anunciados; contraste AA.
   - **Teste/validação:** checklist manual e Lighthouse/axe.
   - **Commit:** `fix: improve keyboard and screen reader accessibility`
-  - **Status:** Pendente
+  - **Status:** Concluída
 
 - [ ] **TASK-029 — Executar testes integrados e corrigir defeitos**
   - **Objetivo:** cobrir cenários de aceitação e corrigir regressões.
@@ -358,6 +358,7 @@
 | 18/11/2026 | TASK-025 | `CheckoutPage.handleConfirm`: revalida via `createOrder` (carrinho vazio, café inexistente, quantidade, endereço), exibe erro `role=alert` se falhar, grava o snapshot com `saveLastOrder` ANTES de `clearCart` e navega para `/success` com `replace` e o pedido no estado da navegação. `npm run test`: todos passando (4 novos de integração com ViaCEP simulada: fluxo válido salva pedido R$ 33,20 com endereço do Figma, esvazia carrinho e badge e navega; ordem das gravações no storage (pedido antes do carrinho); confirmação com storage indisponível segue com o snapshot no estado; formulário inválido não grava pedido nem limpa carrinho). Carrinho vazio e café inexistente cobertos nos testes unitários de `createOrder` (a interface não permite chegar a esses estados). `lint` sem erros; `build` OK. | `feat: confirm valid orders and clear cart` |
 | 18/11/2026 | TASK-026 | `SuccessPage` (snapshot do estado da navegação validado por `parseOrder`, com fallback para `readLastOrder` após refresh; estado vazio sem pedido válido) e `OrderSuccess` (título, card com utility `border-gradient`, endereço com complemento, previsão `DELIVERY_ESTIMATE`, rótulo do pagamento, ilustração provisória); `PageLayout` passa ao Header a cidade/UF do último pedido. `npm run test`: todos passando (6 novos: dados do snapshot após refresh, complemento, independência do carrinho vazio, localização no Header, estado vazio com título da aba, snapshot corrompido rejeitado; teste de rota atualizado); `lint` sem erros; `build` OK. Navegador com pedido salvo: 375 e 1440 px nos dois temas sem overflow e sem erros de console; confere com o frame de Sucesso (traços escuros da ilustração provisória perdem contraste no dark mode — será resolvido na TASK-032). | `feat: add order success page` |
 | 18/11/2026 | TASK-027 | Varredura no Chrome headless (`vite preview`) medindo `scrollWidth − innerWidth`: Home em 320/375/390/768/1280/1440 px nos dois temas; Checkout com carrinho de valores altos (120 unidades, R$ 1.201,40) em 320/375/768/1280 nos dois temas; Checkout vazio em 320; Sucesso com rua e complemento longos em 320/768/1280 nos dois temas — overflow 0 px e nenhum erro de console em todos. Defeito encontrado e corrigido: em 320 px o nome do café encostava no valor da linha do carrinho; `CartItem` passou a usar linha flexível nome/preço que quebra em telas estreitas e imagem de 48 px abaixo de 640 px (desktop inalterado). `npm run test`, `lint` e `build` OK após a correção. | `style: refine responsive layouts across the app` |
+| 18/11/2026 | TASK-028 | Auditoria axe-core 4.10 (tags WCAG 2.0/2.1/2.2 A e AA, inclui contraste e tamanho de alvo) no Chrome headless em Home, Checkout vazio, Checkout com itens, Checkout com erros de validação, Sucesso e Sucesso sem pedido, nos dois temas: 0 violações. Teclado: Tab por todas as telas sem nenhum elemento focado sem contorno visível. Fluxo completo apenas com teclado em 390 px com a ViaCEP real: Enter/Espaço adicionam (anunciado), link do carrinho, CEP 90250440 preenchido pela API, foco no Número, pagamento por seta, confirmação, foco no `main`, Header "Carrinho vazio", pedido mantido após refresh, console sem erros. Melhoria: `useRouteFocus` move o foco para o conteúdo principal a cada troca de rota (teste novo). `npm run test`, `lint` e `build` OK. | `fix: improve keyboard and screen reader accessibility` |
 
 ## Definition of Done (global)
 

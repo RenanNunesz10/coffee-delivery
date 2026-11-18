@@ -45,3 +45,16 @@ describe('rotas', () => {
     expect(screen.getByRole('main')).toHaveAttribute('id', 'conteudo')
   })
 })
+
+describe('foco ao navegar', () => {
+  it('move o foco para o conteúdo principal após trocar de rota', async () => {
+    const user = userEvent.setup()
+    renderApp('/')
+    await screen.findByRole('heading', { level: 1, name: HOME_HEADING })
+    expect(screen.getByRole('main')).not.toHaveFocus()
+
+    await user.click(screen.getByRole('link', { name: /carrinho/i }))
+
+    expect(screen.getByRole('main')).toHaveFocus()
+  })
+})

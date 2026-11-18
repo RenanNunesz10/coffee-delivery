@@ -1,7 +1,10 @@
 import { Outlet, ScrollRestoration, useLocation } from 'react-router'
 import { useCart } from '../../features/cart/useCart'
 import { readLastOrder } from '../../features/orders/orderStorage'
+import { useRouteFocus } from '../../hooks/useRouteFocus'
 import { Header } from '../Header/Header'
+
+const MAIN_CONTENT_ID = 'conteudo'
 
 /** "Porto Alegre, RS" a partir do último pedido salvo, ou `null` sem pedido (PRD §12). */
 function readLastOrderLocation(): string | null {
@@ -16,17 +19,18 @@ export function PageLayout() {
   // refletir um pedido recém-confirmado sem estado duplicado.
   useLocation()
   const lastOrderLocation = readLastOrderLocation()
+  useRouteFocus(MAIN_CONTENT_ID)
 
   return (
     <>
       <a
-        href="#conteudo"
+        href={`#${MAIN_CONTENT_ID}`}
         className="sr-only rounded-sm bg-purple-dark px-4 py-2 text-white focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50"
       >
         Pular para o conteúdo
       </a>
       <Header cartUnits={totalUnits} location={lastOrderLocation} />
-      <main id="conteudo" tabIndex={-1} className="app-container pb-16 outline-none">
+      <main id={MAIN_CONTENT_ID} tabIndex={-1} className="app-container pb-16 outline-none">
         <Outlet />
       </main>
       <ScrollRestoration />
