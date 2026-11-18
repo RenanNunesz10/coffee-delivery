@@ -206,7 +206,7 @@ IDs estáveis, referenciados na TECH_SPEC e na TASKS_SPEC.
 - Paleta e tipografia partem do Style Guide do Figma (amarelo/roxo; Baloo 2 e Roboto) e podem ser personalizadas, mantendo coerência nos dois temas.
 - Símbolo simples e legível em tamanhos pequenos, acompanhado de logotipo tipográfico.
 - Arquivos em SVG (preferencial) e PNG/WebP quando necessário.
-- O hero usa a imagem original do Figma (copo de café), por decisão do aluno em 18/11/2026. A ilustração da tela de sucesso, que não tem asset reutilizável no Figma, é gerada com IA e segue a paleta da marca.
+- O hero usa a imagem original do Figma (copo de café), por decisão do aluno em 18/11/2026. Logo, favicon e ilustração da tela de sucesso foram criados com IA (Claude) em SVG e aprovados pelo aluno como definitivos.
 
 ### 7.2 Branding com IA (obrigatório)
 1. Gerar ao menos uma proposta de logo original com ferramenta de IA.
@@ -278,7 +278,7 @@ IDs estáveis, referenciados na TECH_SPEC e na TASKS_SPEC.
 - Demonstração breve do fluxo de compra.
 
 ## 11. Critérios de aceite gerais
-- [ ] RF-01 a RF-16 implementados e verificados. *(RF-16 parcial: logo e ilustrações provisórias até a TASK-032.)*
+- [x] RF-01 a RF-16 implementados e verificados.
 - [x] RN-01 a RN-10 respeitadas.
 - [x] Fluxo `/` → `/checkout` → `/success` concluído sem reload.
 - [x] Carrinho persiste após refresh e o contador soma unidades.
@@ -289,7 +289,7 @@ IDs estáveis, referenciados na TECH_SPEC e na TASKS_SPEC.
 - [x] Light/dark mode persiste e cobre todas as telas.
 - [x] Layout verificado em 320, 375/390, 768 e 1280/1440 px.
 - [x] `npm run test`, `npm run lint` e `npm run build` sem erros.
-- [ ] Logo no Header, favicon e documentação; seção Branding com IA completa. *(Pendente: TASK-032.)*
+- [x] Logo no Header, favicon e documentação; seção Branding com IA completa.
 - [x] `AI_USAGE.md` com ao menos três interações.
 - [ ] Deploy publicado com rotas SPA funcionando por URL direta. *(Configuração pronta; publicação pendente: TASK-030.)*
 
@@ -304,7 +304,7 @@ IDs estáveis, referenciados na TECH_SPEC e na TASKS_SPEC.
 | Frete | Fixo fictício de R$ 3,50 por pedido não vazio (valor do Figma) |
 | Preço da linha do carrinho | Exibe `preço unitário × quantidade` |
 | Ícones | Phosphor Icons (conforme Style Guide) |
-| Ilustrações | Hero e fotos dos cafés vindos do Figma; ilustração da tela de sucesso gerada com IA |
+| Ilustrações | Hero e fotos dos cafés vindos do Figma; logo, favicon e ilustração da tela de sucesso criados com IA em SVG |
 | Previsão de entrega | Texto fixo informativo "20 min – 30 min" (conforme Figma) |
 | Pagamento | Crédito, débito ou dinheiro; sem transação |
 | CEP | ViaCEP |

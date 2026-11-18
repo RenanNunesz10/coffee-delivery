@@ -24,7 +24,7 @@ export function Header({ cartUnits, location }: HeaderProps) {
           <img
             src={theme === 'dark' ? logoDark : logoLight}
             alt="Coffee Delivery, página inicial"
-            width={85}
+            width={93}
             height={40}
             className="h-10 w-auto"
           />

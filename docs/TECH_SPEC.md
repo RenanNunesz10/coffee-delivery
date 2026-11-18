@@ -88,7 +88,7 @@ coffee-delivery/
 ├── vercel.json                   # rewrite SPA para deploy
 ├── netlify.toml                  # alternativa de deploy (redirect SPA)
 ├── public/
-│   └── favicon.svg               # provisório (TASK-005)
+│   └── favicon.svg               # símbolo da marca (criado com IA)
 ├── docs/
 │   ├── PRD_SPEC.md
 │   ├── TECH_SPEC.md
@@ -104,10 +104,10 @@ coffee-delivery/
     │   ├── router.tsx
     │   └── providers.tsx
     ├── assets/
-    │   ├── brand/                # logo light/dark e símbolo (SVG provisórios)
+    │   ├── brand/                # logo light/dark e símbolo (SVG criados com IA)
     │   ├── coffees/              # 14 fotos extraídas do Figma (WebP 256 px)
-    │   ├── hero/                 # ilustração (provisória) e fundo do hero
-    │   └── illustrations/        # entregador da tela de sucesso (provisório)
+    │   ├── hero/                 # imagem e fundo do hero (Figma)
+    │   └── illustrations/        # entregador da tela de sucesso (SVG criado com IA)
     ├── components/               # UI reutilizável e sem regra de domínio
     │   ├── PageLayout/
     │   ├── Header/               # Header, CartLink (badge), LocationChip

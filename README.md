@@ -36,7 +36,7 @@ SPA de e-commerce de cafés feita como **projeto final da disciplina Single Page
 | RF-12, RF-13 | Pedido salvo como **snapshot** antes de limpar o carrinho; a tela de sucesso continua correta após refresh. |
 | RF-14 | Tema claro/escuro persistido, seguindo o sistema na primeira visita, sem "piscar". |
 | RF-15 | Layout mobile-first verificado de 320 a 1440 px. |
-| RF-16 | Logo no Header e favicon (**provisórios em SVG**; a versão final com IA está na TASK-032). |
+| RF-16 | Logo original criada com IA no Header (versão clara e escura) e no favicon, documentada no Brand Guide. |
 
 ## Screenshots
 
@@ -162,7 +162,7 @@ CoffeeCard ──addItem()──▶ CartProvider ──dispatch(action)──▶
 
 ## Marca e Branding com IA
 
-A logo, o favicon e a ilustração da tela de sucesso são **provisórios, em SVG**. O hero e as fotos dos cafés vêm do Figma (o copo do hero exibe a logo original do desafio, por decisão do aluno). A identidade final criada com IA entra na **TASK-032**, e a seção "Branding com IA" (ferramenta, prompt, resultado e motivos) fica em [docs/BRAND_GUIDE.md](docs/BRAND_GUIDE.md).
+A logo, o símbolo/favicon e a ilustração da tela de sucesso foram **criados com IA** (Claude, gerando SVG) a partir da paleta e da tipografia do Figma, revisados a cada etapa e aprovados como definitivos. O texto da logo está convertido em curvas com a Baloo 2. O hero e as fotos dos cafés vêm do Figma (o copo do hero exibe a logo original do desafio, por decisão do aluno). Ferramenta, pedido, briefing, curadoria, motivos e direitos de uso estão na seção **Branding com IA** do [docs/BRAND_GUIDE.md](docs/BRAND_GUIDE.md).
 
 ## Uso de IA no desenvolvimento
 
@@ -182,7 +182,7 @@ O projeto foi desenvolvido com o **Claude Code** (extensão do VS Code), seguind
 
 ## Limitações conhecidas
 
-- Logo, favicon e ilustração de sucesso ainda provisórios (TASK-032).
+- O copo da imagem do hero exibe a logo original do desafio (imagem do Figma mantida por decisão do aluno).
 - Aplicação ainda não publicada (TASK-030): depende da conta de hospedagem.
 - Apenas o último pedido é mantido; não há histórico (fora do escopo).
 - Projeto demonstrativo: nenhum pedido é enviado e nenhum pagamento é processado.

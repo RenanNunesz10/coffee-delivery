@@ -111,6 +111,14 @@ Princípios: a IA propõe, o aluno decide; nenhuma sugestão é aceita sem revis
 - **Decisão tomada:** correções aceitas; o axe-core e os scripts do navegador ficam fora do projeto (não são dependências), e os resultados estão no registro de execução.
 - **Evidência:** commits `77fee29`, `c13c83b`, `9771502` e `4971f02`.
 
+### IA-11 — Identidade visual criada com IA aprovada como definitiva
+- **Data:** 18/11/2026 · **Tarefa:** TASK-032
+- **Prompt:** "a task 32 não é mais necessária, as imagens que estão já estão muito bom! e a task 30 já vou fazer no Vercel".
+- **Objetivo:** encerrar a identidade visual com os SVGs criados pela IA, cumprindo o RF-16 (logo original desenvolvida com auxílio de IA).
+- **Resposta resumida:** a IA observou que os SVGs eram provisórios em três pontos e fez o acabamento: removeu os comentários de provisório, converteu o texto da logo em curvas com a fonte Baloo 2 (antes, dentro de um `<img>`, o texto aparecia numa fonte substituta) e clareou os traços da ilustração que sumiam no dark mode. Também escreveu a seção Branding com IA do Brand Guide, com ferramenta, pedido, briefing, resultado, curadoria, motivos e direitos de uso, incluindo a licença SIL OFL da Baloo 2.
+- **Análise crítica:** a logo foi criada por um assistente de IA gerando código SVG, e não por um gerador de imagens; isso está registrado com transparência. Antes, eu considerava substituí-la; depois de ver o app completo, a aprovei. Mantive o hero do Figma ciente de que ele exibe a logo original do desafio.
+- **Decisão tomada:** identidade definitiva; TASK-032 concluída com escopo revisado; publicação na Vercel feita pelo aluno (TASK-030).
+- **Evidência:** `docs/BRAND_GUIDE.md` §7; commit `feat: finalize ai created brand identity`.
+
 ## Próximos registros previstos
-- Geração da logo e das ilustrações com IA (TASK-032): ferramenta, prompt e curadoria.
-- Publicação e smoke test no domínio publicado (TASK-030).
+- Publicação na Vercel e smoke test no domínio publicado (TASK-030).

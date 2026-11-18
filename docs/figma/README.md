@@ -113,7 +113,7 @@ As imagens foram extraídas do PDF exportado do Figma, associadas aos cafés pel
 |---|---|
 | `src/assets/hero/hero-coffee.webp` | Imagem do hero do Figma (952 px, 2×), em uso desde 18/11/2026 por decisão do aluno. O copo exibe a logo original do desafio. |
 | `src/assets/hero/hero-background.webp` | Fundo desfocado do hero, extraído (1440 px). Pode ser substituído por gradiente CSS. |
-| Ilustração do entregador (sucesso) | Vetorial, não extraída. SVG provisório (TASK-005); versão com IA (TASK-032). |
+| `src/assets/illustrations/delivery-success.svg` | Ilustração própria criada com IA em SVG, no lugar do vetor do Figma. |
 | Logo original | Vetorial; não será usada (a marca própria será criada com IA, RF-16). |
 
 ## 7. Lacunas e divergências em relação aos SPECs
@@ -127,7 +127,7 @@ As imagens foram extraídas do PDF exportado do Figma, associadas aos cafés pel
 | D5 | Dark mode | Inexistente | Obrigatório (RF-14) | Paleta escura derivada dos tokens base, a definir na TASK-006. |
 | D6 | Localização no Header | "Porto Alegre, RS" fixo | Cidade/UF do último pedido | Mantida a decisão do PRD. |
 | D7 | Logo no copo do hero | Logo original do desafio | Marca própria (RF-16) | **Decisão do aluno (18/11/2026):** usar a imagem original do Figma no hero; a marca própria aparece no Header e no favicon. |
-| D8 | Ilustração do sucesso | Vetorial | — | **Resolvido:** SVG provisório na TASK-005; versão com IA na TASK-032. |
+| D8 | Ilustração do sucesso | Vetorial | — | **Resolvido:** ilustração própria criada com IA em SVG (TASK-005), aprovada como definitiva em 18/11/2026. |
 | D9 | Orientação de 2 fotos | Café com Leite e Havaiano aparecem espelhados na Home | — | Detalhe visual sem impacto; usar as imagens como exportadas. |
 | D10 | Contraste (WCAG AA) | Texto branco sobre amarelo (2,1:1), `base-label` em descrições (3,2:1), texto da tag (2,7:1), número do badge (3,3:1) | WCAG 2.2 AA (PRD 8.1) | **Resolvido na TASK-006:** texto escuro `on-yellow` sobre amarelo, `base-label` escurecido para `#6E6767`, novos tokens `yellow-ink`/`purple-ink`. Verificado por teste automatizado. |
 | D11 | Header ao rolar e no celular | Estático; só desktop | RF-15 | **Decisão (TASK-012):** Header fixo no topo (`sticky`) para o carrinho ficar sempre acessível; abaixo de 640 px o chip de localização mostra só o ícone (texto mantido para leitores de tela) e o botão de tema fica entre o chip e o carrinho. |

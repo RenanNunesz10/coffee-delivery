@@ -300,14 +300,14 @@
   - **Commit:** `test: cover coffee delivery purchase flow`
   - **Status:** Concluída
 
-- [ ] **TASK-032 — Substituir assets provisórios pela identidade criada com IA** *(executar antes da TASK-030)*
-  - **Objetivo:** aplicar a logo, o favicon e a ilustração de sucesso finais gerados com IA pelo aluno no lugar dos SVGs provisórios da TASK-005 (o hero passou a usar a imagem do Figma em 18/11/2026).
+- [x] **TASK-032 — Substituir assets provisórios pela identidade criada com IA** *(escopo revisado pelo aluno em 18/11/2026)*
+  - **Objetivo:** consolidar a identidade final. O aluno aprovou como definitivos os SVGs criados com IA (Claude) na TASK-005; não há troca de imagens, apenas acabamento e documentação da seção Branding com IA.
   - **Requisitos:** RF-16, RF-14.
   - **Arquivos:** `public/favicon.svg`, `src/assets/brand/*`, `src/assets/illustrations/*`, `docs/BRAND_GUIDE.md`.
   - **Critério de pronto:** nenhum asset provisório restante; logo light/dark e favicon legíveis; `BRAND_GUIDE.md` com conceito final e seção **Branding com IA** (ferramenta, prompt, resultado, motivos, termos de uso) cobrindo logo e ilustrações.
   - **Teste/validação:** legibilidade em 16–48 px, contraste nos dois temas, ausência de imagens quebradas, `npm run build`.
   - **Commit:** `feat: apply ai generated brand identity`
-  - **Status:** Bloqueada
+  - **Status:** Concluída
 
 - [ ] **TASK-030 — Preparar deploy**
   - **Objetivo:** publicar em hospedagem estática com rewrite SPA.
@@ -363,6 +363,7 @@
 | 18/11/2026 | TASK-030 | Preparado: `vercel.json` (build, `dist`, rewrite de todas as rotas para `index.html`) e `netlify.toml` (alternativa, redirect 200), `engines.node` igual ao exigido pelo Vite 8 (`^20.19.0 || >=22.12.0`), `.env` no `.gitignore`. Smoke test do build de produção com `vite preview`: `/`, `/checkout`, `/success` e rota inexistente por URL direta sem avisos/erros; ViaCEP real e bloqueada já verificadas na TASK-029. **Bloqueada:** a publicação exige a conta do aluno na Vercel/Netlify e o push para o GitHub (feito pelo aluno ao final); depois de publicar, repetir o smoke test no domínio e registrar o link no README. | `chore: prepare production deployment` |
 | 18/11/2026 | TASK-031 | README completo (funcionalidades por RF, screenshots mobile/desktop nos dois temas, stack com a justificativa do Tailwind, instalação e scripts, deploy, arquitetura e fluxo do estado, decisões, qualidade, branding, uso de IA, limitações); 12 screenshots em `docs/screenshots/` gerados no Chrome sobre o build de produção (checkout preenchido pela ViaCEP real); `AI_USAGE.md` com 10 interações (IA-06 a IA-10 novas, incluindo o erro de lint da IA e sua correção); TECH_SPEC 1.4.0 com a árvore de diretórios real; PRD §11 com critérios verificados marcados e pendências (TASK-030/032) indicadas. Validação: os 21 links e imagens locais do README existem; clone limpo do repositório em pasta temporária seguindo o README → `npm install` OK, `npm run test` 245/245, `npm run lint` OK, `npm run build` OK. | `docs: document setup brand and implementation decisions` |
 | 18/11/2026 | TASK-032 | **Bloqueada:** aguardando a logo, o favicon, o hero (sem a logo original do desafio) e a ilustração de sucesso criados com IA pelo aluno. Os arquivos PNG colocados em `public/` em 18/11/2026 foram inspecionados: são as 14 fotos de café do Figma em 120 × 120 px e a imagem do hero do Figma (com a logo original), não a identidade criada com IA; ficaram fora do Git aguardando decisão do aluno. Para concluir: salvar os assets finais com os mesmos nomes dos SVGs provisórios e preencher a seção "Branding com IA" do `BRAND_GUIDE.md`. | `feat: apply ai generated brand identity` |
+| 18/11/2026 | TASK-032 | **Concluída com escopo revisado:** o aluno aprovou os SVGs criados com IA como identidade definitiva. Acabamento: comentários de provisório removidos; texto da logo convertido em curvas com a Baloo 2 (SIL OFL), largura ajustada para 93 px; traços escuros da ilustração de sucesso clareados para o dark mode; `BRAND_GUIDE.md` final com a seção Branding com IA (ferramenta, pedido, briefing, resultado, curadoria, motivos e direitos). Assets renderizados em PNG nos dois fundos para revisão; `npm run test`, `lint` e `build` OK. | `feat: finalize ai created brand identity` |
 
 ## Definition of Done (global)
 
