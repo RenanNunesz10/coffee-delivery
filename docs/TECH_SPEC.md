@@ -343,7 +343,7 @@ type PostalCodeLookupResult =
   | { status: 'success'; address: Pick<DeliveryAddress, 'postalCode' | 'street' | 'district' | 'city' | 'state'> }
   | { status: 'invalid' }      // não tem 8 dígitos (nenhuma requisição)
   | { status: 'not-found' }    // { erro: true } ou HTTP 400
-  | { status: 'error'; reason: 'network' | 'timeout' | 'http' | 'invalid-response' };
+  | { status: 'error'; reason: 'network' | 'timeout' | 'http' | 'invalid-response' }
   | { status: 'aborted' };     // cancelada pelo chamador; não é exibida como erro
 
 lookupPostalCode(cep: string, options?: { signal?: AbortSignal; timeoutMs?: number; fetchFn?: typeof fetch }): Promise<PostalCodeLookupResult>
